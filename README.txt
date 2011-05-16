@@ -1,5 +1,5 @@
 Cassandra Cluster Admin
-by Sébastien Giroux
+by SÃ©bastien Giroux
 ------------------------------------------------
 
 Cassandra Cluster Admin is a tool to help people administrating their Cassandra cluster.

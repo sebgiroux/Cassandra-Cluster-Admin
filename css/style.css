@@ -1,0 +1,77 @@
+body {
+	font-family: 'Lucida Grande','Lucida Sans Unicode','Geneva','Verdana',sans-serif;
+	font-size: 14px;
+	background-color: #eee;
+}
+
+form div {
+	margin-bottom: 5px;
+}
+
+form label {
+	width: 250px;
+	float: left;
+}
+
+input[type=text] {
+	width: 300px;
+}
+
+input[type=text].smaller {
+	width: 220px;
+}
+
+select {
+	width: 300px;
+}
+
+#cluster_info {
+	border: 1px solid #000;
+	background-color: #ddd;
+	width: 500px;
+	padding: 3px 10px 20px 10px;
+}
+
+a, a:visited {
+	color: #2491CF;
+}
+
+#footer {
+	width: 100%;
+	text-align: center;
+	margin-top: 50px;
+	font-size: smaller;
+}
+
+.info_message {
+    color: #00529B;
+	border: 1px solid #00529B;
+    background-color: #BDE5F8;
+	padding: 10px;
+	margin: 10px 0;
+	width: 600px;
+}
+.success_message  {
+    color: #4F8A10;
+	border: 1px solid #4F8A10;
+    background-color: #DFF2BF;
+	padding: 10px;
+	margin: 10px 0;
+	width: 600px;
+}
+.warning_message  {
+    color: #9F6000;
+	border: 1px solid #9F6000;
+    background-color: #FEEFB3;
+	padding: 10px;
+	margin: 10px 0;
+	width: 600px;
+}
+.error_message  {
+    color: #D8000C;
+	border: 1px solid #D8000C;
+    background-color: #FFBABA;
+	padding: 10px;
+	margin: 10px 0;
+	width: 600px;
+}

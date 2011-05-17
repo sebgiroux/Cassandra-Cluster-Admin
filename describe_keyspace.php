@@ -34,7 +34,7 @@
 		$vw_vars['ring'] = $sys_manager->describe_ring($keyspace_name);
 	}
 	catch(Exception $e) {
-		echo $e->getMessage();
+		$vw_vars['ring'] = $e->getMessage();
 	}
 	
 	echo getHTML('describe_keyspace.php',$vw_vars);

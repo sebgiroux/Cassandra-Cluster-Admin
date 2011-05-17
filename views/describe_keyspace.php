@@ -38,15 +38,21 @@ List of Column Families in Keyspace:
 <h3>Ring</h3>
 	
 <?
-	foreach ($ring as $node) {
-		echo '<ul>';
-			echo '<li>Start Token: '.$node->start_token.'</li>';
-			echo '<li>End Token: '.$node->end_token.'</li>';
-			foreach ($node->endpoints as $endpoint) {
-				echo '<li>Endpoints: '.$endpoint.'</li>';
-			}
-		echo '</ul>';
+	if (is_array($ring)) {
+		foreach ($ring as $node) {
+			echo '<ul>';
+				echo '<li>Start Token: '.$node->start_token.'</li>';
+				echo '<li>End Token: '.$node->end_token.'</li>';
+				foreach ($node->endpoints as $endpoint) {
+					echo '<li>Endpoints: '.$endpoint.'</li>';
+				}
+			echo '</ul>';
+		}
 	}
+	else {
+		echo $ring;
+	}
+
 ?>
 
 <h3>Actions</h3>

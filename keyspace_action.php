@@ -20,14 +20,18 @@
 		$keyspace_name = $_POST['keyspace_name'];
 		$columnfamily_name = $_POST['columnfamily_name'];
 		
+		$attrs = array();
+		
 		$column_type = $_POST['column_type'];
 		if (!empty($column_type)) $attrs['column_type'] = $column_type;
 		
 		$comparator_type = $_POST['comparator_type'];
-		if (!empty($comparator_type)) $attrs['comparator_type'] = 'org.apache.cassandra.db.marshal.'.$comparator_type;
+		if (!empty($comparator_type)) $attrs['comparator_type'] = $comparator_type;
 		
-		$subcomparator_type = $_POST['subcomparator_type'];
-		if (!empty($subcomparator_type) && $column_type == 'Super') $attrs['subcomparator_type'] = 'org.apache.cassandra.db.marshal.'.$subcomparator_type;
+		if (isset($_POST['subcomparator_type'])) {
+			$subcomparator_type = $_POST['subcomparator_type'];
+			if (!empty($subcomparator_type) && $column_type == 'Super') $attrs['subcomparator_type'] = $subcomparator_type;
+		}
 		
 		$comment = $_POST['comment'];
 		if (!empty($comment)) $attrs['comment'] = $comment;

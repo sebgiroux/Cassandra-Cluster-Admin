@@ -127,6 +127,7 @@
 			Disable comparator type if in edit mode
 		*/
 		if ('<?=$mode?>' == 'edit') {
+			$('#columnfamily_name').attr('disabled','disabled');
 			$('#comparator_type').attr('disabled','disabled');
 		}
 		

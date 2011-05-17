@@ -4,7 +4,7 @@
 		
 		@author Sébastien Giroux
 		@copyright All rights reserved - 2011
-	*/
+	*/	
 
 	require('include/phpcassa/connection.php');
     require('include/phpcassa/columnfamily.php');

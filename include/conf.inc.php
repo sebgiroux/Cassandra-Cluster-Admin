@@ -16,6 +16,6 @@
 	
 	$CREDENTIALS = null;
 	if (CASSANDRA_USERNAME != '' && CASSANDRA_PASSWORD != '') {
-		$CREDENTIALS = array('username' => 'Your username', 'password' => 'Your password');
+		$CREDENTIALS = array('username' => CASSANDRA_USERNAME, 'password' => CASSANDRA_PASSWORD);
 	}	
 ?>

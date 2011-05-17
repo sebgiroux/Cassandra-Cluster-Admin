@@ -50,6 +50,8 @@
 	$vw_vars['keyspace_name'] = $keyspace_name;
 	$vw_vars['columnfamily_name'] = $columnfamily_name;
 	
+	$vw_vars['partitioner'] = $sys_manager->describe_partitioner();
+	
 	echo getHTML('describe_columnfamily.php',$vw_vars);
 	echo getHTML('footer.php');
 ?>

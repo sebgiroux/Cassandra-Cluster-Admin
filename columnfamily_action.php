@@ -301,5 +301,62 @@
 		}
 	}
 	
+	/*
+		Browse data - Using get_range()
+	*/
+	
+	if ($action == 'browse_data') {
+		$keyspace_name = $_GET['keyspace_name'];
+		$columnfamily_name = $_GET['columnfamily_name'];
+		
+		$vw_vars['cluster_name'] = $sys_manager->describe_cluster_name();
+		$vw_vars['keyspace_name'] = $keyspace_name;
+		$vw_vars['columnfamily_name'] = $columnfamily_name;
+		
+		$pool = new ConnectionPool($keyspace_name, array(CASSANDRA_SERVER));
+		$column_family = new ColumnFamily($pool, $columnfamily_name);
+		
+		try {					
+			$offset_key = '';
+			if (isset($_GET['offset_key'])) $offset_key = $_GET['offset_key'];
+		
+			$nb_rows = 5;
+		
+			$result = $column_family->get_range($offset_key,'',5,null,$nb_rows,'');
+			
+			$vw_vars['results'] = '';	
+			$nb_results = 0;
+			foreach ($result as $key => $value) {
+				$vw_row_vars['key'] = $key;
+				$vw_row_vars['value'] = $value;
+				
+				$vw_vars['results'] .= getHTML('columnfamily_browse_data_row.php',$vw_row_vars);
+				
+				$nb_results++;
+			}		
+			
+			// We got the number of rows we asked for, display "Next Page" link
+			if ($nb_results == $nb_rows) {
+				$vw_vars['old_offset_key'] = $offset_key;
+				
+				$offset_key = ++$key;				
+				
+				$vw_vars['offset_key'] = $offset_key;
+				$vw_vars['show_next_page_link'] = true;
+			}
+			else {
+				$vw_vars['old_offset_key'] = '';
+				$vw_vars['offset_key'] = '';
+				$vw_vars['show_next_page_link'] = '';
+			}
+			
+			echo getHTML('header.php');
+			echo getHTML('columnfamily_browse_data.php',$vw_vars);
+		}
+		catch (Exception $e) {
+			echo 'Something went wrong '.$e->getMessage();
+		}
+	}
+	
 	echo getHTML('footer.php');
 ?>

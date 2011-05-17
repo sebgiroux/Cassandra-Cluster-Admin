@@ -324,7 +324,7 @@
 		
 			$nb_rows = 5;
 		
-			$result = $column_family->get_range($offset_key,'',5,null,$nb_rows,'');
+			$result = $column_family->get_range($offset_key,'',$nb_rows,null);
 			
 			$vw_vars['results'] = '';	
 			$nb_results = 0;

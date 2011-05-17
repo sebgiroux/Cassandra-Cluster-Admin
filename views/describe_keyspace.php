@@ -2,7 +2,7 @@
 
 <p>
 	Strategy Class: <?=$strategy_class?><br />
-	Strategy Options: <?=$strategy_options?><br />
+	Strategy Options: <?if (empty($strategy_options)): echo 'None'; else: echo $strategy_options; endif;?><br />
 	Replication Factor: <?=$replication_factor?>
 </p>
 

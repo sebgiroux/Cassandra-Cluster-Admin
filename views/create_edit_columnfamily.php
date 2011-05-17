@@ -1,4 +1,4 @@
-<h3><a href="index.php"><?=$cluster_name?></a> &gt; <a href="describe_keyspace.php?keyspace_name=<?=$keyspace_name?>"><?=$keyspace_name?></a> <?if (!empty($columnfamily_name)): echo "&gt; $columnfamily_name"; endif; ?></h3>
+<h3><a href="index.php"><?=$cluster_name?></a> &gt; <a href="describe_keyspace.php?keyspace_name=<?=$keyspace_name?>"><?=$keyspace_name?></a> <?if (!empty($columnfamily_name)): echo "&gt; $columnfamily_name"; endif; ?> <?if($mode=='create'): echo '&gt; Create Column Family'; endif;?></h3>
 
 <?=$success_message?>
 <?=$error_message?>
@@ -21,24 +21,24 @@
 	<div>
 		<label for="comparator_type">Comparator Type:</label>
 		<select id="comparator_type" name="comparator_type">
-			<option value="org.apache.cassandra.db.marshal.AsciiType">AsciiType</option>
-			<option value="org.apache.cassandra.db.marshal.BytesType">BytesType</option>
-			<option value="org.apache.cassandra.db.marshal.LexicalUUIDType">LexicalUUIDType</option>
-			<option value="org.apache.cassandra.db.marshal.LongType">LongType</option>
-			<option value="org.apache.cassandra.db.marshal.TimeUUIDType">TimeUUIDType</option>
-			<option value="org.apache.cassandra.db.marshal.UTF8Type">UTF8Type</option>
+			<option value="org.apache.cassandra.db.marshal.AsciiType">AsciiType (ASCII String)</option>
+			<option value="org.apache.cassandra.db.marshal.BytesType">BytesType (No Type)</option>
+			<option value="org.apache.cassandra.db.marshal.LexicalUUIDType">LexicalUUIDType (Non-version 1 UUID)</option>
+			<option value="org.apache.cassandra.db.marshal.LongType">LongType (64 Bit Integer)</option>
+			<option value="org.apache.cassandra.db.marshal.TimeUUIDType">TimeUUIDType (Version 1 UUID (timestamp based))</option>
+			<option value="org.apache.cassandra.db.marshal.UTF8Type">UTF8Type (UTF8 Encoded String)</option>
 		</select>
 	</div>
 	
 	<div>
 		<label for="subcomparator_type">Subcomparator Type:</label>
 		<select id="subcomparator_type" name="subcomparator_type">
-			<option value="org.apache.cassandra.db.marshal.AsciiType">AsciiType</option>
-			<option value="org.apache.cassandra.db.marshal.BytesType">BytesType</option>
-			<option value="org.apache.cassandra.db.marshal.LexicalUUIDType">LexicalUUIDType</option>
-			<option value="org.apache.cassandra.db.marshal.LongType">LongType</option>
-			<option value="org.apache.cassandra.db.marshal.TimeUUIDType">TimeUUIDType</option>
-			<option value="org.apache.cassandra.db.marshal.UTF8Type">UTF8Type</option>
+			<option value="org.apache.cassandra.db.marshal.AsciiType">AsciiType (ASCII String)</option>
+			<option value="org.apache.cassandra.db.marshal.BytesType">BytesType (No Type)</option>
+			<option value="org.apache.cassandra.db.marshal.LexicalUUIDType">LexicalUUIDType (Non-version 1 UUID)</option>
+			<option value="org.apache.cassandra.db.marshal.LongType">LongType (64 Bit Integer)</option>
+			<option value="org.apache.cassandra.db.marshal.TimeUUIDType">TimeUUIDType (Version 1 UUID (timestamp based))</option>
+			<option value="org.apache.cassandra.db.marshal.UTF8Type">UTF8Type (UTF8 Encoded String)</option>
 		</select>
 	</div>
 	
@@ -108,7 +108,7 @@
 	</div>
 	
 	<div>
-		<input type="submit" name="<? if ($mode == 'edit'): echo 'btn_edit_columnfamily'; else: echo 'btn_create_columnfamily'; endif; ?>" value="<? if ($mode == 'edit'): echo 'Edit Column Family'; else: echo 'Add Column Family'; endif; ?>" />
+		<input type="submit" name="<? if ($mode == 'edit'): echo 'btn_edit_columnfamily'; else: echo 'btn_create_columnfamily'; endif; ?>" value="<? if ($mode == 'edit'): echo 'Edit Column Family'; else: echo 'Create Column Family'; endif; ?>" />
 	</div>
 	
 	<input type="hidden" name="keyspace_name" value="<?=$keyspace_name?>" />

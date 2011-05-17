@@ -66,16 +66,19 @@
 			return '<div class="success_message">Keyspace '.$params['keyspace_name'].' has been dropped successfully!</div>';
 		}
 		elseif ($index == 'create_columnfamily') {
-			return '<div class="success_message">Column family '.$params['columnfamily_name'].' has been created succesfully!</div>';
+			return '<div class="success_message">Column family '.$params['columnfamily_name'].' has been created successfully!</div>';
 		}
 		elseif ($index == 'edit_columnfamily') {
-			return '<div class="success_message">Column family '.$params['columnfamily_name'].' has been edited succesfully!</div>';
+			return '<div class="success_message">Column family '.$params['columnfamily_name'].' has been edited successfully!</div>';
 		}
 		elseif ($index == 'get_key') {
 			return '<div class="success_message">Successfully got key "'.$params['key'].'"</div>';
 		}
 		elseif ($index == 'create_secondary_index') {
 			return '<div class="success_message">Secondary index on column '.$params['column_name'].' has been created succesfully!</div>';
+		}
+		elseif ($index == 'insert_row') {
+			return '<div class="success_message">Row inserted successfully!</div>';
 		}
 	}
 	

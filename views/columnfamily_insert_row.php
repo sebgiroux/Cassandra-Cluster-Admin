@@ -10,6 +10,7 @@
 	}
 </script>
 
+<?=$success_message?>
 <?=$info_message?>
 <?=$error_message?>
 

@@ -38,5 +38,5 @@ This software is still in beta so always be careful when using it on a productio
 
 Credits
 ------------------------------------------------
-The Apache Cassandra project
-Tyler Hobbs (thobbs) - phpcassa
+The Apache Cassandra project - http://cassandra.apache.org/
+Tyler Hobbs (thobbs) - phpcassa - https://github.com/thobbs/phpcassa

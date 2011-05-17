@@ -254,6 +254,7 @@
 		try {
 			if (!empty($key)) {
 				$column_family->insert($key,$data);
+				$vw_vars['success_message'] = displaySuccessMessage('insert_row',array());
 			}
 			else {
 				$vw_vars['info_message'] = displayInfoMessage('insert_row_not_empty',array());
@@ -276,6 +277,7 @@
 		$vw_vars['keyspace_name'] = $keyspace_name;
 		$vw_vars['columnfamily_name'] = $columnfamily_name;
 		
+		if (!isset($vw_vars['success_message'])) $vw_vars['success_message'] = '';
 		if (!isset($vw_vars['info_message'])) $vw_vars['info_message'] = '';
 		if (!isset($vw_vars['error_message'])) $vw_vars['error_message'] = '';
 		

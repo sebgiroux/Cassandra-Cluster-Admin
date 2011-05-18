@@ -7,7 +7,24 @@
 	<li>Row Cache Size: <?=$row_cache_size?></li>
 	<li>Key Cache Size: <?=$key_cache_size?></li>
 	<li>Read Repair Chance: <?=$read_repair_chance?></li>
-	<li>Column Metadata: <?=$column_metadata?></li>
+	<li>
+		Column Metadata: 
+		<?
+			if (is_array($column_metadata)) {
+				if (count($column_metadata) > 0) {
+					foreach ($column_metadata as $key => $value) {
+						echo $key.' '.$value;
+					}
+				}
+				else {
+					echo 'None';
+				}
+			}
+			else {
+				echo $column_metadata;
+			}
+		?>
+	</li>
 	<li>GC Grace Seconds: <?=$gc_grace_seconds?></li>
 	<li>Default Validation Class: <?=$default_validation_class?></li>
 	<li>ID: <?=$id?></li>

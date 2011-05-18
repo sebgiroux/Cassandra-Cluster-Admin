@@ -124,5 +124,28 @@
 		}
 	}
 	
+	function displayCFRow($row,$scf_key = null) {
+		$output = '<table border="1">';
+		
+		if (!is_null($scf_key)) $output .= '<tr><td colspan="2">'.$scf_key.'</td></tr>';
+		
+		foreach ($row as $key => $value) {
+			$output .= '<tr><td>'.$key.'</td><td>'.$value.'</td></tr>';
+		}
+		
+		$output .= '</table><br />';
+		
+		return $output;
+	}
+	
+	function displaySCFRow($row) {
+		$output = '';
+		foreach ($row as $key => $value) {
+			$output .= displayCFRow($value,$key);
+		}	
+		
+		return $output;
+	}
+	
 	session_start();
 ?>

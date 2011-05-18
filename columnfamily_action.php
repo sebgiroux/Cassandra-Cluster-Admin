@@ -324,6 +324,18 @@
 		
 			$nb_rows = 5;
 		
+			$describe_keyspace = $sys_manager->describe_keyspace($keyspace_name);
+		
+			$cf_def = null;
+			foreach ($describe_keyspace->cf_defs as $cfdef) {
+				if ($cfdef->name == $columnfamily_name) {
+					$cf_def = $cfdef;
+					break;
+				}
+			}
+
+			$vw_row_vars['is_super_cf'] = $cf_def->column_type == 'Super';     
+		
 			$result = $column_family->get_range($offset_key,'',$nb_rows,null);
 			
 			$vw_vars['results'] = '';	

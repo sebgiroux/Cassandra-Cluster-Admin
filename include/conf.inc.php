@@ -6,7 +6,7 @@
 		@copyright All rights reserved - 2011
 	*/
 
-	define('CASSANDRA_SERVER','127.0.0.1:9160');
+	$CASSANDRA_SERVERS = array('127.0.0.1:9160'); // Add as many Cassandra nodes as you want in this array
 	
 	/*
 		Enter your cassandra credentials here if needed

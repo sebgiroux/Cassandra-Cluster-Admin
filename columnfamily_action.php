@@ -179,7 +179,7 @@
 		$keyspace_name = $_GET['keyspace_name'];
 		$columnfamily_name = $_GET['columnfamily_name'];
 			
-		$pool = new ConnectionPool($keyspace_name, array(CASSANDRA_SERVER));
+		$pool = new ConnectionPool($keyspace_name, $CASSANDRA_SERVERS);
 		$column_family = new ColumnFamily($pool, $columnfamily_name);
 		
 		try {		
@@ -231,7 +231,7 @@
 		
 		$key = $_POST['key'];
 		
-		$pool = new ConnectionPool($keyspace_name, array(CASSANDRA_SERVER));
+		$pool = new ConnectionPool($keyspace_name, $CASSANDRA_SERVERS);
 		$column_family = new ColumnFamily($pool, $columnfamily_name);
 		
 		$no_column = 1;
@@ -315,7 +315,7 @@
 		$vw_vars['keyspace_name'] = $keyspace_name;
 		$vw_vars['columnfamily_name'] = $columnfamily_name;
 		
-		$pool = new ConnectionPool($keyspace_name, array(CASSANDRA_SERVER));
+		$pool = new ConnectionPool($keyspace_name, $CASSANDRA_SERVERS);
 		$column_family = new ColumnFamily($pool, $columnfamily_name);
 		
 		try {					

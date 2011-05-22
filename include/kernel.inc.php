@@ -13,7 +13,7 @@
 	require('conf.inc.php');
 	
 	try {
-		$sys_manager = new SystemManager(CASSANDRA_SERVER,$CREDENTIALS,1500,1500);
+		$sys_manager = new SystemManager($CASSANDRA_SERVERS[array_rand($CASSANDRA_SERVERS)],$CREDENTIALS,1500,1500);
 	}
 	catch (TException $e) {
 		die('An error happened while connecting to your Cassandra cluster: '.$e->getMessage());

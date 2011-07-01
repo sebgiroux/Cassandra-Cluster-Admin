@@ -5,7 +5,9 @@
 		@author Sébastien Giroux
 		@copyright All rights reserved - 2011
 	*/
-
+	require_once('include/kernel.inc.php');
+	require_once('include/verify_login.inc.php');
+	
 	$vw_vars['cluster_name'] = $sys_manager->describe_cluster_name();
 	$vw_vars['partitioner'] = $sys_manager->describe_partitioner();
 	$vw_vars['snitch'] = $sys_manager->describe_snitch();

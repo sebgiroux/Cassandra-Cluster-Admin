@@ -14,4 +14,6 @@
 	</head>
 	
 	<body>
-		<h1>Cassandra Cluster Admin</h1>
+		<h1 class="float_left">Cassandra Cluster Admin</h1>
+		<div class="float_right"><a href="logout.php">Logout</a></div>
+		<div class="clear_both"></div>

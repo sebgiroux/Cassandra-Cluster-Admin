@@ -7,6 +7,7 @@
 	*/
 
 	require('include/kernel.inc.php');
+	require('include/verify_login.inc.php');
 	
 	$action = '';
 	if (isset($_GET['action'])) $action = $_GET['action'];

@@ -4,6 +4,26 @@ body {
 	background-color: #eee;
 }
 
+.float_left {
+	float: left;
+}
+
+.float_right {
+	float: right;
+}
+
+.clear_left {
+	clear: left;
+}
+
+.clear_right {
+	clear: right;
+}
+
+.clear_both {
+	clear: both;
+}
+
 form div {
 	margin-bottom: 5px;
 }
@@ -13,7 +33,7 @@ form label {
 	float: left;
 }
 
-input[type=text] {
+input[type=text], input[type=password] {
 	width: 300px;
 }
 

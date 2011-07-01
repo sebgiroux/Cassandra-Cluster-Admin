@@ -7,7 +7,8 @@
 	*/
 	
 	require('include/kernel.inc.php');
-		
+	require('include/verify_login.inc.php');
+	
 	/*
 		Display success message
 	*/

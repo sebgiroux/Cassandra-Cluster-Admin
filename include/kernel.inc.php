@@ -23,8 +23,9 @@
 		if (!file_exists('views/'.$filename))
 			die ('The view ' . $filename . ' doesn\'t exist');
 
-		//if we get some params to be treated in php
+		// If we got some params to be treated in php
 		extract($php_params);
+		
 		ob_start();
 		include('views/'.$filename);
 		$content = ob_get_contents();
@@ -133,6 +134,12 @@
 		}
 		elseif ($index == 'columnfamily_name_must_be_specified') {
 			return '<div class="error_message">You must specify a column family name</div>';
+		}
+		elseif ($index == 'login_wrong_username_password') {
+			return '<div class="error_message">Wrong username and/or password!</div>';
+		}
+		elseif ($index == 'you_must_be_logged') {
+			return '<div class="error_message">You must be logged to access Cassandra Cluster Admin!</div>';
 		}
 	}
 	

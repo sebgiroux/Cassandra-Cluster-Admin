@@ -1,14 +1,13 @@
 <h4><a href="describe_columnfamily.php?keyspace_name=<?=$keyspace_name?>&columnfamily_name=<?=$columnfamily_name?>"><?=$columnfamily_name?></a> - <a href="columnfamily_action.php?action=edit&keyspace_name=<?=$keyspace_name?>&columnfamily_name=<?=$columnfamily_name?>">Edit</a></h4>
-<ul>
-	<li>Column Type: <?=$column_type?></li>
-	<li>Comparator Type: <?=$comparator_type?></li>
-	<li>Subcomparator Type: <?=$subcomparator_type?></li>
-	<li>Comment: <?=$comment?></li>
-	<li>Row Cache Size: <?=$row_cache_size?></li>
-	<li>Key Cache Size: <?=$key_cache_size?></li>
-	<li>Read Repair Chance: <?=$read_repair_chance?></li>
-	<li>
-		Column Metadata: 
+<table>
+	<tr><td>Column Type</td><td><?=$column_type?></td></tr>
+	<tr><td>Comparator Type</td><td><?=$comparator_type?></td></tr>
+	<tr><td>Subcomparator Type</td><td><?=$subcomparator_type?></td></tr>
+	<tr><td>Comment</td><td><?=$comment?></td></tr>
+	<tr><td>Row Cache Size</td><td><?=$row_cache_size?></td></tr>
+	<tr><td>Key Cache Size</td><td><?=$key_cache_size?></td></tr>
+	<tr><td>Read Repair Chance</td><td><?=$read_repair_chance?></td></tr>
+	<tr><td>Column Metadata</td><td>
 		<?
 			if (is_array($column_metadata)) {
 				if (count($column_metadata) > 0) {
@@ -24,15 +23,15 @@
 				echo $column_metadata;
 			}
 		?>
-	</li>
-	<li>GC Grace Seconds: <?=$gc_grace_seconds?></li>
-	<li>Default Validation Class: <?=$default_validation_class?></li>
-	<li>ID: <?=$id?></li>
-	<li>Min Compaction Threshold: <?=$min_compaction_threshold?></li>
-	<li>Max Compaction Threshold: <?=$max_compaction_threshold?></li>
-	<li>Row Cache Save Period In Seconds: <?=$row_cache_save_period_in_seconds?></li>
-	<li>Key Cache Save Period In Seconds: <?=$key_cache_save_period_in_seconds?></li>
-	<li>Memtable Flush After Mins: <?=$memtable_flush_after_mins?></li>
-	<li>Memtable Throughput In MB: <?=$memtable_throughput_in_mb?></li>
-	<li>Memtable Operations In Millions: <?=$memtable_operations_in_millions?></li>
-</ul>
+	</td></tr>
+	<tr><td>GC Grace Seconds</td><td><?=$gc_grace_seconds?></td></tr>
+	<tr><td>Default Validation Class</td><td><?=$default_validation_class?></td></tr>
+	<tr><td>ID</td><td><?=$id?></td></tr>
+	<tr><td>Min Compaction Threshold</td><td><?=$min_compaction_threshold?></td></tr>
+	<tr><td>Max Compaction Threshold</td><td><?=$max_compaction_threshold?></td></tr>
+	<tr><td>Row Cache Save Period In Seconds</td><td><?=$row_cache_save_period_in_seconds?></td></tr>
+	<tr><td>Key Cache Save Period In Seconds</td><td><?=$key_cache_save_period_in_seconds?></td></tr>
+	<tr><td>Memtable Flush After Mins</td><td><?=$memtable_flush_after_mins?></td></tr>
+	<tr><td>Memtable Throughput In MB</td><td><?=$memtable_throughput_in_mb?></td></tr>
+	<tr><td>Memtable Operations In Millions</td><td><?=$memtable_operations_in_millions?></td></tr>
+</table>

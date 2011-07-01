@@ -16,7 +16,7 @@
 
 <form method="post" action="">
 	<div>
-		<label for="key">Key:</label>
+		<label for="key">Row Key:</label>
 		<input id="key" name="key" type="text" />
 	</div>
 	
@@ -24,7 +24,7 @@
 		if ($is_super_cf) {
 	?>
 	<div>
-		<label for="key">Column Key:</label>
+		<label for="key">Super Column Key:</label>
 		<input id="column_key" name="column_key" type="text" />
 	</div>
 	<?php

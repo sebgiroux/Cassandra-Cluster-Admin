@@ -1,26 +1,26 @@
 <h3><a href="index.php"><?=$cluster_name?></a> &gt; <a href="describe_keyspace.php?keyspace_name=<?=$keyspace_name?>"><?=$keyspace_name?></a> &gt; <?=$columnfamily_name?></h3>
 
 <?php
-	echo '<ul>';
-		echo '<li>Column Type: '.$one_cf->column_type.'</li>';
-		echo '<li>Comparator Type: '.$one_cf->comparator_type.'</li>';
-		echo '<li>Subcomparator Type: '.$one_cf->subcomparator_type.'</li>';
-		echo '<li>Comment: '.$one_cf->comment.'</li>';
-		echo '<li>Row Cache Size: '.$one_cf->row_cache_size.'</li>';
-		echo '<li>Key Cache Size: '.$one_cf->key_cache_size.'</li>';
-		echo '<li>Read Repair Chance: '.$one_cf->read_repair_chance.'</li>';
-		echo '<li>Column Metadata: '.$one_cf->column_metadata.'</li>';
-		echo '<li>GC Grace Seconds: '.$one_cf->gc_grace_seconds.'</li>';
-		echo '<li>Default Validation Class: '.$one_cf->default_validation_class.'</li>';
-		echo '<li>ID: '.$one_cf->id.'</li>';
-		echo '<li>Min Compaction Threshold: '.$one_cf->min_compaction_threshold.'</li>';
-		echo '<li>Max Compaction Threshold: '.$one_cf->max_compaction_threshold.'</li>';
-		echo '<li>Row Cache Save Period In Seconds: '.$one_cf->row_cache_save_period_in_seconds.'</li>';
-		echo '<li>Key Cache Save Period In Seconds: '.$one_cf->key_cache_save_period_in_seconds.'</li>';
-		echo '<li>Memtable Flush After Mins: '.$one_cf->memtable_flush_after_mins.'</li>';
-		echo '<li>Memtable Throughput In MB: '.$one_cf->memtable_throughput_in_mb.'</li>';
-		echo '<li>Memtable Operations In Millions: '.$one_cf->memtable_operations_in_millions.'</li>';
-	echo '</ul>';
+	echo '<table>';
+		echo '<tr><td>Column Type</td><td>'.$one_cf->column_type.'</td></tr>';
+		echo '<tr><td>Comparator Type</td><td>'.$one_cf->comparator_type.'</td></tr>';
+		echo '<tr><td>Subcomparator Type</td><td>'.$one_cf->subcomparator_type.'</td></tr>';
+		echo '<tr><td>Comment</td><td>'.$one_cf->comment.'</td></tr>';
+		echo '<tr><td>Row Cache Size</td><td>'.$one_cf->row_cache_size.'</td></tr>';
+		echo '<tr><td>Key Cache Size</td><td>'.$one_cf->key_cache_size.'</td></tr>';
+		echo '<tr><td>Read Repair Chance</td><td>'.$one_cf->read_repair_chance.'</td></tr>';
+		echo '<tr><td>Column Metadata</td><td>'.$one_cf->column_metadata.'</td></tr>';
+		echo '<tr><td>GC Grace Seconds</td><td>'.$one_cf->gc_grace_seconds.'</td></tr>';
+		echo '<tr><td>Default Validation Class</td><td>'.$one_cf->default_validation_class.'</td></tr>';
+		echo '<tr><td>ID</td><td>'.$one_cf->id.'</td></tr>';
+		echo '<tr><td>Min Compaction Threshold</td><td>'.$one_cf->min_compaction_threshold.'</td></tr>';
+		echo '<tr><td>Max Compaction Threshold</td><td>'.$one_cf->max_compaction_threshold.'</td></tr>';
+		echo '<tr><td>Row Cache Save Period In Seconds</td><td>'.$one_cf->row_cache_save_period_in_seconds.'</td></tr>';
+		echo '<tr><td>Key Cache Save Period In Seconds</td><td>'.$one_cf->key_cache_save_period_in_seconds.'</td></tr>';
+		echo '<tr><td>Memtable Flush After Mins</td><td>'.$one_cf->memtable_flush_after_mins.'</td></tr>';
+		echo '<tr><td>Memtable Throughput In MB</td><td>'.$one_cf->memtable_throughput_in_mb.'</td></tr>';
+		echo '<tr><td>Memtable Operations In Millions</td><td>'.$one_cf->memtable_operations_in_millions.'</td></tr>';
+	echo '</table>';
 ?>
 
 <?php

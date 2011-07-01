@@ -55,7 +55,7 @@
 		exit();
 	}
 	
-	function displaySuccessMessage($index,$params) {
+	function displaySuccessMessage($index,$params = array()) {
 		if ($index == 'create_keyspace') {
 			return '<div class="success_message">Keyspace '.$params['keyspace_name'].' has been created successfully!</div>';
 		}
@@ -82,7 +82,7 @@
 		}
 	}
 	
-	function displayInfoMessage($index,$params) {
+	function displayInfoMessage($index,$params = array()) {
 		if ($index == 'edit_keyspace_increased_replication_factor') {
 			return '<div class="info_message">Tips: Looks like you increased the replication factor.<br />You might want to run "nodetool -h localhost repair" on all your Cassandra nodes.</div>';
 		}
@@ -97,7 +97,7 @@
 		}
 	}
 
-	function displayErrorMessage($index,$params) {
+	function displayErrorMessage($index,$params = array()) {
 		if ($index == 'create_keyspace') {
 			return '<div class="error_message">Keyspace '.$params['keyspace_name'].' couldn\'t be created.<br /> Reason: '.$params['message'].'</div>';
 		}
@@ -121,6 +121,18 @@
 		}
 		elseif ($index == 'create_secondary_index') {
 			return '<div class="error_message">Couldn\'t create secondary index on column '.$params['column_name'].'<br /> Reason: '.$params['message'].'</div>';
+		}
+		elseif ($index == 'keyspace_doesnt_exists') {
+			return '<div class="error_message">Keyspace "'.$params['keyspace_name'].'" doesn\'t exists</div>';
+		}
+		elseif ($index == 'columnfamily_doesnt_exists') {
+			return '<div class="error_message">Column family "'.$params['column_name'].'" doesn\'t exists</div>';
+		}
+		elseif ($index == 'keyspace_name_must_be_specified') {
+			return '<div class="error_message">You must specify a keyspace name</div>';
+		}
+		elseif ($index == 'columnfamily_name_must_be_specified') {
+			return '<div class="error_message">You must specify a column family name</div>';
 		}
 	}
 	

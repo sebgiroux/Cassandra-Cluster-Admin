@@ -25,8 +25,8 @@
 		}
 		
 		$columnfamily_name = '';
-		if (isset($_GET['columnfamily_name'])) {
-			$columnfamily_name = $_GET['columnfamily_name'];
+		if (isset($_POST['columnfamily_name'])) {
+			$columnfamily_name = $_POST['columnfamily_name'];
 		}
 		
 		$attrs = array();

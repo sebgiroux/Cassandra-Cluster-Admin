@@ -2,8 +2,8 @@
 <table>
 	<tr><td>Column Type</td><td><?=$column_type?></td></tr>
 	<tr><td>Comparator Type</td><td><?=$comparator_type?></td></tr>
-	<tr><td>Subcomparator Type</td><td><?=$subcomparator_type?></td></tr>
-	<tr><td>Comment</td><td><?=$comment?></td></tr>
+	<?php if ($subcomparator_type != ''): ?><tr><td>Subcomparator Type</td><td><?=$subcomparator_type?></td></tr><?php endif; ?>
+	<?php if ($comment != ''): ?><tr><td>Comment</td><td><?=$comment?></td></tr><?php endif; ?>
 	<tr><td>Row Cache Size</td><td><?=$row_cache_size?></td></tr>
 	<tr><td>Key Cache Size</td><td><?=$key_cache_size?></td></tr>
 	<tr><td>Read Repair Chance</td><td><?=$read_repair_chance?></td></tr>

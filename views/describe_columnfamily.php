@@ -4,8 +4,8 @@
 	echo '<table>';
 		echo '<tr><td>Column Type</td><td>'.$one_cf->column_type.'</td></tr>';
 		echo '<tr><td>Comparator Type</td><td>'.$one_cf->comparator_type.'</td></tr>';
-		echo '<tr><td>Subcomparator Type</td><td>'.$one_cf->subcomparator_type.'</td></tr>';
-		echo '<tr><td>Comment</td><td>'.$one_cf->comment.'</td></tr>';
+		if ($one_cf->subcomparator_type != '') echo '<tr><td>Subcomparator Type</td><td>'.$one_cf->subcomparator_type.'</td></tr>';
+		if ($one_cf->comment != '') echo '<tr><td>Comment</td><td>'.$one_cf->comment.'</td></tr>';
 		echo '<tr><td>Row Cache Size</td><td>'.$one_cf->row_cache_size.'</td></tr>';
 		echo '<tr><td>Key Cache Size</td><td>'.$one_cf->key_cache_size.'</td></tr>';
 		echo '<tr><td>Read Repair Chance</td><td>'.$one_cf->read_repair_chance.'</td></tr>';

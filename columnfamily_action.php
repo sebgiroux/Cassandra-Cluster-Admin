@@ -18,7 +18,6 @@
 	*/
 	
 	if (isset($_POST['btn_edit_columnfamily'])) {
-		$columnfamily_name = $_POST['columnfamily_name'];
 		$column_type = $_POST['column_type'];
 		
 		$comment = $_POST['comment'];
@@ -57,7 +56,10 @@
 			$attrs['comparator_type'] = $_POST['comparator_type'];
 		
 		if ($column_type == 'Super' && isset($_POST['subcomparator_type'])) {
-			$attrs['subcomparator_type'] = $subcomparator_type;
+			$attrs['subcomparator_type'] = $_POST['subcomparator_type'];
+		}
+		else {
+			$attrs['subcomparator_type'] = null;
 		}
 		
 		try {

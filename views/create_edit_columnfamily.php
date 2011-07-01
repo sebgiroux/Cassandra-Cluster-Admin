@@ -3,7 +3,7 @@
 <?=$success_message?>
 <?=$error_message?>
 
-<form method="post" action="">
+<form method="post" action="" id="columnfamily_form">
 
 	<div>
 		<label for="columnfamily_name">Column Family Name:</label>
@@ -129,6 +129,9 @@
 		if ('<?=$mode?>' == 'edit') {
 			$('#columnfamily_name').attr('disabled','disabled');
 			$('#comparator_type').attr('disabled','disabled');
+			
+			$('#columnfamily_form').append($('<input type="hidden" id="hidden_columnfamily_name" name="columnfamily_name" value="' + $('#columnfamily_name').val() + '" />'));
+			$('#comparator_type').append($('<input type="hidden" id="hidden_comparator_type" name="comparator_type" value="' + $('#comparator_type').val() + '" />'));
 		}
 		
 		/*
@@ -136,6 +139,8 @@
 		*/		
 		if ($('#column_type').val() == 'Standard' || '<?=$mode?>' == 'edit') {
 			$('#subcomparator_type').attr('disabled','disabled');
+			
+			$('#subcomparator_type').append($('<input type="hidden" id="hidden_subcomparator_type" name="subcomparator_type" value="' + $('#subcomparator_type').val() + '" />'));
 		}
 		
 		/*
@@ -144,9 +149,13 @@
 		$('#column_type').change(function() {
 			if ($('#column_type').val() == 'Standard' || '<?=$mode?>' == 'edit') {
 				$('#subcomparator_type').attr('disabled','disabled');
+				
+				$('#subcomparator_type').append($('<input type="hidden" id="hidden_subcomparator_type" name="subcomparator_type" value="' + $('#subcomparator_type').val() + '" />'));
 			}
 			else {
 				$('#subcomparator_type').attr('disabled','');
+				
+				$('#hidden_subcomparator_type').remove();
 			}
 		});
 	});

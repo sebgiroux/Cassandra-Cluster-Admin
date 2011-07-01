@@ -70,6 +70,8 @@
 				$vw_vars['memtable_throughput_in_mb'] = $one_cf->memtable_throughput_in_mb;
 				$vw_vars['memtable_operations_in_millions'] = $one_cf->memtable_operations_in_millions;
 				
+				$vw_vars['show_edit_link'] = true;
+				
 				$vw_vars['list_column_families'] .= getHTML('columnfamily_row.php',$vw_vars);
 			}
 			

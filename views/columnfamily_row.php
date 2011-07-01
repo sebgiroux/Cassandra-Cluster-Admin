@@ -1,4 +1,7 @@
-<h4><a href="describe_columnfamily.php?keyspace_name=<?=$keyspace_name?>&columnfamily_name=<?=$columnfamily_name?>"><?=$columnfamily_name?></a> - <a href="columnfamily_action.php?action=edit&keyspace_name=<?=$keyspace_name?>&columnfamily_name=<?=$columnfamily_name?>">Edit</a></h4>
+<?php if ($show_edit_link): ?>
+	<h4><a href="describe_columnfamily.php?keyspace_name=<?=$keyspace_name?>&columnfamily_name=<?=$columnfamily_name?>"><?=$columnfamily_name?></a> - <a href="columnfamily_action.php?action=edit&keyspace_name=<?=$keyspace_name?>&columnfamily_name=<?=$columnfamily_name?>">Edit</a></h4>
+<?php endif; ?>
+
 <table>
 	<tr><td>Column Type</td><td><?=$column_type?></td></tr>
 	<tr><td>Comparator Type</td><td><?=$comparator_type?></td></tr>
@@ -12,7 +15,7 @@
 			if (is_array($column_metadata)) {
 				if (count($column_metadata) > 0) {
 					foreach ($column_metadata as $key => $value) {
-						echo $key.' '.$value;
+						echo $key.': '.$value;
 					}
 				}
 				else {

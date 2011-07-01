@@ -6,7 +6,7 @@
 	function addColumn() {
 		num_columns++;		
 		$('#btn_add_column').remove();		
-		$('#columns_list').append('<br /><label for="column_value_' + num_columns + '"><input id="column_name_' + num_columns + '" name="column_name_' + num_columns + '" type="text" class="smaller" /></label><input id="column_value_' + num_columns + '" name="column_value_' + num_columns + '" type="text" class="smaller" /> <input id="btn_add_column" type="button" value="Add..." onclick="addColumn();" />');
+		$('#columns_list').append('<div class="clear_left"></div><div class="insert_row_column_name"><input id="column_name_' + num_columns + '" name="column_name_' + num_columns + '" type="text" class="smaller" /></div><input id="column_value_' + num_columns + '" name="column_value_' + num_columns + '" type="text" class="smaller" /> <input id="btn_add_column" type="button" value="Add..." onclick="addColumn();" />');
 	}
 </script>
 
@@ -26,7 +26,7 @@
 	</div>
 
 	<div id="columns_list">
-		<label><input id="column_name_1" name="column_name_1" type="text" class="smaller" /></label>
+		<div class="insert_row_column_name"><input id="column_name_1" name="column_name_1" type="text" class="smaller" /></div>
 		<input id="column_value_1" name="column_value_1" type="text" class="smaller" /> <input id="btn_add_column" type="button" value="Add..." onclick="addColumn();" />
 	</div>
 	

@@ -28,6 +28,12 @@ form div {
 	margin-bottom: 5px;
 }
 
+.insert_row_column_name {
+	float: left;
+	width: 250px;
+	margin-bottom: 0;
+}
+
 form label {
 	width: 250px;
 	float: left;

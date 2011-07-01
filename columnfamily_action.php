@@ -227,10 +227,19 @@
 		$pool = new ConnectionPool($keyspace_name, $CASSANDRA_SERVERS);
 		$column_family = new ColumnFamily($pool, $columnfamily_name);
 		
-		try {		
-			$output = $column_family->get($key);
+		$vw_vars['results'] = '';	
 		
-			$vw_vars['result'] = '<pre>'.print_r($output,true).'</pre>';			
+		try {					
+			$output = $column_family->get($key);	
+			
+			$vw_row_vars['key'] = $key;
+			$vw_row_vars['value'] = $output;
+			
+			$cf_def = getCFInKeyspace($keyspace_name,$columnfamily_name);
+			$vw_row_vars['is_super_cf'] = $cf_def->column_type == 'Super';
+			
+			$vw_vars['results'] = getHTML('columnfamily_browse_data_row.php',$vw_row_vars);
+			
 			$vw_vars['success_message'] = displaySuccessMessage('get_key',array('key' => $key));
 		}
 		catch (cassandra_NotFoundException $e) {
@@ -264,7 +273,7 @@
 	
 		$cf = getCFInKeyspace($keyspace_name,$columnfamily_name);
 		
-		if (!isset($vw_vars['result'])) $vw_vars['result'] = '';
+		if (!isset($vw_vars['results'])) $vw_vars['results'] = '';
 		if (!isset($vw_vars['success_message'])) $vw_vars['success_message'] = '';
 		if (!isset($vw_vars['error_message'])) $vw_vars['error_message'] = '';
 		
@@ -291,6 +300,9 @@
 		
 		$key = $_POST['key'];
 		
+		$column_key = '';
+		if (isset($_POST['column_key'])) $column_key = $_POST['column_key'];
+		
 		$pool = new ConnectionPool($keyspace_name, $CASSANDRA_SERVERS);
 		$column_family = new ColumnFamily($pool, $columnfamily_name);
 		
@@ -313,7 +325,17 @@
 		
 		try {
 			if (!empty($key)) {
-				$column_family->insert($key,$data);
+				$columns = array();
+				// SCF support
+				if ($column_key != '') {
+					$columns[$column_key] = $data;
+				}
+				else {
+					$columns = $data;
+				}
+				
+				$column_family->insert($key,$columns);
+				
 				$vw_vars['success_message'] = displaySuccessMessage('insert_row',array());
 			}
 			else {
@@ -347,6 +369,9 @@
 		if (!isset($vw_vars['success_message'])) $vw_vars['success_message'] = '';
 		if (!isset($vw_vars['info_message'])) $vw_vars['info_message'] = '';
 		if (!isset($vw_vars['error_message'])) $vw_vars['error_message'] = '';
+		
+		$cf_def = getCFInKeyspace($keyspace_name,$columnfamily_name);
+		$vw_vars['is_super_cf'] = $cf_def->column_type == 'Super';
 		
 		$included_header = true;
 		echo getHTML('header.php');

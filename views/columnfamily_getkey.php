@@ -3,7 +3,7 @@
 <?=$success_message?>
 <?=$error_message?>
 
-<?=$result?>
+<?=$results?>
 
 <form method="post" action="">
 

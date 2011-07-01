@@ -9,6 +9,7 @@
 	require('include/kernel.inc.php');
 	require('include/verify_login.inc.php');
 	
+	$included_header = false;
 	$action = '';
 	if (isset($_GET['action'])) $action = $_GET['action'];
 	
@@ -127,6 +128,7 @@
 		if (!isset($vw_vars['success_message'])) $vw_vars['success_message'] = '';
 		if (!isset($vw_vars['error_message'])) $vw_vars['error_message'] = '';
 		
+		$included_header = true;
 		echo getHTML('header.php');
 		echo getHTML('create_edit_columnfamily.php',$vw_vars);
 	}
@@ -165,6 +167,7 @@
 		if (!isset($vw_vars['success_message'])) $vw_vars['success_message'] = '';
 		if (!isset($vw_vars['error_message'])) $vw_vars['error_message'] = '';
 		
+		$included_header = true;
 		echo getHTML('header.php');
 		echo getHTML('create_edit_keyspace.php',$vw_vars);
 	}
@@ -227,6 +230,7 @@
 		if (!isset($vw_vars['success_message'])) $vw_vars['success_message'] = '';
 		if (!isset($vw_vars['error_message'])) $vw_vars['error_message'] = '';
 		
+		$included_header = true;
 		echo getHTML('header.php');
 		echo getHTML('create_edit_keyspace.php',$vw_vars);
 	}
@@ -253,6 +257,19 @@
 			$_SESSION['keyspace_name'] = $keyspace_name;
 			$_SESSION['message'] = $e->getMessage();
 			redirect('index.php?error_message=drop_keyspace');
+		}
+	}
+	
+	if (!$included_header) {
+		echo getHTML('header.php');
+		
+		// No action specified
+		if (empty($action)) {
+			echo displayErrorMessage('no_action_specified');
+		}
+		// Invalid action specified
+		else {
+			echo displayErrorMessage('invalid_action_specified',array('action' => $action));
 		}
 	}
 	

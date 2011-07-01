@@ -19,6 +19,17 @@
 		<label for="key">Key:</label>
 		<input id="key" name="key" type="text" />
 	</div>
+	
+	<?php
+		if ($is_super_cf) {
+	?>
+	<div>
+		<label for="key">Column Key:</label>
+		<input id="column_key" name="column_key" type="text" />
+	</div>
+	<?php
+		}
+	?>
 
 	<div>
 		<label for="column_name">Column name:</label>

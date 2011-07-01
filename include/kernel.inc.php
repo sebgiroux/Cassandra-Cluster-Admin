@@ -37,7 +37,12 @@
 	function getCFInKeyspace($keyspace_name,$columnfamily_name) {
 		global $sys_manager;
 		
-		$describe_keyspace = $sys_manager->describe_keyspace($keyspace_name);
+		try {
+			$describe_keyspace = $sys_manager->describe_keyspace($keyspace_name);
+		}
+		catch(cassandra_NotFoundException $e) {
+			return null;
+		}
 		
 		$found = false;
 		
@@ -140,6 +145,12 @@
 		}
 		elseif ($index == 'you_must_be_logged') {
 			return '<div class="error_message">You must be logged to access Cassandra Cluster Admin!</div>';
+		}
+		elseif ($index == 'invalid_action_specified') {
+			return '<div class="error_message">Invalid action: '.$params['action'].'</div>';
+		}
+		elseif ($index == 'no_action_specified') {
+			return '<div class="error_message">No action specified</div>';
 		}
 	}
 	

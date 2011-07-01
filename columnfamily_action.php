@@ -9,6 +9,7 @@
 	require('include/kernel.inc.php');
 	require('include/verify_login.inc.php');
 	
+	$included_header = false;
 	$action = '';
 	if (isset($_GET['action'])) $action = $_GET['action'];
 	
@@ -73,9 +74,16 @@
 		Edit a column family
 	*/
 	
-	if ($action == 'edit') {
-		$keyspace_name = $_GET['keyspace_name'];
-		$columnfamily_name = $_GET['columnfamily_name'];
+	if ($action == 'edit') {	
+		$keyspace_name = '';
+		if (isset($_GET['keyspace_name'])) {
+			$keyspace_name = $_GET['keyspace_name'];
+		}
+		
+		$columnfamily_name = '';
+		if (isset($_GET['columnfamily_name'])) {
+			$columnfamily_name = $_GET['columnfamily_name'];
+		}
 	
 		$vw_vars['cluster_name'] = $sys_manager->describe_cluster_name();		
 		$vw_vars['keyspace_name'] = $keyspace_name;
@@ -83,31 +91,38 @@
 		
 		$cf = getCFInKeyspace($keyspace_name,$columnfamily_name);
 		
-		$vw_vars['column_type'] = $cf->column_type;
-		$vw_vars['comparator_type'] = $cf->comparator_type;
-		$vw_vars['subcomparator_type'] = $cf->subcomparator_type;
-		$vw_vars['comment'] = $cf->comment;
-		$vw_vars['row_cache_size'] = $cf->row_cache_size;
-		$vw_vars['key_cache_size'] = $cf->key_cache_size;
-		$vw_vars['read_repair_chance'] = $cf->read_repair_chance;
-		$vw_vars['gc_grace_seconds'] = $cf->gc_grace_seconds;
-		$vw_vars['default_validation_class'] = $cf->default_validation_class;
-		$vw_vars['id'] = $cf->id;
-		$vw_vars['min_compaction_threshold'] = $cf->min_compaction_threshold;
-		$vw_vars['max_compaction_threshold'] = $cf->max_compaction_threshold;
-		$vw_vars['row_cache_save_period_in_seconds'] = $cf->row_cache_save_period_in_seconds;
-		$vw_vars['key_cache_save_period_in_seconds'] = $cf->key_cache_save_period_in_seconds;
-		$vw_vars['memtable_flush_after_mins'] = $cf->memtable_flush_after_mins;
-		$vw_vars['memtable_throughput_in_mb'] = $cf->memtable_throughput_in_mb;
-		$vw_vars['memtable_operations_in_millions'] = $cf->memtable_operations_in_millions;		
-		
-		if (!isset($vw_vars['success_message'])) $vw_vars['success_message'] = '';
-		if (!isset($vw_vars['error_message'])) $vw_vars['error_message'] = '';
-		
-		$vw_vars['mode'] = 'edit';		
-			
+		$included_header = true;
 		echo getHTML('header.php');
-		echo getHTML('create_edit_columnfamily.php',$vw_vars);
+		
+		if ($cf) {			
+			$vw_vars['column_type'] = $cf->column_type;
+			$vw_vars['comparator_type'] = $cf->comparator_type;
+			$vw_vars['subcomparator_type'] = $cf->subcomparator_type;
+			$vw_vars['comment'] = $cf->comment;
+			$vw_vars['row_cache_size'] = $cf->row_cache_size;
+			$vw_vars['key_cache_size'] = $cf->key_cache_size;
+			$vw_vars['read_repair_chance'] = $cf->read_repair_chance;
+			$vw_vars['gc_grace_seconds'] = $cf->gc_grace_seconds;
+			$vw_vars['default_validation_class'] = $cf->default_validation_class;
+			$vw_vars['id'] = $cf->id;
+			$vw_vars['min_compaction_threshold'] = $cf->min_compaction_threshold;
+			$vw_vars['max_compaction_threshold'] = $cf->max_compaction_threshold;
+			$vw_vars['row_cache_save_period_in_seconds'] = $cf->row_cache_save_period_in_seconds;
+			$vw_vars['key_cache_save_period_in_seconds'] = $cf->key_cache_save_period_in_seconds;
+			$vw_vars['memtable_flush_after_mins'] = $cf->memtable_flush_after_mins;
+			$vw_vars['memtable_throughput_in_mb'] = $cf->memtable_throughput_in_mb;
+			$vw_vars['memtable_operations_in_millions'] = $cf->memtable_operations_in_millions;		
+			
+			if (!isset($vw_vars['success_message'])) $vw_vars['success_message'] = '';
+			if (!isset($vw_vars['error_message'])) $vw_vars['error_message'] = '';
+			
+			$vw_vars['mode'] = 'edit';						
+			
+			echo getHTML('create_edit_columnfamily.php',$vw_vars);
+		}
+		else {
+			echo displayErrorMessage('columnfamily_doesnt_exists', array('column_name' => $columnfamily_name));
+		}
 	}
 	
 	/*
@@ -115,8 +130,15 @@
 	*/	
 	
 	if ($action == 'drop') {
-		$keyspace_name = $_GET['keyspace_name'];
-		$columnfamily_name = $_GET['columnfamily_name'];
+		$keyspace_name = '';
+		if (isset($_GET['keyspace_name'])) {
+			$keyspace_name = $_GET['keyspace_name'];
+		}
+		
+		$columnfamily_name = '';
+		if (isset($_GET['columnfamily_name'])) {
+			$columnfamily_name = $_GET['columnfamily_name'];
+		}
 	
 		try {
 			$sys_manager->drop_column_family($keyspace_name, $columnfamily_name);
@@ -131,8 +153,15 @@
 	*/
 	
 	if (isset($_POST['btn_create_secondary_index'])) {
-		$keyspace_name = $_POST['keyspace_name'];
-		$columnfamily_name = $_POST['columnfamily_name'];
+		$keyspace_name = '';
+		if (isset($_GET['keyspace_name'])) {
+			$keyspace_name = $_GET['keyspace_name'];
+		}
+		
+		$columnfamily_name = '';
+		if (isset($_GET['columnfamily_name'])) {
+			$columnfamily_name = $_GET['columnfamily_name'];
+		}
 
 		$column_name = $_POST['column_name'];
 		$data_type = $_POST['data_type'];
@@ -152,8 +181,15 @@
 	*/
 	
 	if ($action == 'create_secondary_index') {
-		$keyspace_name = $_GET['keyspace_name'];
-		$columnfamily_name = $_GET['columnfamily_name'];
+		$keyspace_name = '';
+		if (isset($_GET['keyspace_name'])) {
+			$keyspace_name = $_GET['keyspace_name'];
+		}
+		
+		$columnfamily_name = '';
+		if (isset($_GET['columnfamily_name'])) {
+			$columnfamily_name = $_GET['columnfamily_name'];
+		}
 	
 		$vw_vars['cluster_name'] = $sys_manager->describe_cluster_name();		
 		$vw_vars['keyspace_name'] = $keyspace_name;
@@ -166,6 +202,7 @@
 		if (!isset($vw_vars['success_message'])) $vw_vars['success_message'] = '';
 		if (!isset($vw_vars['error_message'])) $vw_vars['error_message'] = '';
 	
+		$included_header = true;
 		echo getHTML('header.php');
 		echo getHTML('create_edit_secondary_index.php',$vw_vars);
 	}
@@ -177,8 +214,15 @@
 	if (isset($_POST['btn_get_key'])) {
 		$key = $_POST['key'];		
 		
-		$keyspace_name = $_GET['keyspace_name'];
-		$columnfamily_name = $_GET['columnfamily_name'];
+		$keyspace_name = '';
+		if (isset($_GET['keyspace_name'])) {
+			$keyspace_name = $_GET['keyspace_name'];
+		}
+		
+		$columnfamily_name = '';
+		if (isset($_GET['columnfamily_name'])) {
+			$columnfamily_name = $_GET['columnfamily_name'];
+		}
 			
 		$pool = new ConnectionPool($keyspace_name, $CASSANDRA_SERVERS);
 		$column_family = new ColumnFamily($pool, $columnfamily_name);
@@ -202,8 +246,15 @@
 	*/
 	
 	if ($action == 'get_key') {
-		$keyspace_name = $_GET['keyspace_name'];
-		$columnfamily_name = $_GET['columnfamily_name'];
+		$keyspace_name = '';
+		if (isset($_GET['keyspace_name'])) {
+			$keyspace_name = $_GET['keyspace_name'];
+		}
+		
+		$columnfamily_name = '';
+		if (isset($_GET['columnfamily_name'])) {
+			$columnfamily_name = $_GET['columnfamily_name'];
+		}
 	
 		$vw_vars['cluster_name'] = $sys_manager->describe_cluster_name();		
 		$vw_vars['keyspace_name'] = $keyspace_name;
@@ -217,6 +268,7 @@
 		if (!isset($vw_vars['success_message'])) $vw_vars['success_message'] = '';
 		if (!isset($vw_vars['error_message'])) $vw_vars['error_message'] = '';
 		
+		$included_header = true;
 		echo getHTML('header.php');
 		echo getHTML('columnfamily_getkey.php',$vw_vars);
 	}
@@ -227,8 +279,15 @@
 	*/
 	
 	if (isset($_POST['btn_insert_row'])) {
-		$keyspace_name = $_POST['keyspace_name'];
-		$columnfamily_name = $_POST['columnfamily_name'];
+		$keyspace_name = '';
+		if (isset($_GET['keyspace_name'])) {
+			$keyspace_name = $_GET['keyspace_name'];
+		}
+		
+		$columnfamily_name = '';
+		if (isset($_GET['columnfamily_name'])) {
+			$columnfamily_name = $_GET['columnfamily_name'];
+		}
 		
 		$key = $_POST['key'];
 		
@@ -271,8 +330,15 @@
 	*/
 	
 	if ($action == 'insert_row') {
-		$keyspace_name = $_GET['keyspace_name'];
-		$columnfamily_name = $_GET['columnfamily_name'];
+		$keyspace_name = '';
+		if (isset($_GET['keyspace_name'])) {
+			$keyspace_name = $_GET['keyspace_name'];
+		}
+		
+		$columnfamily_name = '';
+		if (isset($_GET['columnfamily_name'])) {
+			$columnfamily_name = $_GET['columnfamily_name'];
+		}
 		
 		$vw_vars['cluster_name'] = $sys_manager->describe_cluster_name();
 		$vw_vars['keyspace_name'] = $keyspace_name;
@@ -282,6 +348,7 @@
 		if (!isset($vw_vars['info_message'])) $vw_vars['info_message'] = '';
 		if (!isset($vw_vars['error_message'])) $vw_vars['error_message'] = '';
 		
+		$included_header = true;
 		echo getHTML('header.php');
 		echo getHTML('columnfamily_insert_row.php',$vw_vars);
 	}
@@ -291,8 +358,15 @@
 	*/
 	
 	if ($action == 'truncate') {
-		$keyspace_name = $_GET['keyspace_name'];
-		$columnfamily_name = $_GET['columnfamily_name'];
+		$keyspace_name = '';
+		if (isset($_GET['keyspace_name'])) {
+			$keyspace_name = $_GET['keyspace_name'];
+		}
+		
+		$columnfamily_name = '';
+		if (isset($_GET['columnfamily_name'])) {
+			$columnfamily_name = $_GET['columnfamily_name'];
+		}
 		
 		try {
 			$sys_manager->truncate_column_family($keyspace_name, $columnfamily_name);
@@ -309,8 +383,15 @@
 	*/
 	
 	if ($action == 'browse_data') {
-		$keyspace_name = $_GET['keyspace_name'];
-		$columnfamily_name = $_GET['columnfamily_name'];
+		$keyspace_name = '';
+		if (isset($_GET['keyspace_name'])) {
+			$keyspace_name = $_GET['keyspace_name'];
+		}
+		
+		$columnfamily_name = '';
+		if (isset($_GET['columnfamily_name'])) {
+			$columnfamily_name = $_GET['columnfamily_name'];
+		}
 		
 		$vw_vars['cluster_name'] = $sys_manager->describe_cluster_name();
 		$vw_vars['keyspace_name'] = $keyspace_name;
@@ -365,11 +446,25 @@
 				$vw_vars['show_next_page_link'] = '';
 			}
 			
+			$included_header = true;
 			echo getHTML('header.php');
 			echo getHTML('columnfamily_browse_data.php',$vw_vars);
 		}
 		catch (Exception $e) {
 			echo 'Something went wrong '.$e->getMessage();
+		}
+	}
+	
+	if (!$included_header) {	
+		echo getHTML('header.php');
+		
+		// No action specified
+		if (empty($action)) {
+			echo displayErrorMessage('no_action_specified');
+		}
+		// Invalid action specified
+		else {
+			echo displayErrorMessage('invalid_action_specified',array('action' => $action));
 		}
 	}
 	

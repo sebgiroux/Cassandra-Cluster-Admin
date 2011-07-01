@@ -1,0 +1,11 @@
+phpcassa (0.8.a.1) unstable; urgency=low
+
+  * Cassandra 0.8 compatibility
+
+ --  Tyler Hobbs <tyler@datastax.com>  Mon, 20 Jun 2011 16:13:20 +0000
+
+phpcassa (0.7.a.4) unstable; urgency=low
+
+  * Initial packaging.
+
+ -- paul cannon <paul@datastax.com>  Tue, 14 Jun 2011 18:29:02 -0500

@@ -196,8 +196,10 @@ class ConnectionPool {
             $servers = self::$default_servers;
         $this->servers = $servers;
 
-        if (is_null($this->pool_size))
+        if (is_null($pool_size))
             $this->pool_size = max(count($this->servers) * 2, 5);
+        else
+            $this->pool_size = $pool_size;
 
         $this->queue = array();
 

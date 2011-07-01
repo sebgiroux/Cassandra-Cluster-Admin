@@ -22,7 +22,7 @@
 	/*
 		Enter your Cassandra Cluster Admin credentials here
 	*/
-	define('CCA_LOGIN_REQUIRED',true);
+	define('CCA_LOGIN_REQUIRED',false);
 	define('CCA_USERNAME','root'); 	
 	define('CCA_PASSWORD','');
 ?>

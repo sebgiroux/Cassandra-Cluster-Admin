@@ -1,4 +1,4 @@
-Cassandra Cluster Admin by Sébastien Giroux
+﻿Cassandra Cluster Admin by Sébastien Giroux
 ------------------------------------------------
 Cassandra Cluster Admin is a GUI tool to help people administrate their Apache Cassandra cluster.
 
@@ -12,6 +12,9 @@ Bug report and/or pull request are always welcome!
 Configuration
 ------------------------------------------------
 To configure Cassandra Cluster Admin, you must edit include/conf.inc.php with your cassandra server IP, and your Cassandra username/password if needed.
+
+You can also configure Cassandra Cluster Admin to be username/password protected. To do so, you can set CCA_LOGIN_REQUIRED to true and specify your
+desired username and password by altering CCA_USERNAME and CCA_PASSWORD respectivly.
 
 
 Thrift C extension

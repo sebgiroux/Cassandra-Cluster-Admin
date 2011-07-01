@@ -1,5 +1,6 @@
 ﻿Cassandra Cluster Admin by Sébastien Giroux
-------------------------------------------------
+
+
 Cassandra Cluster Admin is a GUI tool to help people administrate their Apache Cassandra cluster.
 
 If you're like me and used MySQL for a while (and still using it!), you get used to phpMyAdmin and its simple and easy to use user interface. I thought it would be nice to have a similar tool for Cassandra and I couldn't find any, so I build my own!
@@ -41,4 +42,5 @@ This software is still in beta so always be careful when using it on a productio
 Credits
 ------------------------------------------------
 The Apache Cassandra project - http://cassandra.apache.org/
+
 Tyler Hobbs (thobbs) - phpcassa - https://github.com/thobbs/phpcassa

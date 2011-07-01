@@ -8,6 +8,10 @@ With Cassandra Cluster Admin, you can create/edit/drop keyspace and column famil
 
 Bug report and/or pull request are always welcome!
 
+Screenshots
+------------------------------------------------
+
+[![Cassandra Cluster Admin Homepage](http://www.imgplace.com/img813/1186/66cassandraclusteradmin.th.png)](http://www.imgplace.com/viewimg813/1186/66cassandraclusteradmin.png)  [![Cassandra Cluster Admin Homepage](http://www.imgplace.com/img151/464/31cassandraclusteradmin.th.png)](http://www.imgplace.com/viewimg151/464/31cassandraclusteradmin.png) [![Cassandra Cluster Admin Homepage](http://www.imgplace.com/img714/3434/76cassandraclusteradmin.th.png)](http://www.imgplace.com/viewimg714/3434/76cassandraclusteradmin.png) [![Cassandra Cluster Admin Homepage](http://www.imgplace.com/img64/9024/49cassandraclusteradmin.th.png)](http://www.imgplace.com/viewimg64/9024/49cassandraclusteradmin.png)
 
 Configuration
 ------------------------------------------------

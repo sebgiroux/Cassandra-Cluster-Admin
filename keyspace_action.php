@@ -18,8 +18,15 @@
 		Create a column family
 	*/	
 	if (isset($_POST['btn_create_columnfamily'])) {
-		$keyspace_name = $_POST['keyspace_name'];
-		$columnfamily_name = $_POST['columnfamily_name'];
+		$keyspace_name = '';
+		if (isset($_GET['keyspace_name'])) {
+			$keyspace_name = $_GET['keyspace_name'];
+		}
+		
+		$columnfamily_name = '';
+		if (isset($_GET['columnfamily_name'])) {
+			$columnfamily_name = $_GET['columnfamily_name'];
+		}
 		
 		$attrs = array();
 		
@@ -88,7 +95,10 @@
 	*/
 	
 	if ($action == 'create_cf') {
-		$keyspace_name = $_GET['keyspace_name'];
+		$keyspace_name = '';
+		if (isset($_GET['keyspace_name'])) {
+			$keyspace_name = $_GET['keyspace_name'];
+		}
 		
 		$vw_vars['cluster_name'] = $sys_manager->describe_cluster_name();		
 		$vw_vars['keyspace_name'] = $keyspace_name;
@@ -199,7 +209,10 @@
 	*/
 	
 	if ($action == 'edit') {
-		$keyspace_name = $_GET['keyspace_name'];
+		$keyspace_name = '';
+		if (isset($_GET['keyspace_name'])) {
+			$keyspace_name = $_GET['keyspace_name'];
+		}
 	
 		$describe_keyspace = $sys_manager->describe_keyspace($keyspace_name);
 	
@@ -223,7 +236,10 @@
 	*/
 	
 	if ($action == 'drop') {
-		$keyspace_name = $_GET['keyspace_name'];
+		$keyspace_name = '';
+		if (isset($_GET['keyspace_name'])) {
+			$keyspace_name = $_GET['keyspace_name'];
+		}
 		
 		try {
 			$sys_manager->drop_keyspace($keyspace_name);

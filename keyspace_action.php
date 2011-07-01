@@ -217,22 +217,43 @@
 			$keyspace_name = $_GET['keyspace_name'];
 		}
 	
-		$describe_keyspace = $sys_manager->describe_keyspace($keyspace_name);
-	
-		$vw_vars['cluster_name'] = $sys_manager->describe_cluster_name();
-		$vw_vars['keyspace_name'] = $keyspace_name;
-		$vw_vars['replication_factor'] = $describe_keyspace->replication_factor;
-		
-		$vw_vars['strategy_class'] = $describe_keyspace->strategy_class;
-		
-		$vw_vars['mode'] = 'edit';
-		
-		if (!isset($vw_vars['success_message'])) $vw_vars['success_message'] = '';
-		if (!isset($vw_vars['error_message'])) $vw_vars['error_message'] = '';
-		
 		$included_header = true;
 		echo getHTML('header.php');
-		echo getHTML('create_edit_keyspace.php',$vw_vars);
+	
+		// Keyspace name was empty
+		if ($keyspace_name == '') {
+			echo displayErrorMessage('keyspace_name_must_be_specified');
+		}
+		else {	
+			$found = true;
+			
+			try {
+				$describe_keyspace = $sys_manager->describe_keyspace($keyspace_name);
+			}
+			catch(cassandra_NotFoundException $e) {
+				$found = false;
+			}
+			
+			// Found the keyspace
+			if ($found) {
+				$vw_vars['cluster_name'] = $sys_manager->describe_cluster_name();
+				$vw_vars['keyspace_name'] = $keyspace_name;
+				$vw_vars['replication_factor'] = $describe_keyspace->replication_factor;
+				
+				$vw_vars['strategy_class'] = $describe_keyspace->strategy_class;
+				
+				$vw_vars['mode'] = 'edit';
+				
+				if (!isset($vw_vars['success_message'])) $vw_vars['success_message'] = '';
+				if (!isset($vw_vars['error_message'])) $vw_vars['error_message'] = '';
+				
+				echo getHTML('create_edit_keyspace.php',$vw_vars);
+			}
+			// Keyspace name wasn't found
+			else {				
+				echo displayErrorMessage('keyspace_doesnt_exists',array('keyspace_name' => $keyspace_name));
+			}
+		}
 	}
 	
 	/*

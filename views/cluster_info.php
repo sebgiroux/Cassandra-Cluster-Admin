@@ -10,19 +10,19 @@
 <?=$error_message?>
 
 <p>
-Keyspaces and Column Families:		
+	<h3>Keyspaces and Column Families</h3>	
 	<ul id="keyspaces">
 		<?
 			for ($i = 0; $i < count($keyspaces_name); $i++):
 				$keyspace_name = $keyspaces_name[$i];
-				echo '<li><a href="describe_keyspace.php?keyspace_name='.$keyspace_name.'">'.$keyspace_name.'</a>';
-				echo '<ul>';
-					for ($j = 0; $j < count($keyspaces_details[$i]['columnfamilys_name']); $j++):
-						$columnfamily_name = $keyspaces_details[$i]['columnfamilys_name'][$j];
-						echo '<li><a href="describe_columnfamily.php?keyspace_name='.$keyspace_name.'&columnfamily_name='.$columnfamily_name.'">'.$columnfamily_name.'</a></li>';
-					endfor;
-					echo '</ul>';
 				
+				echo '<li><a href="describe_keyspace.php?keyspace_name='.$keyspace_name.'">'.$keyspace_name.'</a>';
+					echo '<ul>';
+						for ($j = 0; $j < count($keyspaces_details[$i]['columnfamilys_name']); $j++):
+							$columnfamily_name = $keyspaces_details[$i]['columnfamilys_name'][$j];
+							echo '<li><a href="describe_columnfamily.php?keyspace_name='.$keyspace_name.'&columnfamily_name='.$columnfamily_name.'">'.$columnfamily_name.'</a></li>';
+						endfor;						
+					echo '</ul>';				
 				echo '</li>';
 			endfor;
 		?>

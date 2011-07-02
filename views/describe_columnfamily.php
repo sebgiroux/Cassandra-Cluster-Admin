@@ -1,5 +1,6 @@
 <h3><a href="index.php"><?=$cluster_name?></a> &gt; <a href="describe_keyspace.php?keyspace_name=<?=$keyspace_name?>"><?=$keyspace_name?></a> &gt; <?=$columnfamily_name?></h3>
 
+<h3>Column Family Details</h3>
 <?php echo $columnfamily_def; ?>
 
 <?php

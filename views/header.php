@@ -15,5 +15,5 @@
 	
 	<body>
 		<h1 id="cca_title">Cassandra Cluster Admin</h1>
-		<div class="float_right"><a href="logout.php">Logout</a></div>
+		<?php if (CCA_LOGIN_REQUIRED): ?><div class="float_right"><a href="logout.php">Logout</a></div><?php endif; ?>
 		<div class="clear_both"></div>

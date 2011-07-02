@@ -8,10 +8,12 @@
 		echo '<h3>Secondary Indexes</h3>';
 	
 		foreach ($secondary_indexes as $one_si) {
-			echo 'Column Name: '.$one_si['name'].'<br />';
-			echo 'Validation Class: '.$one_si['validation_class'].'<br />';
-			echo 'Index Type: '.$one_si['index_type'].'<br />';
-			echo 'Index Name: '. $one_si['index_name'].'<br />';
+			echo '<table class="table_secondary_index">';
+				echo '<tr><td>Column Name:</td><td>'.$one_si['name'].'</td></tr>';
+				echo '<tr><td>Validation Class:</td><td>'.$one_si['validation_class'].'</td></tr>';
+				echo '<tr><td>Index Type:</td><td>'.$one_si['index_type'].'</td></tr>';
+				echo '<tr><td>Index Name:</td><td>'. $one_si['index_name'].'</td></tr>';
+			echo '</table>';
 		}
 	}
 ?>

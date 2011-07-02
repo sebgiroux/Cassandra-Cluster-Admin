@@ -71,6 +71,10 @@ a, a:visited {
 	color: #2491CF;
 }
 
+.table_secondary_index {
+	margin-bottom: 10px;
+}
+
 #footer {
 	width: 100%;
 	text-align: center;

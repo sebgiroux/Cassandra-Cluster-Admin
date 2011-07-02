@@ -15,7 +15,7 @@
 			if (is_array($column_metadata)) {
 				if (count($column_metadata) > 0) {
 					foreach ($column_metadata as $key => $value) {
-						echo $key.': '.$value;
+						echo $key.': '. print_r($value,true).'<br />';
 					}
 				}
 				else {

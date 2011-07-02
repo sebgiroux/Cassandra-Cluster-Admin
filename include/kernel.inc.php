@@ -13,10 +13,11 @@
 	require('conf.inc.php');
 	
 	try {
-		$sys_manager = new SystemManager($CASSANDRA_SERVERS[array_rand($CASSANDRA_SERVERS)],$CREDENTIALS,1500,1500);
+		$random_server = $CASSANDRA_SERVERS[array_rand($CASSANDRA_SERVERS)];
+		$sys_manager = new SystemManager($random_server,$CREDENTIALS,1500,1500);
 	}
 	catch (TException $e) {
-		die('An error happened while connecting to your Cassandra cluster: '.$e->getMessage());
+		die(getHTML('header.php').getHTML('server_error.php',array('error_message' => displayErrorMessage('cassandra_server_error',array('error_message' => $e->getMessage())))).getHTML('footer.php'));
 	}
 	
 	function getHTML($filename, $php_params = array()) {
@@ -151,6 +152,9 @@
 		}
 		elseif ($index == 'no_action_specified') {
 			return '<div class="error_message">No action specified</div>';
+		}
+		elseif ($index == 'cassandra_server_error') {
+			return '<div class="error_message">An error occured while connecting to your Cassandra server: '.$params['error_message'].'</div>';
 		}
 	}
 	

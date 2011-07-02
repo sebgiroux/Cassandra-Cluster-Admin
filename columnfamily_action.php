@@ -449,8 +449,15 @@
 		try {					
 			$offset_key = '';
 			if (isset($_GET['offset_key'])) $offset_key = $_GET['offset_key'];
+			$vw_vars['current_offset_key'] = $offset_key;
+			
+			$old_offset_key = '';
+			if (isset($_GET['old_offset_key'])) $old_offset_key = $_GET['old_offset_key'];
+			$vw_vars['current_old_offset_key'] = $old_offset_key;
 		
 			$nb_rows = 5;
+			if (isset($_GET['nb_rows']) && is_numeric($_GET['nb_rows']) && $_GET['nb_rows'] > 0) $nb_rows = $_GET['nb_rows'];
+			$vw_vars['nb_rows'] = $nb_rows;
 		
 			$describe_keyspace = $sys_manager->describe_keyspace($keyspace_name);
 		
@@ -494,8 +501,10 @@
 			else {
 				$vw_vars['old_offset_key'] = '';
 				$vw_vars['offset_key'] = '';
-				$vw_vars['show_next_page_link'] = '';
+				$vw_vars['show_next_page_link'] = false;
 			}
+			
+			$vw_vars['show_begin_page_link'] = true;
 			
 			$included_header = true;
 			echo getHTML('header.php');

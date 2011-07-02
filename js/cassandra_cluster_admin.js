@@ -29,3 +29,8 @@ function deleteRow(keyspace_name,columnfamily_name,key) {
 	
 	return false;
 }
+
+function changeRowsPerPage(keyspace_name,columnfamily_name,old_offset_key,offset_key) {
+	location.href = 'columnfamily_action.php?action=browse_data&keyspace_name=' + keyspace_name + '&columnfamily_name=' + columnfamily_name + '&old_offset_key=' + old_offset_key + '&offset_key=' + offset_key + '&nb_rows=' + $('#show_nb_rows').val();
+}
+

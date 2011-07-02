@@ -52,6 +52,10 @@ input[type=text].smaller {
 	width: 220px;
 }
 
+input[type=text].tiny {
+	width: 50px;
+}
+
 select {
 	width: 300px;
 }

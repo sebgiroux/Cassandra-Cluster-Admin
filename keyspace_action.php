@@ -10,6 +10,8 @@
 	require('include/verify_login.inc.php');
 	
 	$included_header = false;
+	$is_valid_action = false;
+	
 	$action = '';
 	if (isset($_GET['action'])) $action = $_GET['action'];
 	
@@ -18,7 +20,7 @@
 	/*
 		Create a column family
 	*/	
-	if (isset($_POST['btn_create_columnfamily'])) {
+	if (isset($_POST['btn_create_columnfamily'])) {	
 		$keyspace_name = '';
 		if (isset($_GET['keyspace_name'])) {
 			$keyspace_name = $_GET['keyspace_name'];
@@ -96,6 +98,8 @@
 	*/
 	
 	if ($action == 'create_cf') {
+		$is_valid_action = true;
+	
 		$keyspace_name = '';
 		if (isset($_GET['keyspace_name'])) {
 			$keyspace_name = $_GET['keyspace_name'];
@@ -158,6 +162,8 @@
 	*/
 	
 	if ($action == 'create') {
+		$is_valid_action = true;
+	
 		$vw_vars['cluster_name'] = $sys_manager->describe_cluster_name();
 		$vw_vars['keyspace_name'] = '';
 		$vw_vars['replication_factor'] = '';
@@ -212,6 +218,8 @@
 	*/
 	
 	if ($action == 'edit') {
+		$is_valid_action = true;
+	
 		$keyspace_name = '';
 		if (isset($_GET['keyspace_name'])) {
 			$keyspace_name = $_GET['keyspace_name'];
@@ -261,6 +269,8 @@
 	*/
 	
 	if ($action == 'drop') {
+		$is_valid_action = true;
+	
 		$keyspace_name = '';
 		if (isset($_GET['keyspace_name'])) {
 			$keyspace_name = $_GET['keyspace_name'];
@@ -284,13 +294,15 @@
 	if (!$included_header) {
 		echo getHTML('header.php');
 		
-		// No action specified
-		if (empty($action)) {
-			echo displayErrorMessage('no_action_specified');
-		}
-		// Invalid action specified
-		else {
-			echo displayErrorMessage('invalid_action_specified',array('action' => $action));
+		if (!$is_valid_action) {
+			// No action specified
+			if (empty($action)) {
+				echo displayErrorMessage('no_action_specified');
+			}
+			// Invalid action specified
+			else {
+				echo displayErrorMessage('invalid_action_specified',array('action' => $action));
+			}
 		}
 	}
 	

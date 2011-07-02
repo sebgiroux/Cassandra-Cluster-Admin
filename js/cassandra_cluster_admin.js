@@ -21,3 +21,11 @@ function truncateColumnFamily(keyspace_name,columnfamily_name) {
 	
 	return false;
 }
+
+function deleteRow(keyspace_name,columnfamily_name,key) {
+	if (confirm('Are you sure you want to delete the row ' + key + '?')) {
+		location.href = 'columnfamily_action.php?action=delete_row&keyspace_name=' + keyspace_name + '&columnfamily_name=' + columnfamily_name + '&key=' + key;
+	}
+	
+	return false;
+}

@@ -10,6 +10,7 @@
 	require('include/verify_login.inc.php');
 	
 	$included_header = false;
+	$is_valid_action = false;
 	$action = '';
 	if (isset($_GET['action'])) $action = $_GET['action'];
 	
@@ -77,6 +78,8 @@
 	*/
 	
 	if ($action == 'edit') {	
+		$is_valid_action = true;
+	
 		$keyspace_name = '';
 		if (isset($_GET['keyspace_name'])) {
 			$keyspace_name = $_GET['keyspace_name'];
@@ -132,6 +135,8 @@
 	*/	
 	
 	if ($action == 'drop') {
+		$is_valid_action = true;
+	
 		$keyspace_name = '';
 		if (isset($_GET['keyspace_name'])) {
 			$keyspace_name = $_GET['keyspace_name'];
@@ -183,6 +188,8 @@
 	*/
 	
 	if ($action == 'create_secondary_index') {
+		$is_valid_action = true;
+	
 		$keyspace_name = '';
 		if (isset($_GET['keyspace_name'])) {
 			$keyspace_name = $_GET['keyspace_name'];
@@ -240,6 +247,10 @@
 			$cf_def = getCFInKeyspace($keyspace_name,$columnfamily_name);
 			$vw_row_vars['is_super_cf'] = $cf_def->column_type == 'Super';
 			
+			$vw_row_vars['keyspace_name'] = $keyspace_name;
+			$vw_row_vars['columnfamily_name'] = $columnfamily_name;
+			$vw_row_vars['show_actions_link'] = false;
+			
 			$vw_vars['results'] = getHTML('columnfamily_browse_data_row.php',$vw_row_vars);
 			
 			$vw_vars['success_message'] = displaySuccessMessage('get_key',array('key' => $key));
@@ -257,6 +268,8 @@
 	*/
 	
 	if ($action == 'get_key') {
+		$is_valid_action = true;
+	
 		$keyspace_name = '';
 		if (isset($_GET['keyspace_name'])) {
 			$keyspace_name = $_GET['keyspace_name'];
@@ -354,6 +367,8 @@
 	*/
 	
 	if ($action == 'insert_row') {
+		$is_valid_action = true;
+	
 		$keyspace_name = '';
 		if (isset($_GET['keyspace_name'])) {
 			$keyspace_name = $_GET['keyspace_name'];
@@ -385,6 +400,8 @@
 	*/
 	
 	if ($action == 'truncate') {
+		$is_valid_action = true;
+	
 		$keyspace_name = '';
 		if (isset($_GET['keyspace_name'])) {
 			$keyspace_name = $_GET['keyspace_name'];
@@ -410,6 +427,8 @@
 	*/
 	
 	if ($action == 'browse_data') {
+		$is_valid_action = true;
+	
 		$keyspace_name = '';
 		if (isset($_GET['keyspace_name'])) {
 			$keyspace_name = $_GET['keyspace_name'];
@@ -453,6 +472,11 @@
 				$vw_row_vars['key'] = $key;
 				$vw_row_vars['value'] = $value;
 				
+				$vw_row_vars['keyspace_name'] = $keyspace_name;
+				$vw_row_vars['columnfamily_name'] = $columnfamily_name;
+				
+				$vw_row_vars['show_actions_link'] = true;
+				
 				$vw_vars['results'] .= getHTML('columnfamily_browse_data_row.php',$vw_row_vars);
 				
 				$nb_results++;
@@ -482,16 +506,52 @@
 		}
 	}
 	
+	/*
+		Delete a row
+	*/
+	if ($action == 'delete_row') {
+		$is_valid_action = true;
+	
+		$keyspace_name = '';
+		if (isset($_GET['keyspace_name'])) {
+			$keyspace_name = $_GET['keyspace_name'];
+		}
+		
+		$columnfamily_name = '';
+		if (isset($_GET['columnfamily_name'])) {
+			$columnfamily_name = $_GET['columnfamily_name'];
+		}
+		
+		$key = '';
+		if (isset($_GET['key'])) {
+			$key = $_GET['key'];
+		}
+		
+		$pool = new ConnectionPool($keyspace_name, $CASSANDRA_SERVERS);
+		$column_family = new ColumnFamily($pool, $columnfamily_name);
+	
+		try {
+			$column_family->remove($key);
+			
+			redirect('columnfamily_action.php?action=browse_data&keyspace_name='.$keyspace_name.'&columnfamily_name='.$columnfamily_name);
+		}
+		catch(Exception $e) {
+			echo 'Something wrong happened '.$e->getMessage();
+		}
+	}
+	
 	if (!$included_header) {	
 		echo getHTML('header.php');
 		
-		// No action specified
-		if (empty($action)) {
-			echo displayErrorMessage('no_action_specified');
-		}
-		// Invalid action specified
-		else {
-			echo displayErrorMessage('invalid_action_specified',array('action' => $action));
+		if (!$is_valid_action) {
+			// No action specified
+			if (empty($action)) {
+				echo displayErrorMessage('no_action_specified');
+			}
+			// Invalid action specified
+			else {
+				echo displayErrorMessage('invalid_action_specified',array('action' => $action));
+			}
 		}
 	}
 	

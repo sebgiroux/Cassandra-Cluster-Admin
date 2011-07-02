@@ -4,8 +4,14 @@
 	<tr>
 		<td>Key</td>
 		<td>Value</td>
+		<td>Actions</td>
 	</tr>
 	<?=$results?>
 </table>
 
 <?if($show_next_page_link): echo '<a href="columnfamily_action.php?action=browse_data&keyspace_name='.$keyspace_name.'&columnfamily_name='.$columnfamily_name.'&old_offset_key='.$old_offset_key.'&offset_key='.$offset_key.'">Next Page &gt;</a>'; endif;?>
+
+<p>
+	<h3>Actions</h3>
+	- <a href="columnfamily_action.php?action=insert_row&keyspace_name=<?=$keyspace_name?>&columnfamily_name=<?=$columnfamily_name?>">Insert a Row</a>
+</p>

@@ -299,7 +299,7 @@
 	
 		
 	/*
-		Submit form insert a row
+		Submit form insert/edit a row
 	*/
 	
 	if (isset($_POST['btn_insert_row'])) {
@@ -315,9 +315,6 @@
 		
 		$key = $_POST['key'];
 		
-		$column_key = '';
-		if (isset($_POST['column_key'])) $column_key = $_POST['column_key'];
-		
 		$pool = new ConnectionPool($keyspace_name, $CASSANDRA_SERVERS);
 		$column_family = new ColumnFamily($pool, $columnfamily_name);
 		
@@ -325,32 +322,44 @@
 		
 		$data = array();
 		
-		while (isset($_POST['column_name_'.$no_column]) && isset($_POST['column_value_'.$no_column])) {
-			$column_name = $_POST['column_name_'.$no_column];
-			$column_value = $_POST['column_value_'.$no_column];
-		
-			if (!empty($_POST['column_name_'.$no_column]) && !empty($_POST['column_value_'.$no_column])) {
-				$data[$column_name] = $column_value;
-			}
-			else
-				break;
+		$no_scf = 1;
 				
-			$no_column++;
+		while (isset($_POST['column_key_'.$no_scf]) || $no_scf == 1) {
+			$column_key_name = '';
+			if (isset($_POST['column_key_'.$no_scf])) $column_key_name = $_POST['column_key_'.$no_scf];
+						
+			$no_column = 1;
+			
+			while (isset($_POST['column_name_'.$no_scf.'_'.$no_column]) && isset($_POST['column_value_'.$no_scf.'_'.$no_column])) {
+				$column_name = $_POST['column_name_'.$no_scf.'_'.$no_column];
+				$column_value = $_POST['column_value_'.$no_scf.'_'.$no_column];
+				
+				if (!empty($_POST['column_name_'.$no_scf.'_'.$no_column]) && !empty($_POST['column_value_'.$no_scf.'_'.$no_column])) {
+					// CF
+					if ($column_key_name == '') {
+						$data[$column_name] = $column_value;
+					}
+					// SCF
+					else {
+						$data[$column_key_name][$column_name] = $column_value;
+					}
+				}
+				
+				$no_column++;
+			}
+			
+			$no_scf++;
 		}
 		
 		try {
-			if (!empty($key)) {
-				$columns = array();
-				// SCF support
-				if ($column_key != '') {
-					$columns[$column_key] = $data;
-				}
-				else {
-					$columns = $data;
-				}
+			if (!empty($key)) {				
+				if (count($data) > 0) {			
 				
-				if (count($columns) > 0) {				
-					$column_family->insert($key,$columns);
+					if (isset($_POST['mode']) && $_POST['mode'] == 'edit') {
+						$column_family->remove($key);
+					}
+					
+					$column_family->insert($key,$data);
 					
 					// Insert successful
 					if (isset($_POST['mode']) && $_POST['mode'] == 'insert') {
@@ -406,6 +415,7 @@
 		
 		$vw_vars['key'] = '';
 		$vw_vars['mode'] = 'insert';
+		$vw_vars['super_key'] = '';
 		
 		$included_header = true;
 		echo getHTML('header.php');

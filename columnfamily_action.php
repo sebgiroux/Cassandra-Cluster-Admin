@@ -349,12 +349,26 @@
 					$columns = $data;
 				}
 				
-				$column_family->insert($key,$columns);
-				
-				$vw_vars['success_message'] = displaySuccessMessage('insert_row',array());
+				if (count($columns) > 0) {				
+					$column_family->insert($key,$columns);
+					
+					// Insert successful
+					if (isset($_POST['mode']) && $_POST['mode'] == 'insert') {
+						$vw_vars['success_message'] = displaySuccessMessage('insert_row');
+					}
+					// Edit successful
+					else {
+						$vw_vars['success_message'] = displaySuccessMessage('edit_row',array('key' => $key));
+					}
+				}
+				// Some fields are not filled
+				else {
+					$vw_vars['error_message'] = displayErrorMessage('insert_row_incomplete_fields');
+				}
 			}
+			// A key must be specified
 			else {
-				$vw_vars['info_message'] = displayInfoMessage('insert_row_not_empty',array());
+				$vw_vars['info_message'] = displayInfoMessage('insert_row_not_empty');
 			}
 		}
 		catch (Exception $e) {
@@ -390,9 +404,12 @@
 		$cf_def = getCFInKeyspace($keyspace_name,$columnfamily_name);
 		$vw_vars['is_super_cf'] = $cf_def->column_type == 'Super';
 		
+		$vw_vars['key'] = '';
+		$vw_vars['mode'] = 'insert';
+		
 		$included_header = true;
 		echo getHTML('header.php');
-		echo getHTML('columnfamily_insert_row.php',$vw_vars);
+		echo getHTML('columnfamily_insert_edit_row.php',$vw_vars);
 	}
 	
 	/*
@@ -513,6 +530,67 @@
 		catch (Exception $e) {
 			echo 'Something went wrong '.$e->getMessage();
 		}
+	}	
+	
+	/*
+		Edit a row
+	*/
+	if ($action == 'edit_row') {
+		$is_valid_action = true;
+	
+		$keyspace_name = '';
+		if (isset($_GET['keyspace_name'])) {
+			$keyspace_name = $_GET['keyspace_name'];
+		}
+		
+		$columnfamily_name = '';
+		if (isset($_GET['columnfamily_name'])) {
+			$columnfamily_name = $_GET['columnfamily_name'];
+		}
+		
+		$key = '';
+		if (isset($_GET['key'])) {
+			$key = $_GET['key'];
+		}
+		
+		$super_key = '';
+		if (isset($_GET['super_key'])) {
+			$super_key = $_GET['super_key'];
+		}
+		
+		$vw_vars['cluster_name'] = $sys_manager->describe_cluster_name();
+		$vw_vars['keyspace_name'] = $keyspace_name;
+		$vw_vars['columnfamily_name'] = $columnfamily_name;
+		
+		if (!isset($vw_vars['success_message'])) $vw_vars['success_message'] = '';
+		if (!isset($vw_vars['info_message'])) $vw_vars['info_message'] = '';
+		if (!isset($vw_vars['error_message'])) $vw_vars['error_message'] = '';
+		
+		$cf_def = getCFInKeyspace($keyspace_name,$columnfamily_name);
+		$vw_vars['is_super_cf'] = $cf_def->column_type == 'Super';
+		
+		$vw_vars['key'] = $key;
+		$vw_vars['super_key'] = $super_key;
+		
+		$vw_vars['mode'] = 'edit';
+		
+		$pool = new ConnectionPool($keyspace_name, $CASSANDRA_SERVERS);
+		$column_family = new ColumnFamily($pool, $columnfamily_name);
+		
+		$vw_vars['results'] = '';	
+		$vw_vars['output'] = '';
+		
+		try {					
+			$output = $column_family->get($key);
+			$vw_vars['output'] = $output;
+		}
+		catch(Exception $e) {
+			echo 'Something went wrong '.$e->getMessage();
+		}
+		
+		$included_header = true;
+		echo getHTML('header.php');
+		echo getHTML('columnfamily_insert_edit_row.php',$vw_vars);
 	}
 	
 	/*

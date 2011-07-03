@@ -87,6 +87,9 @@
 		elseif ($index == 'insert_row') {
 			return '<div class="success_message">Row inserted successfully!</div>';
 		}
+		elseif ($index == 'edit_row') {
+			return '<div class="success_message">Row "'.$params['key'].'" edited successfully!</div>';
+		}
 	}
 	
 	function displayInfoMessage($index,$params = array()) {
@@ -155,6 +158,9 @@
 		}
 		elseif ($index == 'cassandra_server_error') {
 			return '<div class="error_message">An error occured while connecting to your Cassandra server: '.$params['error_message'].'</div>';
+		}
+		elseif ($index == 'insert_row_incomplete_fields') {
+			return '<div class="error_message">Some fields are empty</div>';
 		}
 	}
 	

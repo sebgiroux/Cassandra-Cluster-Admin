@@ -13,11 +13,15 @@ Screenshots
 
 [![Cassandra Cluster Admin Homepage](http://img64.imageshack.us/img64/9024/49cassandraclusteradmin.th.png)](http://img64.imageshack.us/img64/9024/49cassandraclusteradmin.png) [![Cassandra Cluster Admin Column family Definition and Actions](http://img813.imageshack.us/img813/1186/66cassandraclusteradmin.th.png)](http://img813.imageshack.us/img813/1186/66cassandraclusteradmin.png)  [![Cassandra Cluster Admin List of Column Families in a Keyspace](http://img151.imageshack.us/img151/464/31cassandraclusteradmin.th.png)](http://img151.imageshack.us/img151/464/31cassandraclusteradmin.png) [![Cassandra Cluster Admin Edit a Column Family](http://img714.imageshack.us/img714/3434/76cassandraclusteradmin.th.png)](http://img714.imageshack.us/img714/3434/76cassandraclusteradmin.png)
 
-Configuration
+Getting Started
 ------------------------------------------------
-To configure Cassandra Cluster Admin, you must edit include/conf.inc.php with your cassandra server IP, and your Cassandra username/password if needed.
+To get started with Cassandra Cluster admin, you must copy all the files from the package you just downloaded into a directory that can be accessed by a Web browser (ex: http://localhost/cassandra-cluster-admin). If this server is accessible for everyone, you might want to password protect the application, so your data is secure. 
 
-You can also configure Cassandra Cluster Admin to be username/password protected. To do so, you can set CCA_LOGIN_REQUIRED to true and specify your desired username and password by altering CCA_USERNAME and CCA_PASSWORD respectivly.
+All configuration is in include/conf.inc.php:
+
+To password protect the application, you can set CCA_LOGIN_REQUIRED to true and specify your desired username and password by altering CCA_USERNAME and CCA_PASSWORD respectivly.
+
+You also have to specify your Cassandra server IP(s) ($CASSANDRA_SERVERS), and your Cassandra username (CASSANDRA_USERNAME) / password (CASSANDRA_PASSWORD) if needed. 
 
 
 Thrift C extension

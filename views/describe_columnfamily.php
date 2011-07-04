@@ -1,5 +1,32 @@
 <h3><a href="index.php"><?=$cluster_name?></a> &gt; <a href="describe_keyspace.php?keyspace_name=<?=$keyspace_name?>"><?=$keyspace_name?></a> &gt; <?=$columnfamily_name?></h3>
 
+<div id="menu">
+	<?php if ($partitioner == 'org.apache.cassandra.dht.OrderPreservingPartitioner'): ?>
+	<div class="menu_item" onclick="location.href='columnfamily_action.php?action=browse_data&keyspace_name=<?php echo $keyspace_name; ?>&columnfamily_name=<?php echo $columnfamily_name; ?>'">
+		<div class="icon browse_data"></div> Browse Data<br />
+	</div>
+	<?php endif; ?>
+	<div class="menu_item" onclick="location.href='columnfamily_action.php?action=create_secondary_index&keyspace_name=<?=$keyspace_name?>&columnfamily_name=<?=$columnfamily_name?>'">
+		<div class="icon create_secondary_index"></div> Create Secondary Index<br />
+	</div>
+	<div class="menu_item" onclick="location.href='columnfamily_action.php?action=get_key&keyspace_name=<?=$keyspace_name?>&columnfamily_name=<?=$columnfamily_name?>'">
+		<div class="icon get_key"></div> Get Key<br />
+	</div>
+	<div class="menu_item" onclick="location.href='columnfamily_action.php?action=insert_row&keyspace_name=<?=$keyspace_name?>&columnfamily_name=<?=$columnfamily_name?>'">
+		<div class="icon insert_row"></div> Insert Row<br />
+	</div>
+	<div class="menu_item" onclick="location.href='columnfamily_action.php?action=edit&keyspace_name=<?=$keyspace_name?>&columnfamily_name=<?=$columnfamily_name?>'">
+		<div class="icon edit_column_family"></div> Edit Column Family<br />
+	</div>
+	<div class="menu_item" onclick="return truncateColumnFamily('<?=$keyspace_name?>','<?=$columnfamily_name?>');">
+		<div class="icon truncate_column_family"></div> Truncate Column Family<br />
+	</div>
+	<div class="menu_item" onclick="return dropColumnFamily('<?=$keyspace_name?>','<?=$columnfamily_name?>');">
+		<div class="icon drop_column_family"></div> Drop Column Family<br />
+	</div>
+	<div class="clear_left"></div>
+</div>
+
 <h3>Column Family Details</h3>
 <?php echo $columnfamily_def; ?>
 
@@ -17,15 +44,3 @@
 		}
 	}
 ?>
-
-<p>
-	<h3>Actions</h3>
-	
-	<?if ($partitioner == 'org.apache.cassandra.dht.OrderPreservingPartitioner'): echo '- <a href="columnfamily_action.php?action=browse_data&keyspace_name='.$keyspace_name.'&columnfamily_name='.$columnfamily_name.'">Browse Data</a><br/>'; endif;?>
-	- <a href="columnfamily_action.php?action=create_secondary_index&keyspace_name=<?=$keyspace_name?>&columnfamily_name=<?=$columnfamily_name?>">Create a Secondary Index</a><br />
-	- <a href="columnfamily_action.php?action=get_key&keyspace_name=<?=$keyspace_name?>&columnfamily_name=<?=$columnfamily_name?>">Get Key</a><br />
-	- <a href="columnfamily_action.php?action=insert_row&keyspace_name=<?=$keyspace_name?>&columnfamily_name=<?=$columnfamily_name?>">Insert a Row</a><br />
-	- <a href="columnfamily_action.php?action=edit&keyspace_name=<?=$keyspace_name?>&columnfamily_name=<?=$columnfamily_name?>">Edit Column Family</a><br />
-	- <a href="#" onclick="return truncateColumnFamily('<?=$keyspace_name?>','<?=$columnfamily_name?>');">Truncate Column Family</a><br />
-	- <a href="#" onclick="return dropColumnFamily('<?=$keyspace_name?>','<?=$columnfamily_name?>');">Drop Column Family</a>
-</p>

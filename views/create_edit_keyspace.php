@@ -1,4 +1,4 @@
-<h3><a href="index.php"><?=$cluster_name?></a> <?if(!empty($keyspace_name)): echo '&gt; '.$keyspace_name; endif;?><?if($mode=='create'): echo '&gt; Create Keyspace'; endif;?></h3>
+<h3><a href="index.php"><?=$cluster_name?></a> <?if(!empty($keyspace_name)): echo '&gt; <a href="describe_keyspace.php?keyspace_name='.$keyspace_name.'">'.$keyspace_name.'</a>'; endif;?><?if($mode=='create'): echo '&gt; Create Keyspace'; else: echo ' &gt; Edit Keyspace'; endif;?></h3>
 
 <?=$success_message?>
 <?=$error_message?>

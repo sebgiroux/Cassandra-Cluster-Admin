@@ -9,6 +9,85 @@ body {
 	margin-top: 0;
 }
 
+#menu {
+	margin-top: 20px;
+}
+
+#menu .menu_item {
+	float: left;
+	margin-right: 10px;
+	border: 1px solid #212121;
+	background-color: #6395D5;
+	width: 200px;
+	padding: 5px;
+	cursor: pointer;
+	color: #fff;
+	
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+}
+
+#menu .menu_item:hover {
+	background-color: #3A5A91;
+}
+
+#menu .menu_item .icon {
+	float: left;
+	width: 16px;
+	height: 16px;
+	margin-top: 4px;
+	margin-right: 5px;
+}
+
+#menu .menu_item .create_keyspace {
+	background: url('../imgs/create_keyspace.png');
+}
+
+#menu .menu_item .edit_keyspace {
+	background: url('../imgs/edit_keyspace.png');
+}
+
+#menu .menu_item .drop_keyspace {
+	background: url('../imgs/drop_keyspace.png');
+}
+
+#menu .menu_item .browse_data {
+	background: url('../imgs/browse_data.png');
+}
+
+#menu .menu_item .create_secondary_index {
+	background: url('../imgs/create_secondary_index.png');
+}
+
+#menu .menu_item .get_key {
+	background: url('../imgs/get_key.png');
+}
+
+#menu .menu_item .insert_row {
+	background: url('../imgs/insert_row.png');
+}
+
+#menu .menu_item .create_column_family {
+	background: url('../imgs/create_column_family.png');
+}
+
+#menu .menu_item .edit_column_family {
+	background: url('../imgs/edit_column_family.png');
+}
+
+#menu .menu_item .truncate_column_family {
+	background: url('../imgs/truncate_column_family.png');
+}
+
+#menu .menu_item .drop_column_family {
+	background: url('../imgs/drop_column_family.png');
+}
+
+#menu .menu_item a {
+	color: #fff;
+}
+
 .float_left {
 	float: left;
 }

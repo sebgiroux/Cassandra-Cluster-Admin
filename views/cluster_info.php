@@ -9,6 +9,13 @@
 <?=$success_message?>
 <?=$error_message?>
 
+<div id="menu">
+	<div class="menu_item" onclick="location.href='keyspace_action.php?action=create'">
+		<div class="icon create_keyspace"></div> Create New Keyspace<br />
+	</div>
+	<div class="clear_left"></div>
+</div>
+
 <p>
 	<h3>Keyspaces and Column Families</h3>	
 	<ul id="keyspaces">
@@ -29,6 +36,4 @@
 	</ul>		
 </p>
 
-<h3>Actions</h3>
 
-- <a href="keyspace_action.php?action=create">Create a New Keyspace</a><br />

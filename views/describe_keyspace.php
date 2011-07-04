@@ -1,4 +1,16 @@
 <h3><a href="index.php"><?=$cluster_name?></a> &gt; <?=$keyspace_name?></h3>
+<div id="menu">
+	<div class="menu_item" style="width: 220px;" onclick="location.href='keyspace_action.php?action=create_cf&keyspace_name=<?=$keyspace_name?>'">
+		<div class="icon create_column_family"></div> Create New Column Family<br />
+	</div>
+	<div class="menu_item" onclick="location.href='keyspace_action.php?action=edit&keyspace_name=<?=$keyspace_name?>'">
+		<div class="icon edit_keyspace"></div> Edit Keyspace<br />
+	</div>
+	<div class="menu_item" onclick="return dropKeyspace('<?=$keyspace_name?>');">
+		<div class="icon drop_keyspace"></div> Drop Keyspace<br />
+	</div>
+	<div class="clear_left"></div>
+</div>
 
 <h3>Keyspace Details</h3>
 <p>
@@ -29,9 +41,3 @@
 	}
 
 ?>
-
-<h3>Actions</h3>
-
-- <a href="keyspace_action.php?action=create_cf&keyspace_name=<?=$keyspace_name?>">Create a New Column Family</a><br />
-- <a href="keyspace_action.php?action=edit&keyspace_name=<?=$keyspace_name?>">Edit Keyspace</a><br />
-- <a href="#" onclick="return dropKeyspace('<?=$keyspace_name?>');">Drop keyspace</a>

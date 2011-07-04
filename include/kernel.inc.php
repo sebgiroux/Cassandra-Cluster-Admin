@@ -78,6 +78,9 @@
 		elseif ($index == 'edit_columnfamily') {
 			return '<div class="success_message">Column family '.$params['columnfamily_name'].' has been edited successfully!</div>';
 		}
+		elseif ($index == 'drop_columnfamily') {
+			return '<div class="success_message">Column family dropped successfully!</div>';
+		}
 		elseif ($index == 'get_key') {
 			return '<div class="success_message">Successfully got key "'.$params['key'].'"</div>';
 		}
@@ -161,6 +164,9 @@
 		}
 		elseif ($index == 'insert_row_incomplete_fields') {
 			return '<div class="error_message">Some fields are empty</div>';
+		}
+		elseif ($index == 'drop_columnfamily') {
+			return '<div class="error_message">Error while dropping column family: '.$params['message'].'</div>';
 		}
 	}
 	

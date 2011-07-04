@@ -147,11 +147,15 @@
 			$columnfamily_name = $_GET['columnfamily_name'];
 		}
 	
+		$included_header = true;
+		echo getHTML('header.php');
+	
 		try {
 			$sys_manager->drop_column_family($keyspace_name, $columnfamily_name);
+			echo displaySuccessMessage('drop_columnfamily');
 		}
 		catch (Exception $e) {
-			echo 'Something wrong happened '.$e->getMessage();
+			echo displayErrorMessage('drop_columnfamily',array('message' => $e->getMessage()));
 		}
 	}	
 		

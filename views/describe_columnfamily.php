@@ -3,26 +3,26 @@
 <div id="menu">
 	<?php if ($partitioner == 'org.apache.cassandra.dht.OrderPreservingPartitioner'): ?>
 	<div class="menu_item" onclick="location.href='columnfamily_action.php?action=browse_data&keyspace_name=<?php echo $keyspace_name; ?>&columnfamily_name=<?php echo $columnfamily_name; ?>'">
-		<div class="icon browse_data"></div> Browse Data<br />
+		<div class="icon browse_data"></div> Browse Data
 	</div>
 	<?php endif; ?>
 	<div class="menu_item" onclick="location.href='columnfamily_action.php?action=create_secondary_index&keyspace_name=<?=$keyspace_name?>&columnfamily_name=<?=$columnfamily_name?>'">
-		<div class="icon create_secondary_index"></div> Create Secondary Index<br />
+		<div class="icon create_secondary_index"></div> Create Secondary Index
 	</div>
 	<div class="menu_item" onclick="location.href='columnfamily_action.php?action=get_key&keyspace_name=<?=$keyspace_name?>&columnfamily_name=<?=$columnfamily_name?>'">
-		<div class="icon get_key"></div> Get Key<br />
+		<div class="icon get_key"></div> Get Key
 	</div>
 	<div class="menu_item" onclick="location.href='columnfamily_action.php?action=insert_row&keyspace_name=<?=$keyspace_name?>&columnfamily_name=<?=$columnfamily_name?>'">
-		<div class="icon insert_row"></div> Insert Row<br />
+		<div class="icon insert_row"></div> Insert Row
 	</div>
 	<div class="menu_item" onclick="location.href='columnfamily_action.php?action=edit&keyspace_name=<?=$keyspace_name?>&columnfamily_name=<?=$columnfamily_name?>'">
-		<div class="icon edit_column_family"></div> Edit Column Family<br />
+		<div class="icon edit_column_family"></div> Edit Column Family
 	</div>
 	<div class="menu_item" onclick="return truncateColumnFamily('<?=$keyspace_name?>','<?=$columnfamily_name?>');">
-		<div class="icon truncate_column_family"></div> Truncate Column Family<br />
+		<div class="icon truncate_column_family"></div> Truncate Column Family
 	</div>
 	<div class="menu_item" onclick="return dropColumnFamily('<?=$keyspace_name?>','<?=$columnfamily_name?>');">
-		<div class="icon drop_column_family"></div> Drop Column Family<br />
+		<div class="icon drop_column_family"></div> Drop Column Family
 	</div>
 	<div class="clear_left"></div>
 </div>

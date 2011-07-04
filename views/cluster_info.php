@@ -11,7 +11,7 @@
 
 <div id="menu">
 	<div class="menu_item" onclick="location.href='keyspace_action.php?action=create'">
-		<div class="icon create_keyspace"></div> Create New Keyspace<br />
+		<div class="icon create_keyspace"></div> Create New Keyspace
 	</div>
 	<div class="clear_left"></div>
 </div>

@@ -61,12 +61,40 @@ body {
 	background: url('../imgs/create_secondary_index.png');
 }
 
+#menu .menu_item .drop_secondary_index {
+	background: url('../imgs/drop_secondary_index.png');
+}
+
 #menu .menu_item .get_key {
 	background: url('../imgs/get_key.png');
 }
 
 #menu .menu_item .insert_row {
 	background: url('../imgs/insert_row.png');
+}
+
+.small_horizontal_spacer {
+	float: left;
+	width: 5px;
+	height: 5px;
+}
+
+.edit_row_icon {
+	float: left;
+	width: 16px;
+	height: 16px;
+	margin-top: 4px;
+	margin-right: 5px;
+	background: url('../imgs/edit_row.png');
+}
+
+.delete_row_icon {
+	float: left;
+	width: 16px;
+	height: 16px;
+	margin-top: 4px;
+	margin-right: 5px;
+	background: url('../imgs/delete_row.png');
 }
 
 #menu .menu_item .create_column_family {

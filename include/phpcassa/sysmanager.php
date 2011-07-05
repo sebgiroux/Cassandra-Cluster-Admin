@@ -435,7 +435,42 @@ class SystemManager {
         $this->client->system_update_column_family($cfdef);
         $this->wait_for_agreement();
     }
-
+	
+	/**
+     * Drop an index from a column family.
+     *
+     * Example usage:
+     *
+     * <code>
+     * $sys = new SystemManager();
+     * $sys->drop_index("Keyspace1", "Users", "name");
+     * </code>
+     *
+     * @param string $keyspace the name of the keyspace containing the column family
+     * @param string $column_family the name of the column family
+     * @param string $column the name of the column to drop the index from
+     */
+	public function drop_index($keyspace, $column_family, $column) {
+		$matched = false;		
+		$this->client->set_keyspace($keyspace);
+        $cfdef = $this->get_cfdef($keyspace, $column_family);		
+		$col_meta = $cfdef->column_metadata;
+		
+        for ($i = 0; $i < count($col_meta); $i++) {
+			$col = $col_meta[$i];			
+			if ($col->name == $column) {
+				unset($col_meta[$i]);
+				$cfdef->column_metadata = $col_meta;
+				$matched = true;
+				break;
+			}
+		}
+	
+		if ($matched) {
+			$this->client->system_update_column_family($cfdef);
+		}
+	}
+	
     /**
      * Describes the Cassandra cluster. 
      *

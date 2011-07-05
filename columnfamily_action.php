@@ -473,19 +473,48 @@
 		$vw_vars['cluster_name'] = $sys_manager->describe_cluster_name();
 		$vw_vars['keyspace_name'] = $keyspace_name;
 		$vw_vars['columnfamily_name'] = $columnfamily_name;
+				
+		try {		
+			$pool = new ConnectionPool($keyspace_name, $CASSANDRA_SERVERS);
+			$column_family = new ColumnFamily($pool, $columnfamily_name);
 		
-		$pool = new ConnectionPool($keyspace_name, $CASSANDRA_SERVERS);
-		$column_family = new ColumnFamily($pool, $columnfamily_name);
-		
-		try {					
 			$offset_key = '';
-			if (isset($_GET['offset_key'])) $offset_key = $_GET['offset_key'];
-			$vw_vars['current_offset_key'] = $offset_key;
+					
+			if (isset($_GET['pos']) && $_GET['pos'] == 'prev' && isset($_SESSION['browse_data_offset_key']) && is_array($_SESSION['browse_data_offset_key'])) {
+				if (count($_SESSION['browse_data_offset_key']) > 1) {
+					array_pop($_SESSION['browse_data_offset_key']);
+				}
+				
+				$offset_key = array_pop($_SESSION['browse_data_offset_key']);
+			}			
+			elseif (isset($_GET['offset_key'])) {
+				$offset_key = $_GET['offset_key'];
+			}
 			
-			$old_offset_key = '';
-			if (isset($_GET['old_offset_key'])) $old_offset_key = $_GET['old_offset_key'];
-			$vw_vars['current_old_offset_key'] = $old_offset_key;
+			$vw_vars['current_offset_key'] = $offset_key;
 		
+			if ($offset_key == '') {
+				$_SESSION['browse_data_offset_key'] = array();
+				$_SESSION['browse_data_offset_key'][] = '';
+			}
+			else {
+				if (!isset($_SESSION['browse_data_offset_key']) || !is_array($_SESSION['browse_data_offset_key']))
+					$_SESSION['browse_data_offset_key'] = array();
+				
+				$pos = '';
+				if (isset($_GET['pos'])) $pos = $_GET['pos'];
+				
+				// Make sure it's not only a refresh of the page AND a previous click
+				if (end($_SESSION['browse_data_offset_key']) != $offset_key && $pos != 'prev') {
+					$_SESSION['browse_data_offset_key'][] = $offset_key;
+					
+					// Don't keep more then 100 previous key
+					if (count($_SESSION['browse_data_offset_key']) > 100) {
+						array_shift($_SESSION['browse_data_offset_key']);
+					}
+				}
+			}
+				
 			$nb_rows = 5;
 			if (isset($_GET['nb_rows']) && is_numeric($_GET['nb_rows']) && $_GET['nb_rows'] > 0) $nb_rows = $_GET['nb_rows'];
 			$vw_vars['nb_rows'] = $nb_rows;
@@ -502,7 +531,7 @@
 
 			$vw_row_vars['is_super_cf'] = $cf_def->column_type == 'Super';     
 		
-			$result = $column_family->get_range($offset_key,'',$nb_rows,null);
+			$result = $column_family->get_range($offset_key,'',$nb_rows);
 			
 			$vw_vars['results'] = '';	
 			$nb_results = 0;
@@ -520,26 +549,27 @@
 				$nb_results++;
 			}		
 			
+			$vw_vars['show_begin_page_link'] = $offset_key != '';
+			$vw_vars['show_prev_page_link'] = $offset_key != '' && count($_SESSION['browse_data_offset_key']) > 0;
+			
 			// We got the number of rows we asked for, display "Next Page" link
-			if ($nb_results == $nb_rows) {
-				$vw_vars['old_offset_key'] = $offset_key;
-				
+			if ($nb_results == $nb_rows) {				
 				$offset_key = ++$key;				
 				
 				$vw_vars['offset_key'] = $offset_key;
 				$vw_vars['show_next_page_link'] = true;
 			}
 			else {
-				$vw_vars['old_offset_key'] = '';
 				$vw_vars['offset_key'] = '';
 				$vw_vars['show_next_page_link'] = false;
-			}
-			
-			$vw_vars['show_begin_page_link'] = true;
+			}			
 			
 			$included_header = true;
 			echo getHTML('header.php');
 			echo getHTML('columnfamily_browse_data.php',$vw_vars);
+		}
+		catch (cassandra_NotFoundException $e) {
+			echo displayErrorMessage('columnfamily_doesnt_exists',array('column_name' => $columnfamily_name));
 		}
 		catch (Exception $e) {
 			echo 'Something went wrong '.$e->getMessage();
@@ -628,13 +658,16 @@
 			$key = $_GET['key'];
 		}
 		
-		$pool = new ConnectionPool($keyspace_name, $CASSANDRA_SERVERS);
-		$column_family = new ColumnFamily($pool, $columnfamily_name);
-	
 		try {
+			$pool = new ConnectionPool($keyspace_name, $CASSANDRA_SERVERS);
+			$column_family = new ColumnFamily($pool, $columnfamily_name);	
+		
 			$column_family->remove($key);
 			
 			redirect('columnfamily_action.php?action=browse_data&keyspace_name='.$keyspace_name.'&columnfamily_name='.$columnfamily_name);
+		}
+		catch (cassandra_NotFoundException $e) {
+			echo displayErrorMessage('columnfamily_doesnt_exists',array('column_name' => $columnfamily_name));
 		}
 		catch(Exception $e) {
 			echo 'Something wrong happened '.$e->getMessage();

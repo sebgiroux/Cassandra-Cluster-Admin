@@ -18,7 +18,7 @@ body {
 	margin-right: 10px;
 	margin-bottom: 10px;
 	border: 1px solid #212121;
-	background-color: #6395D5;
+	background-color: #ccc;
 	width: 200px;
 	padding: 5px;
 	cursor: pointer;
@@ -30,7 +30,7 @@ body {
 }
 
 #menu .menu_item:hover {
-	background-color: #3A5A91;
+	background-color: #bbb;
 }
 
 #menu .menu_item .icon {
@@ -170,13 +170,13 @@ select {
 
 #cluster_info {
 	border: 1px solid #000;
-	background-color: #ddd;
+	background-color: #e8e8e8;
 	width: 500px;
 	padding: 3px 10px 20px 10px;
 }
 
 a, a:visited {
-	color: #2491CF;
+	color: #777;
 }
 
 .table_secondary_index {

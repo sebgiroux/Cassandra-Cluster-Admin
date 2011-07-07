@@ -30,15 +30,15 @@ The C extension is crucial for phpcassa's performance.
 
 You need to configure and make to be able to use the C extension.
 
-cd include/phpcassa/thrift/ext/thrift_protocol  
-phpize  
-./configure  
-make  
-sudo make install  
+	cd include/phpcassa/thrift/ext/thrift_protocol  
+	phpize  
+	./configure  
+	make  
+	sudo make install  
 
 Add the following line to your php.ini file:
 
-extension=thrift_protocol.so
+	extension=thrift_protocol.so
 
 
 Disclaimer

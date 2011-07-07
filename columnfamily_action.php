@@ -446,7 +446,7 @@
 		try {
 			$sys_manager->truncate_column_family($keyspace_name, $columnfamily_name);
 			
-			redirect('describe_columnfamily.php?keyspace_name='.$keyspace_name.'&columnfamily_name='.$columnfamily_name);
+			redirect('describe_columnfamily.php?keyspace_name='.$keyspace_name.'&amp;columnfamily_name='.$columnfamily_name);
 		}
 		catch(Exception $e) {
 			echo 'Something wrong happened '.$e->getMessage();
@@ -664,7 +664,7 @@
 		
 			$column_family->remove($key);
 			
-			redirect('columnfamily_action.php?action=browse_data&keyspace_name='.$keyspace_name.'&columnfamily_name='.$columnfamily_name);
+			redirect('columnfamily_action.php?action=browse_data&amp;keyspace_name='.$keyspace_name.'&amp;columnfamily_name='.$columnfamily_name);
 		}
 		catch (cassandra_NotFoundException $e) {
 			echo displayErrorMessage('columnfamily_doesnt_exists',array('column_name' => $columnfamily_name));

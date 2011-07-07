@@ -1,4 +1,4 @@
-<h3><a href="index.php"><?=$cluster_name?></a> &gt; <a href="describe_keyspace.php?keyspace_name=<?=$keyspace_name?>"><?=$keyspace_name?></a> &gt; <a href="describe_columnfamily.php?keyspace_name=<?=$keyspace_name?>&columnfamily_name=<?=$columnfamily_name?>"><?=$columnfamily_name?></a> &gt; <?php if ($mode == 'insert'): ?>Insert a Row<?php elseif ($mode == 'edit'): ?>Edit Row "<?php echo $key; ?>"<?php endif; ?></h3>
+<h3><a href="index.php"><?=$cluster_name?></a> &gt; <a href="describe_keyspace.php?keyspace_name=<?=$keyspace_name?>"><?=$keyspace_name?></a> &gt; <a href="describe_columnfamily.php?keyspace_name=<?=$keyspace_name?>&amp;columnfamily_name=<?=$columnfamily_name?>"><?=$columnfamily_name?></a> &gt; <?php if ($mode == 'insert'): ?>Insert a Row<?php elseif ($mode == 'edit'): ?>Edit Row "<?php echo $key; ?>"<?php endif; ?></h3>
 
 <script type="text/javascript">
 	var num_columns = 0;

@@ -1,9 +1,9 @@
 <h3><a href="index.php"><?=$cluster_name?></a> &gt; <?=$keyspace_name?></h3>
 <div id="menu">
-	<div class="menu_item" style="width: 220px;" onclick="location.href='keyspace_action.php?action=create_cf&keyspace_name=<?=$keyspace_name?>'">
+	<div class="menu_item" style="width: 220px;" onclick="location.href='keyspace_action.php?action=create_cf&amp;keyspace_name=<?=$keyspace_name?>'">
 		<div class="icon create_column_family"></div> Create New Column Family
 	</div>
-	<div class="menu_item" onclick="location.href='keyspace_action.php?action=edit&keyspace_name=<?=$keyspace_name?>'">
+	<div class="menu_item" onclick="location.href='keyspace_action.php?action=edit&amp;keyspace_name=<?=$keyspace_name?>'">
 		<div class="icon edit_keyspace"></div> Edit Keyspace
 	</div>
 	<div class="menu_item" onclick="return dropKeyspace('<?=$keyspace_name?>');">
@@ -13,13 +13,13 @@
 </div>
 
 <h3>Keyspace Details</h3>
-<p>
+<div>
 	<table>
 		<tr><td>Strategy Class:</td><td><?=$strategy_class?></td></tr>
 		<tr><td>Strategy Options:</td><td><?if (empty($strategy_options)): echo 'None'; else: echo $strategy_options; endif;?></td></tr>
 		<tr><td>Replication Factor:</td><td><?=$replication_factor?></td></tr>
 	</table>
-</p>
+</div>
 
 <h3>List of Column Families in Keyspace</h3>
 <?=$list_column_families?>
@@ -37,7 +37,7 @@
 		}
 	}
 	else {
-		echo $ring;
+		echo '<p>'.$ring.'</p>';
 	}
 
 ?>

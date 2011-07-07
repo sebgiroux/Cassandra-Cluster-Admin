@@ -27,7 +27,7 @@
 					echo '<ul>';
 						for ($j = 0; $j < count($keyspaces_details[$i]['columnfamilys_name']); $j++):
 							$columnfamily_name = $keyspaces_details[$i]['columnfamilys_name'][$j];
-							echo '<li><a href="describe_columnfamily.php?keyspace_name='.$keyspace_name.'&columnfamily_name='.$columnfamily_name.'">'.$columnfamily_name.'</a></li>';
+							echo '<li><a href="describe_columnfamily.php?keyspace_name='.$keyspace_name.'&amp;columnfamily_name='.$columnfamily_name.'">'.$columnfamily_name.'</a></li>';
 						endfor;						
 					echo '</ul>';				
 				echo '</li>';

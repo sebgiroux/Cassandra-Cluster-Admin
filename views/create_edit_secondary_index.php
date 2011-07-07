@@ -24,7 +24,7 @@
 	</div>
 	
 	<div>
-		<label for="index_name">Index Name (Optional):</label>
+		<label for="index_name">Index Name:</label>
 		<input id="index_name" name="index_name" type="text" />
 	</div>
 	

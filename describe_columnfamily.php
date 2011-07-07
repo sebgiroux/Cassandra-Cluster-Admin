@@ -33,11 +33,28 @@
 			$one_cf = getCFInKeyspace($keyspace_name,$columnfamily_name);
 			
 			// Make sure the column family exists in this keyspace
-			if ($one_cf) {	
+			if ($one_cf) {			
+				$deleted_from_column = '';
+				if (isset($_GET['action']) && $_GET['action'] == 'drop_index' && isset($_GET['column'])) {
+					try {
+						$sys_manager->drop_index($keyspace_name,$columnfamily_name,$_GET['column']);
+						$deleted_from_column = $_GET['column'];
+					}
+					catch (Exception $e) {
+						echo 'Something wrong happened '.$e->getMessage();
+					}
+				}
+			
 				$secondary_indexes = array();
-				foreach ($one_cf->column_metadata as $metadata) {
+				foreach ($one_cf->column_metadata as $metadata) {				
 					$index_type = $metadata->index_type;
-					if ($metadata->index_type === 0) $index_type = 'Keys';
+					
+					// Deleted index
+					if (is_null($index_type) || $deleted_from_column == $metadata->name) {	
+						continue;
+					}
+					
+					if ($index_type === 0) $index_type = 'Keys';
 				
 					$secondary_indexes[] = array('name' => $metadata->name,			
 													'validation_class' => $metadata->validation_class,

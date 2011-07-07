@@ -168,7 +168,7 @@ class SystemManager {
         if (self::endswith($ksdef->strategy_class, 'SimpleStrategy')) {
             if ($ksdef->strategy_options === NULL)
                 $ksdef->strategy_options = array();
-            if (!array_key_exists('replication_fator', $ksdef->strategy_options))
+            if (!array_key_exists('replication_factor', $ksdef->strategy_options))
                 $ksdef->strategy_options['replication_factor'] = (string)$ksdef->replication_factor;
         }
         return $ksdef;
@@ -435,8 +435,8 @@ class SystemManager {
         $this->client->system_update_column_family($cfdef);
         $this->wait_for_agreement();
     }
-	
-	/**
+
+    /**
      * Drop an index from a column family.
      *
      * Example usage:
@@ -450,27 +450,29 @@ class SystemManager {
      * @param string $column_family the name of the column family
      * @param string $column the name of the column to drop the index from
      */
-	public function drop_index($keyspace, $column_family, $column) {
-		$matched = false;		
-		$this->client->set_keyspace($keyspace);
-        $cfdef = $this->get_cfdef($keyspace, $column_family);		
-		$col_meta = $cfdef->column_metadata;
-		
-        for ($i = 0; $i < count($col_meta); $i++) {
-			$col = $col_meta[$i];			
-			if ($col->name == $column) {
-				unset($col_meta[$i]);
-				$cfdef->column_metadata = $col_meta;
-				$matched = true;
-				break;
-			}
-		}
-	
-		if ($matched) {
-			$this->client->system_update_column_family($cfdef);
-		}
-	}
-	
+    public function drop_index($keyspace, $column_family, $column) {
+        $matched = false;       
+        $this->client->set_keyspace($keyspace);
+        $cfdef = $this->get_cfdef($keyspace, $column_family);       
+        $col_metas = $cfdef->column_metadata;
+
+        for ($i = 0; $i < count($col_metas); $i++) {
+            $col_meta = $col_metas[$i];           
+            if ($col_meta->name == $column) {
+                $col_meta->index_type = NULL;
+                $col_meta->index_name = NULL;
+                $col_metas[$i] = $col_meta;
+                $cfdef->column_metadata = $col_metas;
+                $matched = true;
+                break;
+            }
+        }
+
+        if ($matched) {
+            $this->client->system_update_column_family($cfdef);
+        }
+    }
+
     /**
      * Describes the Cassandra cluster. 
      *

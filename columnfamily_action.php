@@ -174,7 +174,7 @@
 			$columnfamily_name = $_GET['columnfamily_name'];
 		}
 
-		$column_name = $_POST['column_name'];
+		$column_name = $_POST['column_name'];		
 		$data_type = $_POST['data_type'];
 		$index_name = $_POST['index_name'];
 		

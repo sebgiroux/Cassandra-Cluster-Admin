@@ -30,18 +30,14 @@
 <h3>Column Family Details</h3>
 <?php echo $columnfamily_def; ?>
 
-<?php
-	if (count($secondary_indexes) > 0) {
-		echo '<h3>Secondary Indexes</h3>';
-	
-		foreach ($secondary_indexes as $one_si) {
-			echo '<div id="menu"><div class="menu_item" onclick="location.href=\'describe_columnfamily.php?keyspace_name='.$keyspace_name.'&amp;columnfamily_name='.$columnfamily_name.'&action=drop_index&column='.$one_si['name'].'\'"><div class="icon drop_secondary_index"></div> Drop Index</div><div class="clear_left"></div></div>';
-			echo '<table class="table_secondary_index">';
-				echo '<tr><td>Column Name:</td><td>'.$one_si['name'].'</td></tr>';
-				echo '<tr><td>Validation Class:</td><td>'.$one_si['validation_class'].'</td></tr>';
-				echo '<tr><td>Index Type:</td><td>'.$one_si['index_type'].'</td></tr>';
-				echo '<tr><td>Index Name:</td><td>'. $one_si['index_name'].'</td></tr>';
-			echo '</table>';
-		}
-	}
-?>
+<?php if (count($secondary_indexes) > 0): ?>
+	<h3>Secondary Indexes</h3>
+		
+	<?php 
+		foreach ($secondary_indexes as $one_si): 
+			echo getHTML('describe_secondary_index.php',array('one_si' => $one_si,
+														  'keyspace_name' => $keyspace_name,
+														  'columnfamily_name' => $columnfamily_name));
+		endforeach;
+	?>
+<?php endif; ?>

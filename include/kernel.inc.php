@@ -193,5 +193,13 @@
 		return $output;
 	}
 	
+	$current_page_title = 'Cassandra Cluster Admin';
+	
+	function getPageTitle() {
+		global $current_page_title;
+		
+		return $current_page_title;
+	}
+	
 	session_start();
 ?>

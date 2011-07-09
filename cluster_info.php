@@ -12,6 +12,7 @@
 	$vw_vars['partitioner'] = $sys_manager->describe_partitioner();
 	$vw_vars['snitch'] = $sys_manager->describe_snitch();
 	$vw_vars['thrift_api_version'] = $sys_manager->describe_version();
+	$vw_vars['schema_version'] = $sys_manager->describe_schema_versions();
 			
 	$keyspaces = $sys_manager->describe_keyspaces();
 	$keyspaces_name = array();

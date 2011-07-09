@@ -96,6 +96,8 @@
 		
 		$cf = getCFInKeyspace($keyspace_name,$columnfamily_name);
 		
+		$current_page_title = 'Cassandra Cluster Admin > '.$keyspace_name.' > '.$columnfamily_name.' > Edit Column Family';
+		
 		$included_header = true;
 		echo getHTML('header.php');
 		
@@ -146,6 +148,8 @@
 		if (isset($_GET['columnfamily_name'])) {
 			$columnfamily_name = $_GET['columnfamily_name'];
 		}
+	
+		$current_page_title = 'Cassandra Cluster Admin > '.$keyspace_name.' > '.$columnfamily_name.' > Drop Column Family';
 	
 		$included_header = true;
 		echo getHTML('header.php');
@@ -216,6 +220,8 @@
 		if (!isset($vw_vars['error_message'])) $vw_vars['error_message'] = '';
 	
 		$included_header = true;
+		$current_page_title = 'Cassandra Cluster Admin > '.$keyspace_name.' > '.$columnfamily_name.' > Create Secondary Index';
+		
 		echo getHTML('header.php');
 		echo getHTML('create_edit_secondary_index.php',$vw_vars);
 	}
@@ -236,13 +242,15 @@
 		if (isset($_GET['columnfamily_name'])) {
 			$columnfamily_name = $_GET['columnfamily_name'];
 		}
+		
+		$cf = getCFInKeyspace($keyspace_name,$columnfamily_name);
+	
+		try {		
+			$pool = new ConnectionPool($keyspace_name, $CASSANDRA_SERVERS);
+			$column_family = new ColumnFamily($pool, $columnfamily_name);
 			
-		$pool = new ConnectionPool($keyspace_name, $CASSANDRA_SERVERS);
-		$column_family = new ColumnFamily($pool, $columnfamily_name);
-		
-		$vw_vars['results'] = '';	
-		
-		try {					
+			$vw_vars['results'] = '';	
+			
 			$output = $column_family->get($key);	
 			
 			$vw_row_vars['key'] = $key;
@@ -295,6 +303,8 @@
 		if (!isset($vw_vars['results'])) $vw_vars['results'] = '';
 		if (!isset($vw_vars['success_message'])) $vw_vars['success_message'] = '';
 		if (!isset($vw_vars['error_message'])) $vw_vars['error_message'] = '';
+		
+		$current_page_title = 'Cassandra Cluster Admin > '.$keyspace_name.' > '.$columnfamily_name.' > Get Key';
 		
 		$included_header = true;
 		echo getHTML('header.php');
@@ -420,6 +430,8 @@
 		$vw_vars['key'] = '';
 		$vw_vars['mode'] = 'insert';
 		$vw_vars['super_key'] = '';
+		
+		$current_page_title = 'Cassandra Cluster Admin > '.$keyspace_name.' > '.$columnfamily_name.' > Insert a Row';
 		
 		$included_header = true;
 		echo getHTML('header.php');
@@ -564,6 +576,8 @@
 				$vw_vars['show_next_page_link'] = false;
 			}			
 			
+			$current_page_title = 'Cassandra Cluster Admin > '.$keyspace_name.' > '.$columnfamily_name.' > Browse Data';
+			
 			$included_header = true;
 			echo getHTML('header.php');
 			echo getHTML('columnfamily_browse_data.php',$vw_vars);
@@ -618,19 +632,21 @@
 		
 		$vw_vars['mode'] = 'edit';
 		
-		$pool = new ConnectionPool($keyspace_name, $CASSANDRA_SERVERS);
-		$column_family = new ColumnFamily($pool, $columnfamily_name);
-		
-		$vw_vars['results'] = '';	
-		$vw_vars['output'] = '';
-		
-		try {					
+		try {		
+			$pool = new ConnectionPool($keyspace_name, $CASSANDRA_SERVERS);
+			$column_family = new ColumnFamily($pool, $columnfamily_name);
+			
+			$vw_vars['results'] = '';	
+			$vw_vars['output'] = '';		
+					
 			$output = $column_family->get($key);
 			$vw_vars['output'] = $output;
 		}
 		catch(Exception $e) {
 			echo 'Something went wrong '.$e->getMessage();
 		}
+		
+		$current_page_title = 'Cassandra Cluster Admin > '.$keyspace_name.' > '.$columnfamily_name.' > Edit Row';
 		
 		$included_header = true;
 		echo getHTML('header.php');
@@ -669,7 +685,7 @@
 		catch (cassandra_NotFoundException $e) {
 			echo displayErrorMessage('columnfamily_doesnt_exists',array('column_name' => $columnfamily_name));
 		}
-		catch(Exception $e) {
+		catch (Exception $e) {
 			echo 'Something wrong happened '.$e->getMessage();
 		}
 	}

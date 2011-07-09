@@ -133,6 +133,9 @@
 		if (!isset($vw_vars['error_message'])) $vw_vars['error_message'] = '';
 		
 		$included_header = true;
+		
+		$current_page_title = 'Cassandra Cluster Admin > '.$keyspace_name.' > Create Column Family';
+		
 		echo getHTML('header.php');
 		echo getHTML('create_edit_columnfamily.php',$vw_vars);
 	}
@@ -174,6 +177,9 @@
 		if (!isset($vw_vars['error_message'])) $vw_vars['error_message'] = '';
 		
 		$included_header = true;
+		
+		$current_page_title = 'Cassandra Cluster Admin > Create Keyspace';
+		
 		echo getHTML('header.php');
 		echo getHTML('create_edit_keyspace.php',$vw_vars);
 	}
@@ -224,6 +230,8 @@
 		if (isset($_GET['keyspace_name'])) {
 			$keyspace_name = $_GET['keyspace_name'];
 		}
+	
+		$current_page_title = 'Cassandra Cluster Admin > Edit Keyspace '.$keyspace_name;
 	
 		$included_header = true;
 		echo getHTML('header.php');

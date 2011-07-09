@@ -9,14 +9,15 @@
 	require('include/kernel.inc.php');
 	require('include/verify_login.inc.php');
 	
-	echo getHTML('header.php');
-	
-	$vw_vars = array();
-	
 	$keyspace_name = '';
 	if (isset($_GET['keyspace_name'])) {
 		$keyspace_name = $_GET['keyspace_name'];
 	}
+	
+	$current_page_title = 'Cassandra Cluster Admin > Keyspace Details > '.$keyspace_name;
+	echo getHTML('header.php');
+	
+	$vw_vars = array();
 	
 	if ($keyspace_name == '') {
 		echo displayErrorMessage('keyspace_name_must_be_specified');

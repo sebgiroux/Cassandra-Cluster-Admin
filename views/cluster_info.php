@@ -3,7 +3,15 @@
 
 	Cluster Partitioner: <?=$partitioner;?><br />
 	Cluster Snitch: <?=$snitch;?><br />
-	Thrift API Version: <?=$thrift_api_version?>
+	Thrift API Version: <?=$thrift_api_version?><br />
+	Schema Version:
+	<?php 
+		foreach ($schema_version as $version => $servers) {
+			foreach ($servers as $one_server) {
+				echo $version.' ';
+			}
+		}
+	?>
 </div>
 
 <?=$success_message?>

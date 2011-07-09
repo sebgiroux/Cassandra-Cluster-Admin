@@ -7,24 +7,28 @@
 	*/
 
 	require('include/kernel.inc.php');
-	require('include/verify_login.inc.php');
-	
-	echo getHTML('header.php');
-	
+	require('include/verify_login.inc.php');	
+		
 	$keyspace_name = '';
 	if (isset($_GET['keyspace_name'])) {
 		$keyspace_name = $_GET['keyspace_name'];
 	}
 	
+	$columnfamily_name = '';
+	if (isset($_GET['columnfamily_name'])) {
+		$columnfamily_name = $_GET['columnfamily_name'];
+	}
+	
+	$current_page_title = 'Cassandra Cluster Admin > Column Family Details > '.$keyspace_name.' > '.$columnfamily_name;
+	
+	echo getHTML('header.php');
+		
 	// Make sure a keyspace name has been specified
 	if ($keyspace_name == '') {
 		echo displayErrorMessage('keyspace_name_must_be_specified');
 	}
 	else {
-		$columnfamily_name = '';
-		if (isset($_GET['columnfamily_name'])) {
-			$columnfamily_name = $_GET['columnfamily_name'];
-		}
+
 
 		if ($columnfamily_name == '') {
 			echo displayErrorMessage('columnfamily_name_must_be_specified');

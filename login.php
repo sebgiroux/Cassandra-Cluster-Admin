@@ -38,6 +38,8 @@
 		$vw_vars['you_must_be_logged'] = displayErrorMessage('you_must_be_logged');
 	}
 	
+	$current_page_title = 'Cassandra Cluster Admin > Login';
+	
 	echo getHTML('header.php');
 	echo getHTML('login.php',$vw_vars);
 	echo getHTML('footer.php');

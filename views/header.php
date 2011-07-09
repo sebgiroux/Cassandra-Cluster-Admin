@@ -4,7 +4,7 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 		
-		<title>Cassandra Cluster Admin</title>
+		<title><?=getPageTitle();?></title>
 	
 		<meta name="title" content="Cassandra Cluster Admin" />
 		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>

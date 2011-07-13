@@ -151,14 +151,13 @@
 	
 		$current_page_title = 'Cassandra Cluster Admin > '.$keyspace_name.' > '.$columnfamily_name.' > Drop Column Family';
 	
-		$included_header = true;
-		echo getHTML('header.php');
-	
 		try {
 			$sys_manager->drop_column_family($keyspace_name, $columnfamily_name);
-			echo displaySuccessMessage('drop_columnfamily');
+			redirect('describe_keyspace.php?keyspace_name='.$keyspace_name.'&deleted_cf=1');
 		}
-		catch (Exception $e) {
+		catch (Exception $e) {			
+			$included_header = true;
+			echo getHTML('header.php');
 			echo displayErrorMessage('drop_columnfamily',array('message' => $e->getMessage()));
 		}
 	}	

@@ -12,6 +12,8 @@
 	<div class="clear_left"></div>
 </div>
 
+<?=$deleted_cf;?>
+
 <h3>Keyspace Details</h3>
 <div>
 	<table>

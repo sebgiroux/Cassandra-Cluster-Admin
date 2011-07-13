@@ -36,6 +36,11 @@
 			echo displayErrorMessage('keyspace_doesnt_exists',array('keyspace_name' => $keyspace_name));
 		}
 		else {
+			$vw_vars['deleted_cf'] = '';
+			if (isset($_GET['deleted_cf']) && $_GET['deleted_cf'] == 1) {
+				$vw_vars['deleted_cf'] = displaySuccessMessage('drop_columnfamily');
+			}
+		
 			$vw_vars['strategy_class'] = $describe_keyspace->strategy_class;
 			$vw_vars['strategy_options'] = $describe_keyspace->strategy_options;
 			$vw_vars['replication_factor'] = $describe_keyspace->replication_factor;

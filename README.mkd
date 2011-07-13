@@ -13,6 +13,14 @@ Screenshots
 
 [![Cassandra Cluster Admin Homepage](http://img64.imageshack.us/img64/9024/49cassandraclusteradmin.th.png)](http://img64.imageshack.us/img64/9024/49cassandraclusteradmin.png) [![Cassandra Cluster Admin Column family Definition and Actions](http://img813.imageshack.us/img813/1186/66cassandraclusteradmin.th.png)](http://img813.imageshack.us/img813/1186/66cassandraclusteradmin.png)  [![Cassandra Cluster Admin List of Column Families in a Keyspace](http://img151.imageshack.us/img151/464/31cassandraclusteradmin.th.png)](http://img151.imageshack.us/img151/464/31cassandraclusteradmin.png) [![Cassandra Cluster Admin Edit a Column Family](http://img714.imageshack.us/img714/3434/76cassandraclusteradmin.th.png)](http://img714.imageshack.us/img714/3434/76cassandraclusteradmin.png)
 
+Supported actions
+------------------------------------------------
+* Keyspace manipulation (add/edit/drop)
+* Column Family manipulation (add/edit/truncate/drop)
+* Row manipulation on column family and super column family (insert/edit/remove)
+* Basic data browser to navigate in the data of a column family
+* Support Cassandra 0.8+ atomic counters
+
 Getting Started
 ------------------------------------------------
 To get started with Cassandra Cluster admin, you must copy all the files from the package you just downloaded into a directory that can be accessed by a Web browser (ex: http://localhost/cassandra-cluster-admin). If this server is accessible for everyone, you might want to password protect the application, so your data is secure. 

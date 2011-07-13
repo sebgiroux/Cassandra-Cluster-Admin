@@ -73,6 +73,10 @@ body {
 	background: url('../imgs/insert_row.png');
 }
 
+#menu .menu_item .counters {
+	background: url('../imgs/counters.png');
+}
+
 .small_horizontal_spacer {
 	float: left;
 	width: 5px;

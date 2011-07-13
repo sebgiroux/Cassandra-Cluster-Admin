@@ -28,8 +28,6 @@
 		echo displayErrorMessage('keyspace_name_must_be_specified');
 	}
 	else {
-
-
 		if ($columnfamily_name == '') {
 			echo displayErrorMessage('columnfamily_name_must_be_specified');
 		}
@@ -100,6 +98,10 @@
 				$vw_vars['columnfamily_name'] = $columnfamily_name;
 				
 				$vw_vars['partitioner'] = $sys_manager->describe_partitioner();
+				
+				$vw_vars['thrift_api_version'] = $sys_manager->describe_version();
+				
+				$vw_vars['is_counter_column'] = $vw_cf_vars['default_validation_class'] == 'org.apache.cassandra.db.marshal.CounterColumnType';
 				
 				echo getHTML('describe_columnfamily.php',$vw_vars);
 			}

@@ -544,6 +544,8 @@
 		
 			$result = $column_family->get_range($offset_key,'',$nb_rows);
 			
+			$is_counter_column = $column_family->cfdef->default_validation_class == 'org.apache.cassandra.db.marshal.CounterColumnType';
+			
 			$vw_vars['results'] = '';	
 			$nb_results = 0;
 			foreach ($result as $key => $value) {
@@ -554,6 +556,8 @@
 				$vw_row_vars['columnfamily_name'] = $columnfamily_name;
 				
 				$vw_row_vars['show_actions_link'] = true;
+				
+				$vw_row_vars['is_counter_column'] = $is_counter_column;
 				
 				$vw_vars['results'] .= getHTML('columnfamily_browse_data_row.php',$vw_row_vars);
 				
@@ -576,6 +580,8 @@
 			}			
 			
 			$current_page_title = 'Cassandra Cluster Admin > '.$keyspace_name.' > '.$columnfamily_name.' > Browse Data';
+			
+			$vw_vars['is_counter_column'] = $is_counter_column;
 			
 			$included_header = true;
 			echo getHTML('header.php');
@@ -689,6 +695,50 @@
 		}
 	}
 	
+	/*
+		Modify counter
+	*/
+	if (isset($_POST['btn_modify_counter'])) {
+		$is_valid_action = true;
+		
+		$key = '';
+		if (isset($_POST['key'])) $key = $_POST['key'];
+		
+		$column = '';
+		if (isset($_POST['column'])) $column = $_POST['column'];
+		
+		$action = '';
+		if (isset($_POST['action'])) $action = $_POST['action'];
+		
+		$value = '';
+		if (isset($_POST['value'])) $value = $_POST['value'];
+
+		$keyspace_name = '';
+		if (isset($_POST['keyspace_name'])) $keyspace_name = $_POST['keyspace_name'];
+		
+		$columnfamily_name = '';
+		if (isset($_POST['columnfamily_name'])) $columnfamily_name = $_POST['columnfamily_name'];
+		
+		try {
+			$pool = new ConnectionPool($keyspace_name, $CASSANDRA_SERVERS);
+			$column_family = new ColumnFamily($pool, $columnfamily_name);	
+			
+			if ($action == 'dec') {
+				$value *= -1;
+			}
+			
+			$column_family->add($key, $column, $value);
+			
+			$new_value = $column_family->get($key);
+			$new_value = $new_value[$column];
+			
+			redirect('counters.php?keyspace_name='.$keyspace_name.'&columnfamily_name='.$columnfamily_name.'&new_value='.$new_value);
+        }
+		catch (Exception $e) {
+			echo 'Something wrong happened '.$e->getMessage();
+		}		
+	}
+
 	if (!$included_header) {	
 		echo getHTML('header.php');
 		

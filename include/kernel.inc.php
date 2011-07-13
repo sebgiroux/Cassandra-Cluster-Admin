@@ -12,6 +12,8 @@
 	
 	require('conf.inc.php');
 	
+	define('MINIMUM_THRIFT_API_VERSION_FOR_COUNTERS','19.10.0');
+	
 	try {
 		$random_server = $CASSANDRA_SERVERS[array_rand($CASSANDRA_SERVERS)];
 		$sys_manager = new SystemManager($random_server,$CREDENTIALS,1500,1500);
@@ -92,6 +94,9 @@
 		}
 		elseif ($index == 'edit_row') {
 			return '<div class="success_message">Row "'.$params['key'].'" edited successfully!</div>';
+		}
+		elseif ($index == 'edit_counter') {
+			return '<div class="success_message">Counter row edited successfully. Value is now '.$params['value'].'!</div>';
 		}
 	}
 	

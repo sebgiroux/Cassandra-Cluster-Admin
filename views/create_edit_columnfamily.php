@@ -94,7 +94,7 @@
 	
 	<div>
 		<label for="default_validation_class">Default Validation Class</label>
-		<input type="text" id="default_validation_class" name="default_validation_class" value="<?=$default_validation_class?>" />
+		<input type="text" id="default_validation_class" name="default_validation_class" value="<?=$default_validation_class?>" /> * Use "CounterColumnType" for Counter Column
 	</div>
 	
 	<div>

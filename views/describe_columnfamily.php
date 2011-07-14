@@ -15,7 +15,7 @@
 		<div class="icon get_key"></div> Get Key
 	</div>
 	
-	<?php if ($is_counter_column && version_compare($thrift_api_version,MINIMUM_THRIFT_API_VERSION_FOR_COUNTERS,'>=')): ?>
+	<?php if ($is_counter_column): ?>
 	<div class="menu_item" onclick="location.href='counters.php?keyspace_name=<?=$keyspace_name?>&amp;columnfamily_name=<?=$columnfamily_name?>'">
 		<div class="icon counters"></div> Counters
 	</div>

@@ -8,8 +8,15 @@
 		<input id="key" name="key" type="text" />
 	</div>
 
+	<? if ($is_super_cf): ?>
 	<div>
-		<label for="column">Column:</label>
+		<label for="super_column">Super Column Name:</label>
+		<input id="super_column" name="super_column" type="text" />
+	</div>
+	<? endif;?>
+	
+	<div>
+		<label for="column">Column name:</label>
 		<input id="column" name="column" type="text" />
 	</div>
 	

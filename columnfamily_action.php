@@ -460,7 +460,7 @@
 			redirect('describe_columnfamily.php?keyspace_name='.$keyspace_name.'&columnfamily_name='.$columnfamily_name);
 		}
 		catch(Exception $e) {
-			echo 'Something wrong happened '.$e->getMessage();
+			echo displayErrorMessage('something_wrong_happened',array('message' => $e->getMessage()));
 		}
 	}
 	
@@ -691,7 +691,7 @@
 			echo displayErrorMessage('columnfamily_doesnt_exists',array('column_name' => $columnfamily_name));
 		}
 		catch (Exception $e) {
-			echo 'Something wrong happened '.$e->getMessage();
+			echo displayErrorMessage('something_wrong_happened',array('message' => $e->getMessage()));
 		}
 	}
 	
@@ -703,6 +703,9 @@
 		
 		$key = '';
 		if (isset($_POST['key'])) $key = $_POST['key'];
+		
+		$super_column = null;
+		if (isset($_POST['super_column'])) $super_column = $_POST['super_column'];
 		
 		$column = '';
 		if (isset($_POST['column'])) $column = $_POST['column'];
@@ -727,15 +730,24 @@
 				$value *= -1;
 			}
 			
-			$column_family->add($key, $column, $value);
+			$column_family->add($key, $column, $value,$super_column);
 			
 			$new_value = $column_family->get($key);
-			$new_value = $new_value[$column];
+			
+			if ($column_family->cfdef->column_type == 'Super') {
+				$new_value = $new_value[$super_column][$column];
+			}
+			else {
+				
+				$new_value = $new_value[$column];
+			}
+
+			
 			
 			redirect('counters.php?keyspace_name='.$keyspace_name.'&columnfamily_name='.$columnfamily_name.'&new_value='.$new_value);
         }
 		catch (Exception $e) {
-			echo 'Something wrong happened '.$e->getMessage();
+			echo displayErrorMessage('something_wrong_happened',array('message' => $e->getMessage()));
 		}		
 	}
 

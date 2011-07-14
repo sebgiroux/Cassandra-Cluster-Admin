@@ -43,7 +43,7 @@
 						$deleted_from_column = $_GET['column'];
 					}
 					catch (Exception $e) {
-						echo 'Something wrong happened '.$e->getMessage();
+						echo displayErrorMessage('something_wrong_happened',array('message' => $e->getMessage()));
 					}
 				}
 			

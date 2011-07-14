@@ -173,6 +173,9 @@
 		elseif ($index == 'drop_columnfamily') {
 			return '<div class="error_message">Error while dropping column family: '.$params['message'].'</div>';
 		}
+		elseif ($index == 'something_wrong_happened') {
+			return '<div class="error_message">Something wrong happened: '.$params['message'].'</div>';
+		}
 	}
 	
 	function displayCFRow($row,$scf_key = null) {

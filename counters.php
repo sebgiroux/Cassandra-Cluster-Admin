@@ -43,6 +43,7 @@
 				$vw_vars['cluster_name'] = $sys_manager->describe_cluster_name();
 				$vw_vars['keyspace_name'] = $keyspace_name;
 				$vw_vars['columnfamily_name'] = $columnfamily_name;
+				$vw_vars['is_super_cf'] = $one_cf->column_type == 'Super';
 				
 				echo getHTML('counters.php',$vw_vars);				
 			}

@@ -9,7 +9,7 @@
 		num_super_columns++;
 		
 		$('#data').append('<div id="' + num_super_columns + '_super_column_data" style="border-bottom: 1px solid #000; margin-bottom: 10px; padding-bottom: 10px;"></div>');
-		$('#' + num_super_columns + '_super_column_data').append('<div><label for="key">Super Column Key:</label><input id="column_key" name="column_key_' + num_super_columns + '" type="text" value="' + super_key + '" /></div>');
+		$('#' + num_super_columns + '_super_column_data').append('<div><label for="column_key">Super Column Name:</label><input id="column_key" name="column_key_' + num_super_columns + '" type="text" value="' + super_key + '" /></div>');
 	}
 	
 	function addColumn(name,value,p_num_super_columns) {

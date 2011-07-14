@@ -1,11 +1,9 @@
 <h3><a href="index.php"><?=$cluster_name?></a> &gt; <a href="describe_keyspace.php?keyspace_name=<?=$keyspace_name?>"><?=$keyspace_name?></a> &gt; <?=$columnfamily_name?></h3>
 
 <div id="menu">
-	<?php if ($partitioner == 'org.apache.cassandra.dht.OrderPreservingPartitioner'): ?>
 	<div class="menu_item" onclick="location.href='columnfamily_action.php?action=browse_data&amp;keyspace_name=<?php echo $keyspace_name; ?>&amp;columnfamily_name=<?php echo $columnfamily_name; ?>'">
 		<div class="icon browse_data"></div> Browse Data
 	</div>
-	<?php endif; ?>
 	
 	<div class="menu_item" onclick="location.href='columnfamily_action.php?action=create_secondary_index&amp;keyspace_name=<?=$keyspace_name?>&amp;columnfamily_name=<?=$columnfamily_name?>'">
 		<div class="icon create_secondary_index"></div> Create Secondary Index

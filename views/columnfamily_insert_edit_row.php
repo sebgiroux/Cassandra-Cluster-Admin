@@ -43,14 +43,21 @@
 			if ($mode == 'edit'):
 				if ($is_super_cf):
 					foreach ($output as $super_key => $data):
+						$super_key = str_replace('\'','\\\'',$super_key);
 						echo 'addSuperColumn(\''.$super_key.'\');';
+						
 						foreach ($data as $name => $value):
+							$name = str_replace('\'','\\\'',$name);
+							$value = str_replace('\'','\\\'',$value);
 							echo 'addColumn(\''.$name.'\',\''.$value.'\',num_super_columns);';
 						endforeach;
 					endforeach;
 				else:
 					echo 'num_super_columns++;';
+					
 					foreach ($output as $name => $value):
+						$name = str_replace('\'','\\\'',$name);
+						$value = str_replace('\'','\\\'',$value);
 						echo 'addColumn(\''.$name.'\',\''.$value.'\',num_super_columns);';
 					endforeach;
 				endif;

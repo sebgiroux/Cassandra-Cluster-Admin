@@ -7,7 +7,7 @@
 		<title><?=getPageTitle();?></title>
 	
 		<meta name="title" content="Cassandra Cluster Admin" />
-		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
+		<script type="text/javascript" src="js/jquery.js"></script>
 		<script type="text/javascript" src="js/cassandra_cluster_admin.js"></script>
 		
 		<link rel="stylesheet" type="text/css" href="css/style.css" />

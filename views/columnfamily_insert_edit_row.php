@@ -13,6 +13,8 @@
 	}
 	
 	function addColumn(name,value,p_num_super_columns) {
+		value = value.replace(/"/g,'&#34;'); // replace " with &#34;
+		
 		if (num_columns == 0) {		
 			if ($('#' + p_num_super_columns + '_super_column_data').length == 0) {
 				$('#data').append('<div id="' + num_super_columns + '_super_column_data" style="border-bottom: 1px solid #000; margin-bottom: 10px; padding-bottom: 10px;"></div>');
@@ -22,6 +24,7 @@
 		}
 		
 		num_columns++;		
+		
 		$('#' + p_num_super_columns + '_super_column_data > .btn_add_column').remove();		
 		$('#' + p_num_super_columns + '_super_column_data').append('<div class="clear_left"></div><div class="insert_row_column_name"><input id="column_name_' + num_super_columns + '_' + num_columns + '" name="column_name_' + num_super_columns + '_' + num_columns + '" type="text" class="smaller" value="' + name + '" /></div><input id="column_value_' + num_super_columns + '_' + num_columns + '" name="column_value_' + num_super_columns + '_' + num_columns + '" type="text" class="smaller" value="' + value + '" /> <input class="btn_add_column" type="button" value="Add..." onclick="addColumn(\'\',\'\',\'' + p_num_super_columns + '\');" />');
 	}

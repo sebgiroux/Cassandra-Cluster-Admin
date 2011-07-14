@@ -94,7 +94,7 @@
 	
 	<div>
 		<label for="default_validation_class">Default Validation Class</label>
-		<input type="text" id="default_validation_class" name="default_validation_class" value="<?=$default_validation_class?>" /> * Use "CounterColumnType" for Counter Column
+		<input type="text" id="default_validation_class" name="default_validation_class" value="<?=$default_validation_class?>" /> <? if ( version_compare($thrift_api_version,MINIMUM_THRIFT_API_VERSION_FOR_COUNTERS,'>=')): ?>* Use "CounterColumnType" for Counter Column<? endif;?>
 	</div>
 	
 	<div>

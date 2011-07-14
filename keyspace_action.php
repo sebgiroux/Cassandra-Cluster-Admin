@@ -86,7 +86,9 @@
 		try {
 			$sys_manager->create_column_family($keyspace_name, $columnfamily_name, $attrs);
 			
-			$vw_vars['success_message'] = displaySuccessMessage('create_columnfamily',array('columnfamily_name' => $columnfamily_name));
+			$_SESSION['message'] = $columnfamily_name;
+			
+			redirect('describe_keyspace.php?keyspace_name='.$keyspace_name.'&create_cf=1');
 		}
 		catch (Exception $e) {
 			$vw_vars['error_message'] = displayErrorMessage('create_columnfamily',array('columnfamily_name' => $columnfamily_name, 'message' => $e->getMessage()));
@@ -128,6 +130,7 @@
 		$vw_vars['memtable_operations_in_millions'] = '';				
 		
 		$vw_vars['mode'] = 'create';		
+		$vw_vars['thrift_api_version'] = $sys_manager->describe_version();
 				
 		if (!isset($vw_vars['success_message'])) $vw_vars['success_message'] = '';
 		if (!isset($vw_vars['error_message'])) $vw_vars['error_message'] = '';

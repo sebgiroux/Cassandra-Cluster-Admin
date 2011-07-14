@@ -123,7 +123,8 @@
 			if (!isset($vw_vars['success_message'])) $vw_vars['success_message'] = '';
 			if (!isset($vw_vars['error_message'])) $vw_vars['error_message'] = '';
 			
-			$vw_vars['mode'] = 'edit';						
+			$vw_vars['mode'] = 'edit';
+			$vw_vars['thrift_api_version'] = $sys_manager->describe_version();
 			
 			echo getHTML('create_edit_columnfamily.php',$vw_vars);
 		}
@@ -737,17 +738,15 @@
 			if ($column_family->cfdef->column_type == 'Super') {
 				$new_value = $new_value[$super_column][$column];
 			}
-			else {
-				
+			else {				
 				$new_value = $new_value[$column];
-			}
-
-			
+			}			
 			
 			redirect('counters.php?keyspace_name='.$keyspace_name.'&columnfamily_name='.$columnfamily_name.'&new_value='.$new_value);
         }
 		catch (Exception $e) {
-			echo displayErrorMessage('something_wrong_happened',array('message' => $e->getMessage()));
+			$_SESSION['message'] = $e->getMessage();
+			redirect('counters.php?keyspace_name='.$keyspace_name.'&columnfamily_name='.$columnfamily_name.'&error=1');
 		}		
 	}
 

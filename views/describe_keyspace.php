@@ -1,4 +1,5 @@
 <h3><a href="index.php"><?=$cluster_name?></a> &gt; <?=$keyspace_name?></h3>
+
 <div id="menu">
 	<div class="menu_item" style="width: 220px;" onclick="location.href='keyspace_action.php?action=create_cf&amp;keyspace_name=<?=$keyspace_name?>'">
 		<div class="icon create_column_family"></div> Create New Column Family
@@ -12,6 +13,7 @@
 	<div class="clear_left"></div>
 </div>
 
+<?=$added_cf;?>
 <?=$deleted_cf;?>
 
 <h3>Keyspace Details</h3>

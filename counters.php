@@ -35,9 +35,17 @@
 			// Make sure the column family exists in this keyspace
 			if ($one_cf) {	
 				$vw_vars['success_message'] = '';
+				$vw_vars['error_message'] = '';
+				
+				// Success
 				if (isset($_GET['new_value'])) {
 					$new_value = $_GET['new_value'];
 					$vw_vars['success_message'] = displaySuccessMessage('edit_counter',array('value' => $new_value));
+				}
+				
+				// Error
+				if (isset($_GET['error']) == 1) {
+					$vw_vars['error_message'] = displayErrorMessage('something_wrong_happened',array('message' => $_SESSION['message']));
 				}
 			
 				$vw_vars['cluster_name'] = $sys_manager->describe_cluster_name();

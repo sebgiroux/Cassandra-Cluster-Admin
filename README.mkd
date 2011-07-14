@@ -1,4 +1,4 @@
-﻿Cassandra Cluster Admin by Sébastien Giroux
+Cassandra Cluster Admin by Sébastien Giroux
 ===============================================
 Cassandra Cluster Admin is a GUI tool to help people administrate their Apache Cassandra cluster.
 

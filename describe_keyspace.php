@@ -2,7 +2,7 @@
 	/*
 		Cassandra Cluster Admin
 		
-		@author Sébastien Giroux
+		@author SÃ©bastien Giroux
 		@copyright All rights reserved - 2011
 	*/
 
@@ -36,6 +36,14 @@
 			echo displayErrorMessage('keyspace_doesnt_exists',array('keyspace_name' => $keyspace_name));
 		}
 		else {
+			// CF created successfully
+			$vw_vars['added_cf'] = '';
+			if (isset($_GET['create_cf']) == 1) {
+				$columnfamily_name = $_SESSION['message'];
+				$vw_vars['added_cf'] = displaySuccessMessage('create_columnfamily',array('columnfamily_name' => $columnfamily_name));
+			}
+		
+			// CF deleted successfully
 			$vw_vars['deleted_cf'] = '';
 			if (isset($_GET['deleted_cf']) && $_GET['deleted_cf'] == 1) {
 				$vw_vars['deleted_cf'] = displaySuccessMessage('drop_columnfamily');
@@ -93,7 +101,7 @@
 			catch(Exception $e) {
 				$vw_vars['ring'] = $e->getMessage();
 			}
-			
+				
 			echo getHTML('describe_keyspace.php',$vw_vars);	
 		}		
 	}

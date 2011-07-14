@@ -121,9 +121,10 @@
 		/*
 			Set dropdown with right value on page load
 		*/		
-		$('#column_type').val('<?=$column_type?>');
-		$('#comparator_type').val('<?=$comparator_type?>');
-		$('#subcomparator_type').val('<?=$subcomparator_type?>');
+		
+		if ('<?=$column_type?>' != '') $('#column_type').val('<?=$column_type?>');
+		if ('<?=$comparator_type?>' != '') $('#comparator_type').val('<?=$comparator_type?>');
+		if ('<?=$subcomparator_type?>' != '') $('#subcomparator_type').val('<?=$subcomparator_type?>');
 		
 		/*
 			Disable comparator type if in edit mode

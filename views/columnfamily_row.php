@@ -1,11 +1,18 @@
 <table border="1" cellpadding="5">
-	<?php if (!is_null($scf_key)): ?><tr><td colspan="2"><?=$scf_key?></td></tr><?php endif; ?>
+	<?php if (!is_null($scf_key)): ?>
+		<tr>
+			<td colspan="2">
+				<div class="float_left"><?=$scf_key?></div>
+				<div class="float_right" style="margin-left: 20px;"><div class="delete_row_icon"></div><div class="float_left"><a href="#" onclick="deleteSuperColumn('<?php echo $keyspace_name; ?>','<?php echo $columnfamily_name; ?>','<?php echo $row_key; ?>','<?php echo $scf_key;?>')">Delete</a></div>
+				<div class="clear_both"></div>
+			</td>
+		</tr>
+	<?php endif; ?>
 			
 	<?php foreach ($row as $column => $value): ?>
 		<tr>
 			<td><?=$column?></td>
-			<td><pre><?=$value?></pre>
-			</td>
+			<td><pre><?=$value?></pre></td>
 		</tr>
 	<?php endforeach; ?>
 </table>

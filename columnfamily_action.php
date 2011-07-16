@@ -704,11 +704,16 @@
 			$key = $_GET['key'];
 		}
 		
+		$super_column_key = null;
+		if (isset($_GET['super_column_key'])) {
+			$super_column_key = $_GET['super_column_key'];
+		}
+		
 		try {
 			$pool = new ConnectionPool($keyspace_name, $CASSANDRA_SERVERS);
 			$column_family = new ColumnFamily($pool, $columnfamily_name);	
 		
-			$column_family->remove($key);
+			$column_family->remove($key,null,$super_column_key);
 			
 			redirect('columnfamily_action.php?action=browse_data&&keyspace_name='.$keyspace_name.'&columnfamily_name='.$columnfamily_name);
 		}

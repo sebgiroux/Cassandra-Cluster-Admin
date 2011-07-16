@@ -30,6 +30,14 @@ function deleteRow(keyspace_name,columnfamily_name,key) {
 	return false;
 }
 
+function deleteSuperColumn(keyspace_name,columnfamily_name,key,super_column) {
+	if (confirm('Are you sure you want to delete the super column ' + super_column + ' of the row ' + key + '?')) {
+		location.href = 'columnfamily_action.php?action=delete_row&keyspace_name=' + keyspace_name + '&columnfamily_name=' + columnfamily_name + '&key=' + key + '&super_column_key=' + super_column;
+	}
+	
+	return false;
+}
+
 function changeRowsPerPage(keyspace_name,columnfamily_name,offset_key) {
 	location.href = 'columnfamily_action.php?action=browse_data&keyspace_name=' + keyspace_name + '&columnfamily_name=' + columnfamily_name + '&offset_key=' + offset_key + '&nb_rows=' + $('#show_nb_rows').val();
 }

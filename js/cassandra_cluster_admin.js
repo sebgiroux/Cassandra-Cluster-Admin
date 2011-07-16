@@ -42,3 +42,7 @@ function changeRowsPerPage(keyspace_name,columnfamily_name,offset_key) {
 	location.href = 'columnfamily_action.php?action=browse_data&keyspace_name=' + keyspace_name + '&columnfamily_name=' + columnfamily_name + '&offset_key=' + offset_key + '&nb_rows=' + $('#show_nb_rows').val();
 }
 
+function applyClusterChange() {
+	var cluster_index = $('#cluster').val();
+	location.href = 'index.php?cluster=' + cluster_index;
+}

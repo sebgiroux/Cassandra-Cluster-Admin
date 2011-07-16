@@ -246,7 +246,7 @@
 		$cf = getCFInKeyspace($keyspace_name,$columnfamily_name);
 	
 		try {		
-			$pool = new ConnectionPool($keyspace_name, $CASSANDRA_SERVERS);
+			$pool = new ConnectionPool($keyspace_name, getArrayOfNodesForCurrentCluster());
 			$column_family = new ColumnFamily($pool, $columnfamily_name);
 			
 			$vw_vars['results'] = '';	
@@ -331,7 +331,7 @@
 		
 		$key = $_POST['key'];
 		
-		$pool = new ConnectionPool($keyspace_name, $CASSANDRA_SERVERS);
+		$pool = new ConnectionPool($keyspace_name, getArrayOfNodesForCurrentCluster());
 		$column_family = new ColumnFamily($pool, $columnfamily_name);
 		
 		$no_column = 1;
@@ -489,7 +489,7 @@
 		$vw_vars['columnfamily_name'] = $columnfamily_name;
 				
 		try {		
-			$pool = new ConnectionPool($keyspace_name, $CASSANDRA_SERVERS);
+			$pool = new ConnectionPool($keyspace_name, getArrayOfNodesForCurrentCluster());
 			$column_family = new ColumnFamily($pool, $columnfamily_name);
 		
 			// Increment counter
@@ -663,7 +663,7 @@
 		$vw_vars['mode'] = 'edit';
 		
 		try {		
-			$pool = new ConnectionPool($keyspace_name, $CASSANDRA_SERVERS);
+			$pool = new ConnectionPool($keyspace_name, getArrayOfNodesForCurrentCluster());
 			$column_family = new ColumnFamily($pool, $columnfamily_name);
 			
 			$vw_vars['results'] = '';	
@@ -710,7 +710,7 @@
 		}
 		
 		try {
-			$pool = new ConnectionPool($keyspace_name, $CASSANDRA_SERVERS);
+			$pool = new ConnectionPool($keyspace_name, getArrayOfNodesForCurrentCluster());
 			$column_family = new ColumnFamily($pool, $columnfamily_name);	
 		
 			$column_family->remove($key,null,$super_column_key);
@@ -753,7 +753,7 @@
 		if (isset($_POST['columnfamily_name'])) $columnfamily_name = $_POST['columnfamily_name'];
 		
 		try {
-			$pool = new ConnectionPool($keyspace_name, $CASSANDRA_SERVERS);
+			$pool = new ConnectionPool($keyspace_name, getArrayOfNodesForCurrentCluster());
 			$column_family = new ColumnFamily($pool, $columnfamily_name);	
 			
 			if ($action == 'dec') {

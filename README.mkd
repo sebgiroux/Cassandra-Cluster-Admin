@@ -23,13 +23,13 @@ Supported actions
 
 Getting Started
 ------------------------------------------------
-To get started with Cassandra Cluster admin, you must copy all the files from the package you just downloaded into a directory that can be accessed by a Web browser (ex: http://localhost/cassandra-cluster-admin). If this server is accessible for everyone, you might want to password protect the application, so your data is secure. 
+To get started with Cassandra Cluster admin, you must copy all the files from the package you just downloaded into a directory that can be accessed by a Web browser (ex: http://localhost/cassandra-cluster-admin). The server must have PHP installed (5.3+ recommended). Installing the Thrift PHP extension is also a good idea for performance (read "Thrift C extension" section below).
 
-All configuration is in "include/conf.inc.php":
+All configuration is in `include/conf.inc.php`:
 
-To password protect the application, you can set `CCA_LOGIN_REQUIRED` to true and specify your desired username and password by altering `CCA_USERNAME` and `CCA_PASSWORD` respectivly.
+If this Web server is accessible by everyone, you might want to password protect the application, so your data is secure. To do so, you can set `CCA_LOGIN_REQUIRED` to true and specify your desired username and password by altering `CCA_USERNAME` and `CCA_PASSWORD` respectivly.
 
-If your Cassandra server is not running on localhost or if you have multiple Cassandra servers, you have to alter the` $CASSANDRA_SERVERS` array, and your Cassandra username (`CASSANDRA_USERNAME`) / password (`CASSANDRA_PASSWORD`) if needed. 
+If your Cassandra server is not running on localhost or if you have multiple Cassandra nodes/clusters, you have to alter the `$CASSANDRA_CLUSTERS` array. This application support multiple Cassandra Cluster so you can alter `$CASSANDRA_CLUSTERS` accordingly. More info is found in the configuration file about multi cluster configuration.
 
 
 Thrift C extension

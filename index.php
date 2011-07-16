@@ -8,6 +8,12 @@
 	
 	require('include/kernel.inc.php');
 	require('include/verify_login.inc.php');
+
+	// Change current cluster
+	if (isset($_GET['cluster']) && $_GET['cluster'] >= 0 && $_GET['cluster'] <= count($CASSANDRA_CLUSTERS) - 1) {
+		$_SESSION['cluster_index'] = $_GET['cluster'];
+		redirect('index.php');
+	}
 	
 	/*
 		Display success message

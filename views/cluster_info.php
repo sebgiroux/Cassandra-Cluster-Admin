@@ -1,3 +1,15 @@
+<div id="cluster_selection">
+	<? if (count($cluster_details) > 1): ?>
+		Select a cluster:
+		<select name="cluster" id="cluster" onchange="applyClusterChange();">
+			<?php foreach ($cluster_details as $index => $one_cluster): ?>
+				<?php $cluster_name = getClusterNameForIndex($index); ?>
+				<?php if (!is_null($cluster_name)): ?><option value="<?=$index?>" <? if (getClusterIndex() == $index) echo 'selected="selected"'; ?>><?=$cluster_name?></option><? endif; ?>
+			<?php endforeach; ?>
+		</select>
+	<? endif; ?>
+</div>
+
 <div id="cluster_info">
 	<h3>Cluster Name: <?=$cluster_name;?></h3>
 

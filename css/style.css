@@ -198,6 +198,10 @@ select {
 	width: 300px;
 }
 
+#cluster_selection {
+	margin-bottom: 20px;
+}
+
 #cluster_info {
 	border: 1px solid #000;
 	background-color: #e8e8e8;

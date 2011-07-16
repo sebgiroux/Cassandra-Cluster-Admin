@@ -14,9 +14,17 @@
 	
 	define('MINIMUM_THRIFT_API_VERSION_FOR_COUNTERS','19.10.0');
 	
-	try {
-		$random_server = $CASSANDRA_SERVERS[array_rand($CASSANDRA_SERVERS)];
-		$sys_manager = new SystemManager($random_server,$CREDENTIALS,1500,1500);
+	session_start();
+	
+	// Make sure the cluster index in the session still exists in the config array
+	if (getClusterIndex() > count($CASSANDRA_CLUSTERS) - 1) {
+		$_SESSION['cluster_index'] = 0;
+	}
+	
+	try {	
+		$random_server = getRandomNodeForCurrentCluster();
+	
+		$sys_manager = new SystemManager($random_server,getCredentialsForCurrentCluster(),1500,1500);
 	}
 	catch (TException $e) {
 		die(getHTML('header.php').getHTML('server_error.php',array('error_message' => displayErrorMessage('cassandra_server_error',array('error_message' => $e->getMessage())))).getHTML('footer.php'));
@@ -212,5 +220,69 @@
 		return $current_page_title;
 	}
 	
-	session_start();
+	/*
+		Cluster helper function
+	*/
+	
+	function getClusterIndex() {
+		if (isset($_SESSION['cluster_index'])) {
+			return $_SESSION['cluster_index'];
+		}
+		
+		return 0;
+	}
+		
+	function getClusterNameForIndex($index) {
+		try {
+			$random_server = getRandomNodeForIndex($index);
+			$credentials = getCredentialsForIndex($index);
+	
+			$sys_manager = new SystemManager($random_server,$credentials,1500,1500);
+			
+			return $sys_manager->describe_cluster_name();
+		}
+		catch (TException $e) {
+			return null;
+		}		
+	}
+	
+	function getArrayOfNodesForCurrentCluster() {
+		global $CASSANDRA_CLUSTERS;
+		
+		$all_nodes = $CASSANDRA_CLUSTERS[getClusterIndex()]['nodes'];
+		
+		return $all_nodes;
+	}
+	
+	function getRandomNodeForIndex($index) {
+		global $CASSANDRA_CLUSTERS;
+		
+		$all_nodes = $CASSANDRA_CLUSTERS[$index]['nodes'];
+		$random_server = $all_nodes[array_rand($all_nodes)];
+		
+		return $random_server;
+	}
+	
+	function getRandomNodeForCurrentCluster() {
+		return getRandomNodeForIndex(getClusterIndex());
+	}
+	
+	function getCredentialsForIndex($index) {
+		global $CASSANDRA_CLUSTERS;
+		
+		$cluster = $CASSANDRA_CLUSTERS[$index];
+		
+		$username = $cluster['username'];
+		$password = $cluster['password'];
+		
+		if ($username == '' && $password == '') {
+			return null;
+		}
+		
+		return array('username' => $username, 'password' => $password);
+	}
+	
+	function getCredentialsForCurrentCluster() {
+		return getCredentialsForIndex(getClusterIndex());
+	}
 ?>

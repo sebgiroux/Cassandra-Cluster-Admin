@@ -24,24 +24,25 @@
 	<div class="clear_left"></div>
 </div>
 
-<p>
-	<h3>Keyspaces and Column Families</h3>	
-	<ul id="keyspaces">
-		<?
-			for ($i = 0; $i < count($keyspaces_name); $i++):
-				$keyspace_name = $keyspaces_name[$i];
-				
-				echo '<li><a href="describe_keyspace.php?keyspace_name='.$keyspace_name.'">'.$keyspace_name.'</a>';
-					echo '<ul>';
-						for ($j = 0; $j < count($keyspaces_details[$i]['columnfamilys_name']); $j++):
-							$columnfamily_name = $keyspaces_details[$i]['columnfamilys_name'][$j];
-							echo '<li><a href="describe_columnfamily.php?keyspace_name='.$keyspace_name.'&amp;columnfamily_name='.$columnfamily_name.'">'.$columnfamily_name.'</a></li>';
-						endfor;						
-					echo '</ul>';				
-				echo '</li>';
-			endfor;
-		?>
-	</ul>		
-</p>
+<h3>Keyspaces and Column Families</h3>	
+<ul id="keyspaces">
+	<?
+		$nb_ks = count($keyspaces_name);
+		for ($i = 0; $i < $nb_ks; $i++):
+			$keyspace_name = $keyspaces_name[$i];
+			
+			echo '<li><a href="describe_keyspace.php?keyspace_name='.$keyspace_name.'">'.$keyspace_name.'</a>';
+				echo '<ul>';
+					$nb_cf = count($keyspaces_details[$i]['columnfamilys_name']);
+					for ($j = 0; $j < $nb_cf; $j++):
+						$columnfamily_name = $keyspaces_details[$i]['columnfamilys_name'][$j];
+						echo '<li><a href="describe_columnfamily.php?keyspace_name='.$keyspace_name.'&amp;columnfamily_name='.$columnfamily_name.'">'.$columnfamily_name.'</a></li>';
+					endfor;						
+				echo '</ul>';				
+			echo '</li>';
+		endfor;
+	?>
+</ul>		
+
 
 

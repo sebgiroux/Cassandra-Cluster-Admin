@@ -263,6 +263,8 @@
 			$vw_row_vars['columnfamily_name'] = $columnfamily_name;
 			$vw_row_vars['show_actions_link'] = false;
 			
+			$vw_row_vars['is_couter_column'] = false;
+			
 			$vw_vars['results'] = getHTML('columnfamily_browse_data_row.php',$vw_row_vars);
 			
 			$vw_vars['success_message'] = displaySuccessMessage('get_key',array('key' => $key));
@@ -490,6 +492,28 @@
 			$pool = new ConnectionPool($keyspace_name, $CASSANDRA_SERVERS);
 			$column_family = new ColumnFamily($pool, $columnfamily_name);
 		
+			// Increment counter
+			if (isset($_GET['increment'])) {
+				$row_key = $_GET['row_key'];
+				$column = $_GET['column'];
+				
+				$super_column = null;
+				if (isset($_GET['super_column'])) $super_column = $_GET['super_column'];
+				
+				$column_family->add($row_key, $column, 1,$super_column);
+			}
+			
+			// Decrement counter
+			if (isset($_GET['decrement'])) {
+				$row_key = $_GET['row_key'];
+				$column = $_GET['column'];
+				
+				$super_column = null;
+				if (isset($_GET['super_column'])) $super_column = $_GET['super_column'];
+				
+				$column_family->add($row_key, $column, -1,$super_column);
+			}
+		
 			$offset_key = '';
 					
 			if (isset($_GET['pos']) && $_GET['pos'] == 'prev' && isset($_SESSION['browse_data_offset_key']) && is_array($_SESSION['browse_data_offset_key'])) {
@@ -592,7 +616,7 @@
 			echo displayErrorMessage('columnfamily_doesnt_exists',array('column_name' => $columnfamily_name));
 		}
 		catch (Exception $e) {
-			echo 'Something went wrong '.$e->getMessage();
+			echo displayErrorMessage('something_wrong_happened',array('message' => $e->getMessage()));
 		}
 	}	
 	
@@ -649,7 +673,7 @@
 			$vw_vars['output'] = $output;
 		}
 		catch(Exception $e) {
-			echo 'Something went wrong '.$e->getMessage();
+			echo displayErrorMessage('something_wrong_happened',array('message' => $e->getMessage()));
 		}
 		
 		$current_page_title = 'Cassandra Cluster Admin > '.$keyspace_name.' > '.$columnfamily_name.' > Edit Row';

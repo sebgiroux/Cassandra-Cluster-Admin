@@ -91,7 +91,7 @@
 				
 				$vw_cf_vars['show_edit_link'] = false;
 				
-				$vw_vars['columnfamily_def'] = getHTML('columnfamily_row.php',$vw_cf_vars);				
+				$vw_vars['columnfamily_def'] = getHTML('columnfamily_details.php',$vw_cf_vars);				
 				
 				$vw_vars['cluster_name'] = $sys_manager->describe_cluster_name();
 				$vw_vars['keyspace_name'] = $keyspace_name;

@@ -4,6 +4,10 @@ body {
 	background-color: #eee;
 }
 
+pre {
+	margin: 0;
+}
+
 #cca_title {
 	float: left;
 	margin-top: 0;
@@ -89,7 +93,7 @@ body {
 	height: 16px;
 	margin-top: 4px;
 	margin-right: 5px;
-	background: url('../imgs/edit_row.png');
+	background-image: url('../imgs/edit_row.png');
 }
 
 .delete_row_icon {
@@ -98,7 +102,25 @@ body {
 	height: 16px;
 	margin-top: 4px;
 	margin-right: 5px;
-	background: url('../imgs/delete_row.png');
+	background-image: url('../imgs/delete_row.png');
+}
+
+.increment_counter_icon {
+	float: left;
+	width: 16px;
+	height: 16px;
+	margin-top: 4px;
+	margin-right: 5px;
+	background-image: url('../imgs/increment_counter.png');
+}
+
+.decrement_counter_icon {
+	float: left;
+	width: 16px;
+	height: 16px;
+	margin-top: 4px;
+	margin-right: 5px;
+	background-image: url('../imgs/decrement_counter.png');
 }
 
 #menu .menu_item .create_column_family {

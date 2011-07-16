@@ -91,7 +91,7 @@
 					
 					$vw_vars['show_edit_link'] = true;
 					
-					$vw_vars['list_column_families'] .= getHTML('columnfamily_row.php',$vw_vars);
+					$vw_vars['list_column_families'] .= getHTML('columnfamily_details.php',$vw_vars);
 				}
 			}
 			

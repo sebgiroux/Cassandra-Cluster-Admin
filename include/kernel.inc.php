@@ -178,24 +178,27 @@
 		}
 	}
 	
-	function displayCFRow($row,$scf_key = null) {
-		$output = '<table border="1" cellpadding="5">';
+	function displayCFRow($row_key,$keyspace_name,$columnfamily_name,$row,$scf_key = null,$is_counter_column = false) {		
+		$vw_vars['scf_key'] = $scf_key;
+		$vw_vars['row'] = $row;
+		$vw_vars['keyspace_name'] = $keyspace_name;
+		$vw_vars['columnfamily_name'] = $columnfamily_name;
+		$vw_vars['row_key'] = $row_key;
 		
-		if (!is_null($scf_key)) $output .= '<tr><td colspan="2">'.$scf_key.'</td></tr>';
-		
-		foreach ($row as $key => $value) {
-			$output .= '<tr><td>'.$key.'</td><td>'.$value.'</td></tr>';
+		// If it's a column family of counter
+		if ($is_counter_column) {			
+			return getHTML('columnfamily_row_counter.php',$vw_vars);
 		}
-		
-		$output .= '</table><br />';
-		
-		return $output;
+		else {		
+			return getHTML('columnfamily_row.php',$vw_vars);
+		}
 	}
 	
-	function displaySCFRow($row) {
+	function displaySCFRow($row_key,$keyspace_name,$columnfamily_name,$row,$is_counter_column = false) {
 		$output = '';
+		
 		foreach ($row as $key => $value) {
-			$output .= displayCFRow($value,$key);
+			$output .= displayCFRow($row_key,$keyspace_name,$columnfamily_name,$value,$key,$is_counter_column);
 		}	
 		
 		return $output;

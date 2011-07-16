@@ -263,7 +263,7 @@
 			$vw_row_vars['columnfamily_name'] = $columnfamily_name;
 			$vw_row_vars['show_actions_link'] = false;
 			
-			$vw_row_vars['is_couter_column'] = false;
+			$vw_row_vars['is_counter_column'] = false;
 			
 			$vw_vars['results'] = getHTML('columnfamily_browse_data_row.php',$vw_row_vars);
 			

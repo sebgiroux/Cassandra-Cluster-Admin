@@ -24,12 +24,7 @@
 	<?=$results?>
 </table>
 
-<?php
-	if ($show_begin_page_link): echo '<a href="columnfamily_action.php?action=browse_data&amp;keyspace_name='.$keyspace_name.'&amp;columnfamily_name='.$columnfamily_name.'&amp;pos=begin&nb_rows='.$nb_rows.'">&lt;&lt; Begin</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;'; endif;
-	
-	if ($show_prev_page_link): echo '<a href="columnfamily_action.php?action=browse_data&amp;keyspace_name='.$keyspace_name.'&amp;columnfamily_name='.$columnfamily_name.'&amp;offset_key='.$current_offset_key.'&amp;pos=prev&nb_rows='.$nb_rows.'">&lt; Prev Page</a>'; endif;
-	
-	if ($show_prev_page_link && $show_next_page_link) echo '&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;';
-	
-	if ($show_next_page_link): echo '<a href="columnfamily_action.php?action=browse_data&amp;keyspace_name='.$keyspace_name.'&amp;columnfamily_name='.$columnfamily_name.'&offset_key='.$offset_key.'&pos=next&nb_rows='.$nb_rows.'">Next Page &gt;</a>'; endif;	
-?>
+<?php if ($show_begin_page_link): ?><a href="columnfamily_action.php?action=browse_data&amp;keyspace_name=<?=$keyspace_name?>&amp;columnfamily_name=<?=$columnfamily_name?>&amp;pos=begin&nb_rows=<?=$nb_rows?>">&lt;&lt; Begin</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<? endif; ?>
+<?php if ($show_prev_page_link): ?><a href="columnfamily_action.php?action=browse_data&amp;keyspace_name=<?=$keyspace_name?>&amp;columnfamily_name=<?=$columnfamily_name?>&amp;offset_key=<?=$current_offset_key?>&amp;pos=prev&nb_rows=<?=$nb_rows?>">&lt; Prev Page</a><? endif; ?>
+<?php if ($show_prev_page_link && $show_next_page_link): ?>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<?php endif; ?>
+<?php if ($show_next_page_link): ?><a href="columnfamily_action.php?action=browse_data&amp;keyspace_name=<?=$keyspace_name?>&amp;columnfamily_name=<?=$columnfamily_name?>&offset_key=<?=$offset_key?>&pos=next&nb_rows=<?=$nb_rows?>">Next Page &gt;</a><? endif; ?>	

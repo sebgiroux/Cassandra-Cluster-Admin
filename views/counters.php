@@ -36,8 +36,8 @@
 	
 	<div>
 		<input type="submit" name="btn_modify_counter" value="Modify Counter" />
+		
+		<input type="hidden" name="keyspace_name" value="<?=$keyspace_name?>" />
+		<input type="hidden" name="columnfamily_name" value="<?=$columnfamily_name?>" />
 	</div>
-	
-	<input type="hidden" name="keyspace_name" value="<?=$keyspace_name?>" />
-	<input type="hidden" name="columnfamily_name" value="<?=$columnfamily_name?>" />
 </form>

@@ -37,8 +37,7 @@
 	
 	<div>
 		<input type="submit" name="<? if ($mode == 'edit'): echo 'btn_edit_secondary_index'; else: echo 'btn_create_secondary_index'; endif; ?>" value="<? if ($mode == 'edit'): echo 'Edit Secondary Index'; else: echo 'Add Secondary Index'; endif; ?>" />
-	</div>
-	
-	<input type="hidden" name="keyspace_name" value="<?=$keyspace_name?>" />
-	<input type="hidden" name="columnfamily_name" value="<?=$columnfamily_name?>" />
+		<input type="hidden" name="keyspace_name" value="<?=$keyspace_name?>" />
+		<input type="hidden" name="columnfamily_name" value="<?=$columnfamily_name?>" />
+	</div>	
 </form>

@@ -107,13 +107,12 @@
 		<input type="text" id="max_compaction_threshold" name="max_compaction_threshold" value="<?=$max_compaction_threshold?>" />
 	</div>
 	
-	<p style="font-size: smaller;">* Any field left blank will use the server default value.</p>
+	<p class="form_tips">* Any field left blank will use the server default value.</p>
 	
 	<div>
 		<input type="submit" name="<? if ($mode == 'edit'): echo 'btn_edit_columnfamily'; else: echo 'btn_create_columnfamily'; endif; ?>" value="<? if ($mode == 'edit'): echo 'Edit Column Family'; else: echo 'Create Column Family'; endif; ?>" />
+		<input type="hidden" name="keyspace_name" value="<?=$keyspace_name?>" />
 	</div>
-	
-	<input type="hidden" name="keyspace_name" value="<?=$keyspace_name?>" />
 </form>
 
 <script type="text/javascript">

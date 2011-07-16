@@ -6,7 +6,6 @@
 <?=$results?>
 
 <form method="post" action="">
-
 	<div>
 		<label for="key">Key:</label>
 		<input id="key" name="key" type="text" />
@@ -14,6 +13,5 @@
 
 	<div>
 		<input type="submit" name="btn_get_key" value="Get" />
-	</div>
-	
+	</div>	
 </form>

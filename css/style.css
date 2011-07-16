@@ -178,6 +178,10 @@ form label {
 	float: left;
 }
 
+.form_tips {
+	font-size: smaller;
+}
+
 input[type=text], input[type=password] {
 	width: 300px;
 }

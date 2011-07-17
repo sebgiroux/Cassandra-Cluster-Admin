@@ -8,6 +8,24 @@ pre {
 	margin: 0;
 }
 
+table, td {
+    border-color: #cdcdcd;
+    border-style: solid;
+}
+
+table {
+    border-width: 0 0 1px 1px;
+    border-spacing: 0;
+    border-collapse: collapse;
+}
+
+td {
+    margin: 0;
+    padding: 4px;
+    border-width: 1px 1px 0 0;
+    background-color: #eee;
+}
+
 #cca_title {
 	float: left;
 	margin-top: 0;

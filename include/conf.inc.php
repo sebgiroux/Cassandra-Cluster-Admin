@@ -29,4 +29,6 @@
 	define('CCA_LOGIN_REQUIRED',false);
 	define('CCA_USERNAME','root'); 	
 	define('CCA_PASSWORD','');
+	
+	define('MX4J_HTTP_ADAPTOR_PORT',8081);
 ?>

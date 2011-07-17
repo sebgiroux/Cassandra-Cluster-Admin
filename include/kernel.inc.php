@@ -12,6 +12,7 @@
 	
 	require('helper/ClusterHelper.php');
 	require('helper/ColumnFamilyHelper.php');
+	require('helper/MX4J.php');
 	
 	require('conf.inc.php');
 	
@@ -49,6 +50,14 @@
 
 		return $content;
 	} 
+	
+	function formatBytes($bytes) {
+		if ($bytes < 1024) return $bytes.' B';
+		elseif ($bytes < 1048576) return round($bytes / 1024, 2).' KB';
+		elseif ($bytes < 1073741824) return round($bytes / 1048576, 2).' MB';
+		elseif ($bytes < 1099511627776) return round($bytes / 1073741824, 2).' GB';
+		else return round($bytes / 1099511627776, 2).' TB';
+	}
 	
 	function redirect($url) {
 		header('Location: '.$url);
@@ -88,6 +97,9 @@
 		}
 		elseif ($index == 'edit_counter') {
 			return '<div class="success_message">Counter row edited successfully. Value is now '.$params['value'].'!</div>';
+		}
+		elseif ($index == 'invoke_garbage_collector') {
+			return '<div class="success_message">Garbage collector was invoked succesfully!</div>';
 		}
 	}
 	
@@ -166,6 +178,9 @@
 		}
 		elseif ($index == 'something_wrong_happened') {
 			return '<div class="error_message">Something wrong happened: '.$params['message'].'</div>';
+		}
+		elseif ($index == 'invoke_garbage_collector') {
+			return '<div class="success_message">Invoking garbage collector failed.</div>';
 		}
 	}
 	

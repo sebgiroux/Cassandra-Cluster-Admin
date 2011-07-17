@@ -20,6 +20,7 @@ Supported actions
 * Row manipulation on column family and super column family (insert/edit/remove)
 * Basic data browser to navigate in the data of a column family
 * Support Cassandra 0.8+ atomic counters
+* Support management of multiple Cassandra clusters
 
 Getting Started
 ------------------------------------------------
@@ -30,6 +31,8 @@ All configuration is in `include/conf.inc.php`:
 If this Web server is accessible by everyone, you might want to password protect the application, so your data is secure. To do so, you can set `CCA_LOGIN_REQUIRED` to true and specify your desired username and password by altering `CCA_USERNAME` and `CCA_PASSWORD` respectivly.
 
 If your Cassandra server is not running on localhost or if you have multiple Cassandra nodes/clusters, you have to alter the `$CASSANDRA_CLUSTERS` array. This application support multiple Cassandra Cluster so you can alter `$CASSANDRA_CLUSTERS` accordingly. More info is found in the configuration file about multi cluster configuration.
+
+If you want to see JMX stats in Cassandra Cluster Admin, you will need to activate MX4J on all your Casandra nodes you want to see the JMX stats. Once this is done, if MX4J is not running on the default port (8081), you will also need to alter `MX4J_HTTP_ADAPTOR_PORT`.
 
 
 Thrift C extension

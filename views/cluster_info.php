@@ -56,5 +56,10 @@
 	?>
 </ul>		
 
+<h3>JMX</h3>
+
+<ul>
+	<li><a href="jmx.php">See Stats</a></li>
+</ul>
 
 

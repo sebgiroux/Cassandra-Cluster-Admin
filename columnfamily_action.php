@@ -94,7 +94,7 @@
 		$vw_vars['keyspace_name'] = $keyspace_name;
 		$vw_vars['columnfamily_name'] = $columnfamily_name;
 		
-		$cf = getCFInKeyspace($keyspace_name,$columnfamily_name);
+		$cf = ColumnFamilyHelper::getCFInKeyspace($keyspace_name,$columnfamily_name);
 		
 		$current_page_title = 'Cassandra Cluster Admin > '.$keyspace_name.' > '.$columnfamily_name.' > Edit Column Family';
 		
@@ -214,7 +214,7 @@
 		
 		$vw_vars['mode'] = 'create';
 	
-		$cf = getCFInKeyspace($keyspace_name,$columnfamily_name);
+		$cf = ColumnFamilyHelper::getCFInKeyspace($keyspace_name,$columnfamily_name);
 	
 		if (!isset($vw_vars['success_message'])) $vw_vars['success_message'] = '';
 		if (!isset($vw_vars['error_message'])) $vw_vars['error_message'] = '';
@@ -243,10 +243,10 @@
 			$columnfamily_name = $_GET['columnfamily_name'];
 		}
 		
-		$cf = getCFInKeyspace($keyspace_name,$columnfamily_name);
+		$cf = ColumnFamilyHelper::getCFInKeyspace($keyspace_name,$columnfamily_name);
 	
 		try {		
-			$pool = new ConnectionPool($keyspace_name, getArrayOfNodesForCurrentCluster());
+			$pool = new ConnectionPool($keyspace_name, $cluster_helper->getArrayOfNodesForCurrentCluster());
 			$column_family = new ColumnFamily($pool, $columnfamily_name);
 			
 			$vw_vars['results'] = '';	
@@ -256,7 +256,7 @@
 			$vw_row_vars['key'] = $key;
 			$vw_row_vars['value'] = $output;
 			
-			$cf_def = getCFInKeyspace($keyspace_name,$columnfamily_name);
+			$cf_def = ColumnFamilyHelper::getCFInKeyspace($keyspace_name,$columnfamily_name);
 			$vw_row_vars['is_super_cf'] = $cf_def->column_type == 'Super';
 			
 			$vw_row_vars['keyspace_name'] = $keyspace_name;
@@ -300,7 +300,7 @@
 		
 		$vw_vars['mode'] = 'create';
 	
-		$cf = getCFInKeyspace($keyspace_name,$columnfamily_name);
+		$cf = ColumnFamilyHelper::getCFInKeyspace($keyspace_name,$columnfamily_name);
 		
 		if (!isset($vw_vars['results'])) $vw_vars['results'] = '';
 		if (!isset($vw_vars['success_message'])) $vw_vars['success_message'] = '';
@@ -331,7 +331,7 @@
 		
 		$key = $_POST['key'];
 		
-		$pool = new ConnectionPool($keyspace_name, getArrayOfNodesForCurrentCluster());
+		$pool = new ConnectionPool($keyspace_name, $cluster_helper->getArrayOfNodesForCurrentCluster());
 		$column_family = new ColumnFamily($pool, $columnfamily_name);
 		
 		$no_column = 1;
@@ -426,7 +426,7 @@
 		if (!isset($vw_vars['info_message'])) $vw_vars['info_message'] = '';
 		if (!isset($vw_vars['error_message'])) $vw_vars['error_message'] = '';
 		
-		$cf_def = getCFInKeyspace($keyspace_name,$columnfamily_name);
+		$cf_def = ColumnFamilyHelper::getCFInKeyspace($keyspace_name,$columnfamily_name);
 		$vw_vars['is_super_cf'] = $cf_def->column_type == 'Super';
 		
 		$vw_vars['key'] = '';
@@ -489,7 +489,7 @@
 		$vw_vars['columnfamily_name'] = $columnfamily_name;
 				
 		try {		
-			$pool = new ConnectionPool($keyspace_name, getArrayOfNodesForCurrentCluster());
+			$pool = new ConnectionPool($keyspace_name, $cluster_helper->getArrayOfNodesForCurrentCluster());
 			$column_family = new ColumnFamily($pool, $columnfamily_name);
 		
 			// Increment counter
@@ -654,7 +654,7 @@
 		if (!isset($vw_vars['info_message'])) $vw_vars['info_message'] = '';
 		if (!isset($vw_vars['error_message'])) $vw_vars['error_message'] = '';
 		
-		$cf_def = getCFInKeyspace($keyspace_name,$columnfamily_name);
+		$cf_def = ColumnFamilyHelper::getCFInKeyspace($keyspace_name,$columnfamily_name);
 		$vw_vars['is_super_cf'] = $cf_def->column_type == 'Super';
 		
 		$vw_vars['key'] = $key;
@@ -663,7 +663,7 @@
 		$vw_vars['mode'] = 'edit';
 		
 		try {		
-			$pool = new ConnectionPool($keyspace_name, getArrayOfNodesForCurrentCluster());
+			$pool = new ConnectionPool($keyspace_name, $cluster_helper->getArrayOfNodesForCurrentCluster());
 			$column_family = new ColumnFamily($pool, $columnfamily_name);
 			
 			$vw_vars['results'] = '';	
@@ -710,7 +710,7 @@
 		}
 		
 		try {
-			$pool = new ConnectionPool($keyspace_name, getArrayOfNodesForCurrentCluster());
+			$pool = new ConnectionPool($keyspace_name, $cluster_helper->getArrayOfNodesForCurrentCluster());
 			$column_family = new ColumnFamily($pool, $columnfamily_name);	
 		
 			$column_family->remove($key,null,$super_column_key);
@@ -753,7 +753,7 @@
 		if (isset($_POST['columnfamily_name'])) $columnfamily_name = $_POST['columnfamily_name'];
 		
 		try {
-			$pool = new ConnectionPool($keyspace_name, getArrayOfNodesForCurrentCluster());
+			$pool = new ConnectionPool($keyspace_name, $cluster_helper->getArrayOfNodesForCurrentCluster());
 			$column_family = new ColumnFamily($pool, $columnfamily_name);	
 			
 			if ($action == 'dec') {

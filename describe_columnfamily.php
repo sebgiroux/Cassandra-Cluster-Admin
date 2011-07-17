@@ -32,7 +32,7 @@
 			echo displayErrorMessage('columnfamily_name_must_be_specified');
 		}
 		else {			
-			$one_cf = getCFInKeyspace($keyspace_name,$columnfamily_name);
+			$one_cf = ColumnFamilyHelper::getCFInKeyspace($keyspace_name,$columnfamily_name);
 			
 			// Make sure the column family exists in this keyspace
 			if ($one_cf) {			

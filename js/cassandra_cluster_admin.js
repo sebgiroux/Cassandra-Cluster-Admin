@@ -81,18 +81,43 @@ function doPlotNonHeapMemory(position) {
 	});	  
 }
 
+function round(value,precision) {
+	var m = Math.pow(10, precision);
+    value *= m;
+    var sgn = (value > 0) | -(value < 0); // sign of the number
+    var is_half = value % 1 === 0.5 * sgn;
+	var f = Math.floor(value);
+	
+	if (is_half) value = f + (f % 2 * sgn); // rouds .5 towards the next even integer
+
+	return (is_half ? value : Math.round(value)) / m;
+}
+
+function formatBytes(bytes) {
+	if (bytes < 1024) return bytes + ' B';
+	else if (bytes < 1048576) return round(bytes / 1024, 2) + ' KB';
+	else if (bytes < 1073741824) return round(bytes / 1048576, 2) + ' MB';
+	else if (bytes < 1099511627776) return round(bytes / 1073741824, 2) + ' GB';
+	else return round(bytes / 1099511627776, 2) + ' TB';
+}
+
 function getHeapMemoryUsage() {
 	$.getJSON('jmx.php?get_json_heap_memory_usage=1',function(data) {
 		var d = new Date();			
 		heap_memory_states.push([d.getTime(),data.used]);
 		if (heap_memory_states.length > 5) heap_memory_states.shift(); // Make sure array don't grow too big
 		
+		$('#heap_memory_committed').html(formatBytes(data.committed));
+		$('#heap_memory_init').html(formatBytes(data.init));
+		$('#heap_memory_max').html(formatBytes(data.max));
+		$('#heap_memory_used').html(formatBytes(data.used));
+		
 		doPlotHeapMemory('right');
 	});
 	
 	setTimeout(function() {
 		getHeapMemoryUsage();
-	}, 4000);
+	}, $('#data_refresh_interval').val());
 }
 
 function getNonHeapMemoryUsage() {
@@ -101,10 +126,15 @@ function getNonHeapMemoryUsage() {
 		non_heap_memory_states.push([d.getTime(),data.used]);
 		if (non_heap_memory_states.length > 5) non_heap_memory_states.shift(); // Make sure array don't grow too big
 		
+		$('#non_heap_memory_committed').html(formatBytes(data.committed));
+		$('#non_heap_memory_init').html(formatBytes(data.init));
+		$('#non_heap_memory_max').html(formatBytes(data.max));
+		$('#non_heap_memory_used').html(formatBytes(data.used));
+		
 		doPlotNonHeapMemory('right');
 	});
 	
 	setTimeout(function() {
 		getNonHeapMemoryUsage();
-	}, 4000);
+	}, $('#data_refresh_interval').val());
 }

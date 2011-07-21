@@ -2,8 +2,18 @@
 
 <script type="text/javascript">
 	var d = new Date();	
-	var heap_memory_states = [d.getTime(),"<?=$heap_memory_usage['used']?>"];
-	var non_heap_memory_states = [d.getTime(),"<?=$non_heap_memory_usage['used']?>"];
+	
+	var data_refresh_interval = $('#data_refresh_interval').val();
+	
+	var heap_memory_states = [];
+	heap_memory_states.push([d.getTime() -  $('#data_refresh_interval').val() * 2,"<?=$heap_memory_usage['used']?>"]);
+	heap_memory_states.push([d.getTime() -  $('#data_refresh_interval').val(),"<?=$heap_memory_usage['used']?>"]);
+	heap_memory_states.push([d.getTime(),"<?=$heap_memory_usage['used']?>"]);
+	
+	var non_heap_memory_states = []
+	non_heap_memory_states.push([d.getTime() -  $('#data_refresh_interval').val() * 2,"<?=$non_heap_memory_usage['used']?>"]);
+	non_heap_memory_states.push([d.getTime() -  $('#data_refresh_interval').val(),"<?=$non_heap_memory_usage['used']?>"]);
+	non_heap_memory_states.push([d.getTime(),"<?=$non_heap_memory_usage['used']?>"]);
 	
 	$(document).ready(function() {  
 		// Heap Memory Usage Graph
@@ -29,6 +39,18 @@
 </div>
 
 <div class="float_left">
+	Data Refresh Interval:
+	<select id="data_refresh_interval" style="width: 100px;">
+		<option value="2000">2 seconds</option>
+		<option value="4000" selected="selected">4 seconds</option>
+		<option value="10000">10 seconds</option>
+		<option value="30000">30 seconds</option>
+		<option value="500000">5 minutes</option>
+	</select>
+</div>
+<div class="clear_left"></div>
+
+<div class="float_left">
 	<h3>Real Time Heap Memory Usage</h3>
 	<div id="heap_memory_usage_graph" style="width:400px; height:200px;margin-bottom: 20px;"></div>
 
@@ -37,20 +59,20 @@
 			<td colspan="2">Heap Memory Usage</td>
 		</tr>
 		<tr>
-			<td>Commited</td>
-			<td><?=formatBytes($heap_memory_usage['committed'])?></td>
+			<td>Committed</td>
+			<td id="heap_memory_committed"><?=formatBytes($heap_memory_usage['committed'])?></td>
 		</tr>
 		<tr>
 			<td>Init</td>
-			<td><?=formatBytes($heap_memory_usage['init'])?></td>
+			<td id="heap_memory_init"><?=formatBytes($heap_memory_usage['init'])?></td>
 		</tr>
 		<tr>
 			<td>Max</td>
-			<td><?=formatBytes($heap_memory_usage['max'])?></td>
+			<td id="heap_memory_max"><?=formatBytes($heap_memory_usage['max'])?></td>
 		</tr>
 		<tr>
 			<td>Used</td>
-			<td><?=formatBytes($heap_memory_usage['used'])?></td>
+			<td id="heap_memory_used"><?=formatBytes($heap_memory_usage['used'])?></td>
 		</tr>
 	</table>
 </div>
@@ -64,20 +86,20 @@
 			<td colspan="2">Non Heap Memory Usage</td>
 		</tr>
 		<tr>
-			<td>Commited</td>
-			<td><?=formatBytes($non_heap_memory_usage['committed'])?></td>
+			<td>Committed</td>
+			<td id="non_heap_memory_committed"><?=formatBytes($non_heap_memory_usage['committed'])?></td>
 		</tr>
 		<tr>
 			<td>Init</td>
-			<td><?=formatBytes($non_heap_memory_usage['init'])?></td>
+			<td id="non_heap_memory_init"><?=formatBytes($non_heap_memory_usage['init'])?></td>
 		</tr>
 		<tr>
 			<td>Max</td>
-			<td><?=formatBytes($non_heap_memory_usage['max'])?></t
+			<td id="non_heap_memory_max"><?=formatBytes($non_heap_memory_usage['max'])?></t
 		</tr>
 		<tr>
 			<td>Used</td>
-			<td><?=formatBytes($non_heap_memory_usage['used'])?></td>
+			<td id="non_heap_memory_used"><?=formatBytes($non_heap_memory_usage['used'])?></td>
 		</tr>
 	</table>
 </div>

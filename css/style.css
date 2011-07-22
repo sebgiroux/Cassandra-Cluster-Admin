@@ -192,8 +192,24 @@ form div {
 }
 
 form label {
-	width: 250px;
+	width: 280px;
 	float: left;
+}
+
+form .form_label {
+	float: left;
+	margin-bottom: 0;
+}
+
+form .form_label_help {
+	float: right;
+	margin: 0 5px;
+	font-weight: bold;
+}
+
+form div .clear_label {
+	margin: 0;
+	clear: both;
 }
 
 .form_tips {
@@ -214,6 +230,20 @@ input[type=text].tiny {
 
 select {
 	width: 300px;
+}
+
+.tooltip {
+   position: absolute;
+   padding: 0 10px;
+   z-index: 2;
+   
+   color: #303030;
+   background-color: #f5f5b5;
+   border: 1px solid #DECA7E;
+   font-weight: normal;
+   text-align: justify;
+   
+   width: 330px;
 }
 
 #cluster_selection {

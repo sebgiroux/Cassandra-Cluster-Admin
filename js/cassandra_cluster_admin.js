@@ -138,3 +138,65 @@ function getNonHeapMemoryUsage() {
 		getNonHeapMemoryUsage();
 	}, $('#data_refresh_interval').val());
 }
+
+function registerCFFormTooltips() {
+	$('#read_repair_chance_tooltip').simpletip({
+		content: '<p>Before 0.7, read_repair was either invoked on every read request or on none of them. This is now tunable as a double between 0 and 1 (inclusive on both ends) for the chance of invoking the repair.</p><p>Default is: "1.0", read repair on every read request.</p>',
+		offset: [15,0]
+	});
+	
+	$('#gc_grace_seconds_tooltip').simpletip({
+		content: '<p>Time to wait before garbage-collection deletion markers. Set this to a large enough value that you are confident that the deletion marker will be propagated to all replicas by the time this many seconds has elapsed, even in the face of hardware failures. The default value is ten days.</p><p>Default is: \'864000\' seconds, or 10 days.</p>',
+		offset: [15,0]
+	});
+	
+	$('#memtable_operations_in_millions_tooltip').simpletip({
+		content: '<p>The maximum number of columns in millions to store in memory per ColumnFamily before flushing to disk. This is also a per-memtable setting. Use with MemtableSizeInMB to tune memory usage.</p>',
+		offset: [15,0]
+	});
+	
+	$('#memtable_throughput_in_mb_tooltip').simpletip({
+		content: '<p>The maximum amount of data to store in memory per ColumnFamily before flushing to disk. Note: There is one memtable per column family, and this threshold is based solely on the amount of data stored, not actual heap memory usage (there is some overhead in indexing the columns).</p>',
+		offset: [15,0]
+	});
+	
+	$('#memtable_flush_after_mins_tooltip').simpletip({
+		content: '<p>The maximum time to leave a dirty memtable unflushed. (While any affected columnfamilies have unflushed data from a commit log segment, that segment cannot be deleted.) This needs to be large enough that it won\'t cause a flush storm of all your memtables flushing at once because none has hit the size or count thresholds yet. For production, a larger value such as 1440 is recommended.</p>', 
+		offset: [15,0]
+	});
+	
+	$('#default_validation_class_tooltip').simpletip({
+		content: '<p>Used in conjunction with the validation_class property in the per-column settings to guarantee the type of a column value.</p><p>Default is: \'BytesType\', a no-op.</p>',
+		offset: [15,0]
+	});
+	
+	$('#min_compaction_threshold_tooltip').add('#max_compaction_threshold_tooltip').simpletip({
+		content: '<p>Previously in the CompactionManager, these values tune the size and frequency of minor compactions. The min and max boundaries are the number of tables to attempt to merge together at once. Raising the minimum will make minor compactions take more memory and run less often, lowering the maximum will have the opposite effect.</p><p>Note: Setting minimum and maximum to 0 will disable minor compactions. USE AT YOUR OWN PERIL!</p><p>Defaults are: \'4\' minimum tables to compact at once, and \'32\' maximum.</p>',
+		offset: [15,0]
+	});
+	
+	$('#comparator_type_tooltip').add('#subcomparator_type_tooltip').simpletip({
+		content: '<p>The CompareWith attribute tells Cassandra how to sort the columns for slicing operations. The default is BytesType, which is a straightforward lexical comparison of the bytes in each column. Other options are AsciiType, UTF8Type, LexicalUUIDType, TimeUUIDType, and LongType. You can also specify the fully-qualified class name to a class of your choice extending org.apache.cassandra.db.marshal.AbstractType.</p><p>SuperColumns have a similar CompareSubcolumnsWith attribute.</p><ul><li>BytesType: Simple sort by byte value. No validation is performed.</li><li>AsciiType: Like BytesType, but validates that the input can be parsed as US-ASCII.</li><li>UTF8Type: A string encoded as UTF8</li><li>LongType: A 64bit long</li><li>LexicalUUIDType: A 128bit UUID, compared lexically (by byte value)</li><li>TimeUUIDType: a 128bit version 1 UUID, compared by timestamp</li></ul><p>These are currently the same types used for validators.</p>',
+		offset: [15,0]
+	});
+	
+	$('#row_cache_size_tooltip').simpletip({
+		content: '<p>Determines how many rows to cache. The values can either be an absolute value or a double between 0 and 1 (inclusive on both ends) denoting what fraction should be cached.</p><p>Each each row cache hit saves 2 seeks at the minimum, sometimes more. The row cache saves more time then key cache, but must store the whole values of its rows, so it is extremely space-intensive. It\'s best to only use the row cache if you have hot rows or static rows.</p><p>Default is: \'0\', disabled row cache.</p>',
+		offset: [15,0]
+	});
+	
+	$('#row_cached_save_period_in_seconds_tooltip').simpletip({
+		content: '<p>Determines how often Cassandra saves the cache to the saved_caches_directory. Saved caches greatly improve cold-start speeds. Row cache saving is much more expensive than key cache and has limited use.</p><p>Default is: \'0\' (disabled) row cache saving.</p>',
+		offset: [15,0]
+	});
+	
+	$('#key_cache_size_tooltip').simpletip({
+		content: '<p>Determines how many keys to cache. The values can either be an absolute value or a double between 0 and 1 (inclusive on both ends) denoting what fraction should be cached.</p><p>Each key cache hit saves 1 seek. The key cache is fairly tiny for the amount of time it saves, so it\'s worthwhile to use it at large numbers all the way up to 1.0 (all keys cached).</p><p>Default is: \'200000\' keys cached</p>',
+		offset: [15,0]
+	});
+	
+	$('#key_cached_save_period_in_seconds_tooltip').simpletip({
+		content: '<p>Determines how often Cassandra saves the cache to the saved_caches_directory. Saved caches greatly improve cold-start speeds, and is relatively cheap in terms of I/O for the key cache.</p><p>Default is: \'3600\' seconds (1 hour) between saves of the key cache</p>',	
+		offset: [15,0]
+	});
+}

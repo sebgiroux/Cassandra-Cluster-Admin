@@ -24,7 +24,9 @@ Supported actions
 
 Getting Started
 ------------------------------------------------
-To get started with Cassandra Cluster admin, you must copy all the files from the package you just downloaded into a directory that can be accessed by a Web browser (ex: http://localhost/cassandra-cluster-admin). The server must have PHP installed (5.3+ recommended). Installing the Thrift PHP extension is also a good idea for performance (read "Thrift C extension" section below).
+If you're under Windows, I suggest you install [EasyPHP](http://www.easyphp.org/) or [XAMPP](http://www.apachefriends.org/en/xampp-windows.html) for a quick WAMP setup install.
+
+Once your Web server is setup, you copy all the files from the package you've just downloaded into a directory that can be accessed by a Web browser (ex: http://localhost/cassandra-cluster-admin). The server must have PHP installed (5.3+ recommended). Installing the Thrift PHP extension is also a good idea for performance (read "Thrift C extension" section below).
 
 All configuration is in `include/conf.inc.php`:
 
@@ -32,8 +34,7 @@ If this Web server is accessible by everyone, you might want to password protect
 
 If your Cassandra server is not running on localhost or if you have multiple Cassandra nodes/clusters, you have to alter the `$CASSANDRA_CLUSTERS` array. This application support multiple Cassandra Cluster so you can alter `$CASSANDRA_CLUSTERS` accordingly. More info is found in the configuration file about multi cluster configuration.
 
-If you want to see JMX stats in Cassandra Cluster Admin, you will need to activate MX4J on all your Casandra nodes you want to see the JMX stats. Once this is done, if MX4J is not running on the default port (8081), you will also need to alter `MX4J_HTTP_ADAPTOR_PORT`.
-
+If you want to see JMX stats in Cassandra Cluster Admin, you will need to activate MX4J on all your Casandra nodes you want to see the JMX stats. Once this is done, if MX4J is not running on the default port (8081), you will also need to alter `MX4J_HTTP_ADAPTOR_PORT` in the configuration file of Cassandra Cluster Admin.
 
 Thrift C extension
 ------------------------------------------------

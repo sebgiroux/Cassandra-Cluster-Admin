@@ -19,7 +19,10 @@
 	</div>
 	
 	<div>
-		<label for="comparator_type">Comparator Type:</label>
+		<label for="comparator_type">
+			<div class="form_label">Comparator Type:</div>
+			<div class="form_label_help" id="comparator_type_tooltip">?</div>			
+		</label>
 		<select id="comparator_type" name="comparator_type">
 			<option value="org.apache.cassandra.db.marshal.AsciiType">AsciiType (ASCII String)</option>
 			<option value="org.apache.cassandra.db.marshal.BytesType">BytesType (No Type)</option>
@@ -28,10 +31,14 @@
 			<option value="org.apache.cassandra.db.marshal.TimeUUIDType">TimeUUIDType (Version 1 UUID (timestamp based))</option>
 			<option value="org.apache.cassandra.db.marshal.UTF8Type">UTF8Type (UTF8 Encoded String)</option>
 		</select>
+		<div class="clear_label"></div>
 	</div>
 	
 	<div>
-		<label for="subcomparator_type">Subcomparator Type:</label>
+		<label for="subcomparator_type">
+			<div class="form_label">Subcomparator Type:</div>
+			<div class="form_label_help" id="subcomparator_type_tooltip">?</div>	
+		</label>
 		<select id="subcomparator_type" name="subcomparator_type">
 			<option value="org.apache.cassandra.db.marshal.AsciiType">AsciiType (ASCII String)</option>
 			<option value="org.apache.cassandra.db.marshal.BytesType">BytesType (No Type)</option>
@@ -40,6 +47,7 @@
 			<option value="org.apache.cassandra.db.marshal.TimeUUIDType">TimeUUIDType (Version 1 UUID (timestamp based))</option>
 			<option value="org.apache.cassandra.db.marshal.UTF8Type">UTF8Type (UTF8 Encoded String)</option>
 		</select>
+		<div class="clear_label"></div>
 	</div>
 	
 	<div>
@@ -48,63 +56,111 @@
 	</div>
 	
 	<div>
-		<label for="row_cache_size">Row Cache Size:</label>
+		<label for="row_cache_size">
+			<div class="form_label">Row Cache Size:</div>
+			<div class="form_label_help" id="row_cache_size_tooltip">?</div>
+		</label>
 		<input type="text" id="row_cache_size" name="row_cache_size" value="<?=$row_cache_size?>" />
+		<div class="clear_label"></div>
 	</div>
 	
 	<div>
-		<label for="row_cache_save_period_in_seconds">Row Cached Save Period in Seconds:</label>
+		<label for="row_cache_save_period_in_seconds">
+			<div class="form_label">Row Cached Save Period in Seconds:</div>
+			<div class="form_label_help" id="row_cached_save_period_in_seconds_tooltip">?</div>
+		</label>
 		<input type="text" id="row_cache_save_period_in_seconds" name="row_cache_save_period_in_seconds" value="<?=$row_cache_save_period_in_seconds?>" />
+		<div class="clear_label"></div>
 	</div>
 	
 	<div>
-		<label for="key_cache_size">Key Cache Size:</label>
+		<label for="key_cache_size">
+			<div class="form_label">Key Cache Size:</div>
+			<div class="form_label_help" id="key_cache_size_tooltip">?</div>
+		</label>
 		<input type="text" id="key_cache_size" name="key_cache_size" value="<?=$key_cache_size?>" />
+		<div class="clear_label"></div>
 	</div>
 	
 	<div>
-		<label for="key_cache_save_period_in_seconds">Key Cached Save Period in Seconds:</label>
+		<label for="key_cache_save_period_in_seconds">
+			<div class="form_label">Key Cached Save Period in Seconds:</div>
+			<div class="form_label_help" id="key_cached_save_period_in_seconds_tooltip">?</div>
+		</label>
 		<input type="text" id="key_cache_save_period_in_seconds" name="key_cache_save_period_in_seconds" value="<?=$key_cache_save_period_in_seconds?>" />
+		<div class="clear_label"></div>
 	</div>
 	
 	<div>
-		<label for="read_repair_chance">Read Repair Chance:</label>
+		<label for="read_repair_chance">
+			<div class="form_label">Read Repair Chance:</div>
+			<div class="form_label_help" id="read_repair_chance_tooltip">?</div>
+		</label>
 		<input type="text" id="read_repair_chance" name="read_repair_chance" value="<?=$read_repair_chance?>" />
+		<div class="clear_label"></div>
 	</div>
 	
 	<div>
-		<label for="gc_grace_seconds">GC Grace Seconds:</label>
+		<label for="gc_grace_seconds">
+			<div class="form_label">GC Grace Seconds:</div>
+			<div class="form_label_help" id="gc_grace_seconds_tooltip">?</div>
+		</label>
 		<input type="text" id="gc_grace_seconds" name="gc_grace_seconds" value="<?=$gc_grace_seconds?>" />
+		<div class="clear_label"></div>
 	</div>
 	
 	<div>
-		<label for="memtable_operations_in_millions">Memtable Operations in Millions:</label>
+		<label for="memtable_operations_in_millions">
+			<div class="form_label">Memtable Operations in Millions:</div>
+			<div class="form_label_help" id="memtable_operations_in_millions_tooltip">?</div>
+		</label>
 		<input type="text" id="memtable_operations_in_millions" name="memtable_operations_in_millions" value="<?=$memtable_operations_in_millions?>" />
+		<div class="clear_label"></div>
 	</div>
 	
 	<div>
-		<label for="memtable_throughput_in_mb">Memtable Throughput in MB</label>
+		<label for="memtable_throughput_in_mb">
+			<div class="form_label">Memtable Throughput in MB:</div>
+			<div class="form_label_help" id="memtable_throughput_in_mb_tooltip">?</div>
+		</label>
 		<input type="text" id="memtable_throughput_in_mb" name="memtable_throughput_in_mb" value="<?=$memtable_throughput_in_mb?>" />
+		<div class="clear_label"></div>
 	</div>
 	
 	<div>
-		<label for="memtable_flush_after_mins">Memtable Flush After Mins:</label>
+		<label for="memtable_flush_after_mins">
+			<div class="form_label">Memtable Flush After Mins:</div>
+			<div class="form_label_help" id="memtable_flush_after_mins_tooltip">?</div>
+		</label>
 		<input type="text" id="memtable_flush_after_mins" name="memtable_flush_after_mins" value="<?=$memtable_flush_after_mins?>" />
+		<div class="clear_label"></div>
 	</div>
 	
 	<div>
-		<label for="default_validation_class">Default Validation Class</label>
+		<label for="default_validation_class">
+			<div class="form_label">Default Validation Class:</div>
+			<div class="form_label_help" id="default_validation_class_tooltip">?</div>
+		</label>
 		<input type="text" id="default_validation_class" name="default_validation_class" value="<?=$default_validation_class?>" /> <? if ( version_compare($thrift_api_version,MINIMUM_THRIFT_API_VERSION_FOR_COUNTERS,'>=')): ?>* Use "CounterColumnType" for Counter Column<? endif;?>
+		<div class="clear_label"></div>
 	</div>
 	
 	<div>
-		<label for="min_compaction_threshold">Min Compaction Threshold</label>
+		<label for="min_compaction_threshold">
+			<div class="form_label">Min Compaction Threshold:</div>
+			<div class="form_label_help" id="min_compaction_threshold_tooltip">?</div>
+		</label>
 		<input type="text" id="min_compaction_threshold" name="min_compaction_threshold" value="<?=$min_compaction_threshold?>" />
+		<div class="clear_label"></div>
 	</div>
 	
 	<div>
-		<label for="max_compaction_threshold">Max Compaction Threshold</label>
+		<label for="max_compaction_threshold">
+			<div class="form_label">Max Compaction Threshold:</div>
+			<div class="form_label_help" id="max_compaction_threshold_tooltip">?</div>
+		</label>
 		<input type="text" id="max_compaction_threshold" name="max_compaction_threshold" value="<?=$max_compaction_threshold?>" />
+		<div class="clear_label"></div>
 	</div>
 	
 	<p class="form_tips">* Any field left blank will use the server default value.</p>
@@ -119,8 +175,7 @@
 	$(document).ready(function() {
 		/*
 			Set dropdown with right value on page load
-		*/		
-		
+		*/				
 		if ('<?=$column_type?>' != '') $('#column_type').val('<?=$column_type?>');
 		if ('<?=$comparator_type?>' != '') $('#comparator_type').val('<?=$comparator_type?>');
 		if ('<?=$subcomparator_type?>' != '') $('#subcomparator_type').val('<?=$subcomparator_type?>');
@@ -160,5 +215,10 @@
 				$('#hidden_subcomparator_type').remove();
 			}
 		});
+		
+		/*
+			Tooltips
+		*/
+		registerCFFormTooltips();
 	});
 </script>

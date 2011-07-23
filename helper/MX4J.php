@@ -222,5 +222,50 @@
 				return $result == 'success';
 			}
 		}
+		
+		public function getColumnFamilyDetails($keyspace_name,$columnfamily_name) {
+			$data = $this->doCall($this->getUrl().'/mbean?objectname=org.apache.cassandra.db:type=ColumnFamilies,keyspace='.$keyspace_name.',columnfamily='.$columnfamily_name.'&template=identity');
+			
+			$return = array();
+			
+			foreach ($data['Attribute'] as $one_attribute) {
+				$name = $one_attribute['@attributes']['name'];
+				$value = $one_attribute['@attributes']['value'];
+				
+				$return[] = array('name' => $name,'value' => $value);
+			}
+			
+			return $return;
+		}
+		
+		public function getColumnFamilyKeyCacheDetails($keyspace_name,$columnfamily_name) {
+			$data = $this->doCall($this->getUrl().'/mbean?objectname=org.apache.cassandra.db:type=Caches,keyspace='.$keyspace_name.',cache='.$columnfamily_name.'KeyCache&template=identity');
+			
+			$return = array();
+			
+			foreach ($data['Attribute'] as $one_attribute) {
+				$name = $one_attribute['@attributes']['name'];
+				$value = $one_attribute['@attributes']['value'];
+				
+				$return[] = array('name' => $name,'value' => $value);
+			}
+			
+			return $return;
+		}
+		
+		public function getColumnFamilyRowCacheDetails($keyspace_name,$columnfamily_name) {
+			$data = $this->doCall($this->getUrl().'/mbean?objectname=org.apache.cassandra.db:type=Caches,keyspace='.$keyspace_name.',cache='.$columnfamily_name.'RowCache&template=identity');
+			
+			$return = array();
+			
+			foreach ($data['Attribute'] as $one_attribute) {
+				$name = $one_attribute['@attributes']['name'];
+				$value = $one_attribute['@attributes']['value'];
+				
+				$return[] = array('name' => $name,'value' => $value);
+			}
+			
+			return $return;
+		}
 	}
 ?>

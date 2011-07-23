@@ -40,6 +40,17 @@
 		if (isset($_GET['get_json_non_heap_memory_usage']) && $_GET['get_json_non_heap_memory_usage'] == 1) {
 			die(json_encode($mx4j->getNonHeapMemoryUsage()));
 		}
+		
+		if (isset($_GET['columnfamily_details']) && isset($_GET['keyspace_name']) && isset($_GET['columnfamily_name'])) {
+			$keyspace_name = $_GET['keyspace_name'];
+			$columnfamily_name = $_GET['columnfamily_name'];
+		
+			$details = array('details' => $mx4j->getColumnFamilyDetails($keyspace_name,$columnfamily_name),		
+							 'key_cache' => $mx4j->getColumnFamilyKeyCacheDetails($keyspace_name,$columnfamily_name),	
+							 'row_cache' => $mx4j->getColumnFamilyRowCacheDetails($keyspace_name,$columnfamily_name));	
+			
+			die(json_encode($details));
+		}
 	
 		$vw_vars['heap_memory_usage'] = $mx4j->getHeapMemoryUsage();
 		$vw_vars['non_heap_memory_usage'] = $mx4j->getNonHeapMemoryUsage();
@@ -60,6 +71,13 @@
 		$vw_vars['cluster_name'] = $sys_manager->describe_cluster_name();
 		
 		$vw_vars['all_nodes'] = $all_nodes;
+		
+		/*
+			List of keyspaces and column families
+		*/
+		$ks_and_cf_details = ColumnFamilyHelper::getKeyspacesAndColumnFamiliesDetails();
+		
+		$vw_vars['ks_and_cf_details'] = $ks_and_cf_details;
 		
 		echo getHTML('header.php');
 		echo getHTML('jmx.php',$vw_vars);

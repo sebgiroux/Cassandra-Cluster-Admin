@@ -45,9 +45,9 @@
 			
 			echo '<li><a href="describe_keyspace.php?keyspace_name='.$keyspace_name.'">'.$keyspace_name.'</a>';
 				echo '<ul>';
-					$nb_cf = count($keyspaces_details[$i]['columnfamilys_name']);
+					$nb_cf = count($keyspaces_details[$i]['columnfamilies_name']);
 					for ($j = 0; $j < $nb_cf; $j++):
-						$columnfamily_name = $keyspaces_details[$i]['columnfamilys_name'][$j];
+						$columnfamily_name = $keyspaces_details[$i]['columnfamilies_name'][$j];
 						echo '<li><a href="describe_columnfamily.php?keyspace_name='.$keyspace_name.'&amp;columnfamily_name='.$columnfamily_name.'">'.$columnfamily_name.'</a></li>';
 					endfor;						
 				echo '</ul>';				

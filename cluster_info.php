@@ -17,21 +17,10 @@
 	
 	$vw_vars['cluster_helper'] = $cluster_helper;
 			
-	$keyspaces = $sys_manager->describe_keyspaces();
-	$keyspaces_name = array();
-	$keyspaces_details = array();
+	$ks_and_cf_details = ColumnFamilyHelper::getKeyspacesAndColumnFamiliesDetails();
 	
-	foreach ($keyspaces as $keyspace) {
-		$keyspaces_name[] = $keyspace->name;
-		
-		$columnfamilys_name = array();
-		
-		foreach ($keyspace->cf_defs as $columnfamily) {
-			$columnfamilys_name[] = $columnfamily->name;
-		}
-		
-		$keyspaces_details[] = array('columnfamilys_name' => $columnfamilys_name);
-	}
+	$keyspaces_name = $ks_and_cf_details['keyspaces_name'];
+	$keyspaces_details = $ks_and_cf_details['keyspaces_details'];
 	
 	$vw_vars['keyspaces_name'] = $keyspaces_name;
 	$vw_vars['keyspaces_details'] = $keyspaces_details;

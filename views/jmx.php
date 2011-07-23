@@ -15,6 +15,22 @@
 	non_heap_memory_states.push([d.getTime() -  $('#data_refresh_interval').val(),"<?=$non_heap_memory_usage['used']?>"]);
 	non_heap_memory_states.push([d.getTime(),"<?=$non_heap_memory_usage['used']?>"]);
 	
+	// Build array of keyspaces and column families
+	var keyspaces_name = ['<?php echo implode('\',\'',$ks_and_cf_details['keyspaces_name']); ?>'];
+	
+	var keyspaces_details = [];
+	
+	<?php 
+		foreach ($ks_and_cf_details['keyspaces_details'] as $key => $one_keyspace):
+			echo 'keyspaces_details['.$key.'] = [];';
+			foreach ($one_keyspace['columnfamilies_name'] as $cf_key => $cf_name):
+	?>
+			keyspaces_details[<?=$key?>][<?=$cf_key?>] = '<?=$cf_name?>';
+	<?php 
+			endforeach;
+		endforeach;
+	?>
+	
 	$(document).ready(function() {  
 		// Heap Memory Usage Graph
 		doPlotHeapMemory('right');
@@ -23,6 +39,10 @@
 		// Non Heap Memory Usage Graph
 		doPlotNonHeapMemory('right');
 		getNonHeapMemoryUsage();
+		
+		buildDropDownOfKeyspaces();
+		
+		changeColumnFamily();
 	});
 </script>
 
@@ -113,11 +133,14 @@
 		<td>Completed Tasks</td>
 		<td>Pending Tasks</td>
 	</tr>
-	<?php
-		foreach ($tp_stats as $one_tp_stat):
-			echo '<tr><td>'.$one_tp_stat['name'].'</td><td>'.$one_tp_stat['active_count'].'</td><td>'.$one_tp_stat['completed_tasks'].'</td><td>'.$one_tp_stat['pending_tasks'].'</td>';
-		endforeach;
-	?>
+	<?php foreach ($tp_stats as $one_tp_stat): ?>
+			<tr>
+				<td><?=$one_tp_stat['name']?></td>
+				<td><?=$one_tp_stat['active_count']?></td>
+				<td><?=$one_tp_stat['completed_tasks']?></td>
+				<td><?=$one_tp_stat['pending_tasks']?></td>
+			</tr>
+	<?php endforeach; ?>
 </table>
 
 <p>Number of loaded class: <?=$nb_loaded_class?></p>
@@ -130,3 +153,26 @@
 	endif;
 ?>
 <div><input type="button" value="Trigger Garbage Collector" onclick="triggerGarbageCollector();"/></div>
+
+<h3>Column Families Stats</h3>
+
+<form>
+	<div><label for="keyspace_list">Select a Keyspace:</label> <select id="keyspace_list" onchange="buildDropDownOfColumnFamilies();"></select></div>
+
+	<div><label for="columnfamily_list">Select a Column Family:</label> <select id="columnfamily_list" onchange="changeColumnFamily();"></select></div>
+</form>
+
+<h3>Details</h3>
+
+<!-- Column Family Details -->
+<table id="columnfamily_details"></table>
+
+<h3>Key Cache</h3>
+
+<!-- Column Family Key Cache Details -->
+<table id="column_family_key_cache_details"></table>
+
+<h3>Row Cache</h3>
+
+<!-- Column Family Row Cache Details -->
+<table id="column_family_row_cache_details"></table>

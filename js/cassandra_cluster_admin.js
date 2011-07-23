@@ -139,6 +139,70 @@ function getNonHeapMemoryUsage() {
 	}, $('#data_refresh_interval').val());
 }
 
+function buildDropDownOfKeyspaces() {
+	var dropdown = $('#keyspace_list');
+	
+	$('#keyspace_list > option').remove();		
+
+	$.each(keyspaces_name,function(index_keyspace) {
+		dropdown.append($('<option />').val(index_keyspace).text(keyspaces_name[index_keyspace]));
+	}); 
+	
+	buildDropDownOfColumnFamilies();
+}
+
+function buildDropDownOfColumnFamilies() {
+	var index_keyspace = $('#keyspace_list').val();
+	var dropdown = $('#columnfamily_list');
+	
+	$('#columnfamily_list > option').remove();	
+	
+	$.each(keyspaces_details[index_keyspace],function(index_columnfamily) {
+		dropdown.append($("<option />").val(index_columnfamily).text(keyspaces_details[index_keyspace][index_columnfamily]));
+	});
+	
+	changeColumnFamily();
+}
+
+function changeColumnFamily() {
+	var index_keyspace = $('#keyspace_list').val();
+	var index_columnfamily = $('#columnfamily_list').val();
+
+	var keyspace_name = keyspaces_name[index_keyspace];
+	var columnfamily_name = keyspaces_details[index_keyspace][index_columnfamily];
+
+	$.getJSON('jmx.php?columnfamily_details=1&keyspace_name=' + keyspace_name + '&columnfamily_name=' + columnfamily_name, function(data) {
+		$('#columnfamily_details').find('tr').remove();
+		$('#column_family_key_cache_details').find('tr').remove();
+		$('#column_family_row_cache_details').find('tr').remove();
+		
+		$('#columnfamily_details').append('<tr><td>Name</td><td>Value</td></tr>');
+		$('#column_family_key_cache_details').append('<tr><td>Name</td><td>Value</td></tr>');
+		$('#column_family_row_cache_details').append('<tr><td>Name</td><td>Value</td></tr>');
+	
+		$.each(data.details,function(item) {
+			var name = data.details[item].name;
+			var value = data.details[item].value;
+			
+			$('#columnfamily_details').append('<tr><td>' + name + '</td><td>' + value + '</td></tr>');
+		});
+		
+		$.each(data.key_cache,function(item) {
+			var name = data.key_cache[item].name;
+			var value = data.key_cache[item].value;
+			
+			$('#column_family_key_cache_details').append('<tr><td>' + name + '</td><td>' + value + '</td></tr>');
+		});		
+				
+		$.each(data.row_cache,function(item) {
+			var name = data.row_cache[item].name;
+			var value = data.row_cache[item].value;
+			
+			$('#column_family_row_cache_details').append('<tr><td>' + name + '</td><td>' + value + '</td></tr>');
+		});
+	});
+}
+
 function registerCFFormTooltips() {
 	$('#read_repair_chance_tooltip').simpletip({
 		content: '<p>Before 0.7, read_repair was either invoked on every read request or on none of them. This is now tunable as a double between 0 and 1 (inclusive on both ends) for the chance of invoking the repair.</p><p>Default is: "1.0", read repair on every read request.</p>',

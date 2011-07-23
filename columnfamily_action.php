@@ -278,6 +278,100 @@
 	}
 	
 	/*
+		Submit query secondary index
+	*/
+	
+	if (isset($_POST['btn_query_secondary_index'])) {
+		$nb_rows = 10;
+		if (isset($_POST['nb_rows'])) $nb_rows = $_POST['nb_rows'];
+		
+		$keyspace_name = '';
+		if (isset($_GET['keyspace_name'])) {
+			$keyspace_name = $_GET['keyspace_name'];
+		}
+		
+		$columnfamily_name = '';
+		if (isset($_GET['columnfamily_name'])) {
+			$columnfamily_name = $_GET['columnfamily_name'];
+		}
+		
+		try {		
+			$pool = new ConnectionPool($keyspace_name, $cluster_helper->getArrayOfNodesForCurrentCluster());
+			$column_family = new ColumnFamily($pool, $columnfamily_name);
+		
+			$no_index_expression = 0;
+			$arr_index_expression = array();
+			
+			while (isset($_POST['index_name_'.$no_index_expression]) && isset($_POST['operator_'.$no_index_expression]) && isset($_POST['column_value_'.$no_index_expression])) {
+				$index_name = $_POST['index_name_'.$no_index_expression];
+				$operator = $_POST['operator_'.$no_index_expression];
+				$column_value = $_POST['column_value_'.$no_index_expression];
+			
+				switch ($operator) {
+					case 'eq':
+						$operator = cassandra_IndexOperator::EQ;
+						break;
+						
+					case 'gte':
+						$operator = cassandra_IndexOperator::GTE;
+						break;
+					
+					case 'gt':
+						$operator = cassandra_IndexOperator::GT;
+						break;
+						
+					case 'lte':
+						$operator = cassandra_IndexOperator::LTE;
+						break;
+						
+					case 'lt':
+						$operator = cassandra_IndexOperator::LT;
+						break;
+						
+					default:
+						// Invalid operator
+						break;
+				}
+			
+				$arr_index_expression[] = CassandraUtil::create_index_expression($index_name, $column_value, $operator);
+				
+				$no_index_expression++;
+			}
+			
+			$index_clause = CassandraUtil::create_index_clause($arr_index_expression,'',$nb_rows);
+			
+			$result = $column_family->get_indexed_slices($index_clause);
+			
+			$vw_row_vars['is_super_cf'] = $column_family->cfdef->column_type == 'Super';     
+			$vw_row_vars['is_counter_column'] = $column_family->cfdef->default_validation_class == 'org.apache.cassandra.db.marshal.CounterColumnType';
+			
+			$vw_vars['results_secondary_index'] = '';
+			$vw_vars['results'] = '';
+			
+			$nb_results = 0;
+			
+			foreach ($result as $key => $value) {
+				$vw_row_vars['key'] = $key;
+				$vw_row_vars['value'] = $value;
+				
+				$vw_row_vars['keyspace_name'] = $keyspace_name;
+				$vw_row_vars['columnfamily_name'] = $columnfamily_name;
+				
+				$vw_row_vars['show_actions_link'] = false;
+				
+				$vw_vars['results_secondary_index'] .= getHTML('columnfamily_browse_data_row.php',$vw_row_vars);
+				
+				$nb_results++;
+			}		
+			
+			$vw_vars['error_message_secondary_index'] = displaySuccessMessage('query_secondary_index',array('nb_results' => $nb_results));
+		}
+		catch (Exception $e) {
+			$vw_vars['error_message_secondary_index'] = displayErrorMessage('query_secondary_index',array('message' => $e->getMessage()));
+		}
+	}
+	
+	/*
 		Get a key
 	*/
 	
@@ -305,6 +399,19 @@
 		if (!isset($vw_vars['results'])) $vw_vars['results'] = '';
 		if (!isset($vw_vars['success_message'])) $vw_vars['success_message'] = '';
 		if (!isset($vw_vars['error_message'])) $vw_vars['error_message'] = '';
+		
+		if (!isset($vw_vars['results_secondary_index'])) $vw_vars['results_secondary_index'] = '';
+		if (!isset($vw_vars['success_message_secondary_index'])) $vw_vars['success_message_secondary_index'] = '';
+		if (!isset($vw_vars['error_message_secondary_index'])) $vw_vars['error_message_secondary_index'] = '';
+		
+		$index_name = array();
+		foreach ($cf->column_metadata as $one_si) {
+			if ($one_si instanceof cassandra_ColumnDef) {
+				$index_name[] = $one_si->name;
+			}
+		}
+		
+		$vw_vars['index_name'] = $index_name;
 		
 		$current_page_title = 'Cassandra Cluster Admin > '.$keyspace_name.' > '.$columnfamily_name.' > Get Key';
 		
@@ -566,13 +673,13 @@
 			}
 
 			$vw_row_vars['is_super_cf'] = $cf_def->column_type == 'Super';     
+			$vw_row_vars['is_counter_column'] = $column_family->cfdef->default_validation_class == 'org.apache.cassandra.db.marshal.CounterColumnType';
 		
-			$result = $column_family->get_range($offset_key,'',$nb_rows);
-			
-			$is_counter_column = $column_family->cfdef->default_validation_class == 'org.apache.cassandra.db.marshal.CounterColumnType';
+			$result = $column_family->get_range($offset_key,'',$nb_rows);		
 			
 			$vw_vars['results'] = '';	
 			$nb_results = 0;
+			
 			foreach ($result as $key => $value) {
 				$vw_row_vars['key'] = $key;
 				$vw_row_vars['value'] = $value;
@@ -581,8 +688,6 @@
 				$vw_row_vars['columnfamily_name'] = $columnfamily_name;
 				
 				$vw_row_vars['show_actions_link'] = true;
-				
-				$vw_row_vars['is_counter_column'] = $is_counter_column;
 				
 				$vw_vars['results'] .= getHTML('columnfamily_browse_data_row.php',$vw_row_vars);
 				
@@ -606,7 +711,7 @@
 			
 			$current_page_title = 'Cassandra Cluster Admin > '.$keyspace_name.' > '.$columnfamily_name.' > Browse Data';
 			
-			$vw_vars['is_counter_column'] = $is_counter_column;
+			$vw_vars['is_counter_column'] = $vw_row_vars['is_counter_column'];
 			
 			$included_header = true;
 			echo getHTML('header.php');

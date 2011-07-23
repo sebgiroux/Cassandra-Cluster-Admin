@@ -101,6 +101,9 @@
 		elseif ($index == 'invoke_garbage_collector') {
 			return '<div class="success_message">Garbage collector was invoked succesfully!</div>';
 		}
+		elseif ($index == 'query_secondary_index') {
+			return '<div class="success_message">Successfully got '.$params['nb_results'].' rows from secondary index</div>';
+		}
 	}
 	
 	function displayInfoMessage($index,$params = array()) {
@@ -180,7 +183,10 @@
 			return '<div class="error_message">Something wrong happened: '.$params['message'].'</div>';
 		}
 		elseif ($index == 'invoke_garbage_collector') {
-			return '<div class="success_message">Invoking garbage collector failed.</div>';
+			return '<div class="error_message">Invoking garbage collector failed.</div>';
+		}
+		elseif ($index == 'query_secondary_index') {
+			return '<div class="error_message">Error while querying secondary index: '.$params['message'].'</div>';
 		}
 	}
 	

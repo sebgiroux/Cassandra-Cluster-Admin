@@ -51,8 +51,34 @@ function changeMX4JNode() {
 	location.href = 'jmx.php?change_mx4j_node=' + $('#node').val();
 }
 
-function triggerGarbageCollector() {
-	location.href = 'jmx.php?trigger_gc=1';
+function triggerJMXInvoke(action) {
+	var index_keyspace = $('#keyspace_list').val();
+	var index_columnfamily = $('#columnfamily_list').val();
+
+	var keyspace_name = keyspaces_name[index_keyspace];
+	var columnfamily_name = keyspaces_details[index_keyspace][index_columnfamily];
+
+	if (action == 'garbage_collector') {
+		location.href = 'jmx.php?trigger_gc=1';
+	}
+	else if (action == 'force_major_compaction') {
+		location.href = 'jmx.php?trigger_force_major_compaction=1&keyspace_name=' + keyspace_name + '&columnfamily_name=' + columnfamily_name;
+	}
+	else if (action == 'invalidate_key_cache') {
+		location.href = 'jmx.php?trigger_invalidate_key_cache=1&keyspace_name=' + keyspace_name + '&columnfamily_name=' + columnfamily_name;
+	}
+	else if (action == 'invalidate_row_cache') {
+		location.href = 'jmx.php?trigger_invalidate_row_cache=1&keyspace_name=' + keyspace_name + '&columnfamily_name=' + columnfamily_name;
+	}
+	else if (action == 'force_flush') {
+		location.href = 'jmx.php?trigger_force_flush=1&keyspace_name=' + keyspace_name + '&columnfamily_name=' + columnfamily_name;
+	}
+	else if (action == 'disable_auto_compaction') {
+		location.href = 'jmx.php?trigger_disable_auto_compaction=1&keyspace_name=' + keyspace_name + '&columnfamily_name=' + columnfamily_name;
+	}
+	else if (action == 'estimate_keys') {
+		location.href = 'jmx.php?trigger_estimate_keys=1&keyspace_name=' + keyspace_name + '&columnfamily_name=' + columnfamily_name;
+	}
 }
 
 function doPlotHeapMemory(position) {

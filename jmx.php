@@ -60,13 +60,79 @@
 		$vw_vars['tp_stats'] = $mx4j->getTpStats();
 
 		$vw_vars['trigger_gc'] = null;
+		$vw_vars['trigger_force_major_compaction'] = null;
+		$vw_vars['trigger_invalidate_key_cache'] = null;
+		$vw_vars['trigger_invalidate_row_cache'] = null;
+		$vw_vars['trigger_force_flush'] = null;
+		$vw_vars['trigger_disable_auto_compaction'] = null;
+		$vw_vars['trigger_estimate_keys'] = null;
 		
 		// Trigger the garbage collector
 		if (isset($_GET['trigger_gc']) && $_GET['trigger_gc'] == 1) {
 			$trigger_gc = $mx4j->triggerGarbageCollection();
 			
 			$vw_vars['trigger_gc'] = $trigger_gc;
+		}	
+		
+		// Trigger a major compaction
+		if (isset($_GET['trigger_force_major_compaction']) && $_GET['trigger_force_major_compaction'] == 1 && isset($_GET['keyspace_name']) && isset($_GET['columnfamily_name'])) {
+			$keyspace_name = $_GET['keyspace_name'];
+			$columnfamily_name = $_GET['columnfamily_name'];
+			
+			$trigger_force_major_compaction = $mx4j->forceMajorCompaction($keyspace_name,$columnfamily_name);
+			
+			$vw_vars['trigger_force_major_compaction'] = $trigger_force_major_compaction;
 		}
+		
+		// Trigger invalidate key cache
+		if (isset($_GET['trigger_invalidate_key_cache']) && $_GET['trigger_invalidate_key_cache'] == 1 && isset($_GET['keyspace_name']) && isset($_GET['columnfamily_name'])) {
+			$keyspace_name = $_GET['keyspace_name'];
+			$columnfamily_name = $_GET['columnfamily_name'];
+			
+			$trigger_invalidate_key_cache = $mx4j->invalidateKeyCache($keyspace_name,$columnfamily_name);
+			
+			$vw_vars['trigger_invalidate_key_cache'] = $trigger_invalidate_key_cache;
+		}
+		
+		// Trigger invalidate row cache
+		if (isset($_GET['trigger_invalidate_row_cache']) && $_GET['trigger_invalidate_row_cache'] == 1 && isset($_GET['keyspace_name']) && isset($_GET['columnfamily_name'])) {
+			$keyspace_name = $_GET['keyspace_name'];
+			$columnfamily_name = $_GET['columnfamily_name'];
+			
+			$trigger_invalidate_row_cache = $mx4j->invalidateRowCache($keyspace_name,$columnfamily_name);
+			
+			$vw_vars['trigger_invalidate_row_cache'] = $trigger_invalidate_row_cache;
+		}
+		
+		// Trigger force flush
+		if (isset($_GET['trigger_force_flush']) && $_GET['trigger_force_flush'] == 1 && isset($_GET['keyspace_name']) && isset($_GET['columnfamily_name'])) {
+			$keyspace_name = $_GET['keyspace_name'];
+			$columnfamily_name = $_GET['columnfamily_name'];
+			
+			$trigger_force_flush = $mx4j->forceFlush($keyspace_name,$columnfamily_name);
+			
+			$vw_vars['trigger_force_flush'] = $trigger_force_flush;
+		}
+		
+		// Trigger disable auto compaction
+		if (isset($_GET['trigger_disable_auto_compaction']) && $_GET['trigger_disable_auto_compaction'] == 1 && isset($_GET['keyspace_name']) && isset($_GET['columnfamily_name'])) {
+			$keyspace_name = $_GET['keyspace_name'];
+			$columnfamily_name = $_GET['columnfamily_name'];
+			
+			$trigger_disable_auto_compaction = $mx4j->disableAutoCompaction($keyspace_name,$columnfamily_name);
+			
+			$vw_vars['trigger_disable_auto_compaction'] = $trigger_disable_auto_compaction;
+		}
+		
+		// Trigger estimate keys
+		if (isset($_GET['trigger_estimate_keys']) && $_GET['trigger_estimate_keys'] == 1 && isset($_GET['keyspace_name']) && isset($_GET['columnfamily_name'])) {
+			$keyspace_name = $_GET['keyspace_name'];
+			$columnfamily_name = $_GET['columnfamily_name'];
+			
+			$trigger_estimate_keys = $mx4j->estimateKeys($keyspace_name,$columnfamily_name);
+			
+			$vw_vars['trigger_estimate_keys'] = $trigger_estimate_keys;
+		}	
 		
 		$vw_vars['cluster_name'] = $sys_manager->describe_cluster_name();
 		

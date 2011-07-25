@@ -267,5 +267,66 @@
 			
 			return $return;
 		}
+		
+		public function forceMajorCompaction($keyspace_name,$columnfamily_name) {
+			$data = $this->doCall($this->getUrl().'/invoke?operation=forceMajorCompaction&objectname=org.apache.cassandra.db:type=ColumnFamilies,keyspace='.$keyspace_name.',columnfamily='.$columnfamily_name.'&template=identity');
+			
+			if (isset($data['Operation']['@attributes'])) {
+				$result = $data['Operation']['@attributes']['result'];
+				
+				return $result == 'success';
+			}
+		}
+		
+		public function invalidateKeyCache($keyspace_name,$columnfamily_name) {
+			$data = $this->doCall($this->getUrl().'/invoke?operation=invalidateKeyCache&objectname=org.apache.cassandra.db:type=ColumnFamilies,keyspace='.$keyspace_name.',columnfamily='.$columnfamily_name.'&template=identity');
+			
+			if (isset($data['Operation']['@attributes'])) {
+				$result = $data['Operation']['@attributes']['result'];
+				
+				return $result == 'success';
+			}
+		}
+		
+		public function invalidateRowCache($keyspace_name,$columnfamily_name) {
+			$data = $this->doCall($this->getUrl().'/invoke?operation=invalidateRowCache&objectname=org.apache.cassandra.db:type=ColumnFamilies,keyspace='.$keyspace_name.',columnfamily='.$columnfamily_name.'&template=identity');
+			
+			if (isset($data['Operation']['@attributes'])) {
+				$result = $data['Operation']['@attributes']['result'];
+				
+				return $result == 'success';
+			}
+		}
+		
+		public function forceFlush($keyspace_name,$columnfamily_name) {
+			$data = $this->doCall($this->getUrl().'/invoke?operation=forceFlush&objectname=org.apache.cassandra.db:type=ColumnFamilies,keyspace='.$keyspace_name.',columnfamily='.$columnfamily_name.'&template=identity');
+			
+			if (isset($data['Operation']['@attributes'])) {
+				$result = $data['Operation']['@attributes']['result'];
+				
+				return $result == 'success';
+			}
+		}
+		
+		public function disableAutoCompaction($keyspace_name,$columnfamily_name) {
+			$data = $this->doCall($this->getUrl().'/invoke?operation=disableAutoCompaction&objectname=org.apache.cassandra.db:type=ColumnFamilies,keyspace='.$keyspace_name.',columnfamily='.$columnfamily_name.'&template=identity');
+			
+			if (isset($data['Operation']['@attributes'])) {
+				$result = $data['Operation']['@attributes']['result'];
+				
+				return $result == 'success';
+			}
+		}
+		
+		public function estimateKeys($keyspace_name,$columnfamily_name) {
+			$data = $this->doCall($this->getUrl().'/invoke?operation=estimateKeys&objectname=org.apache.cassandra.db:type=ColumnFamilies,keyspace='.$keyspace_name.',columnfamily='.$columnfamily_name.'&template=identity');
+			
+			if (isset($data['Operation']['@attributes'])) {
+				$result = $data['Operation']['@attributes']['result'];
+				$return = $data['Operation']['@attributes']['return'];
+				
+				return array('return' => $return,'result' => $result == 'success');
+			}
+		}
 	}
 ?>

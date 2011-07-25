@@ -152,7 +152,7 @@
 		echo displayErrorMessage('invoke_garbage_collector');
 	endif;
 ?>
-<div><input type="button" value="Trigger Garbage Collector" onclick="triggerGarbageCollector();"/></div>
+<div><input type="button" value="Trigger Garbage Collector" onclick="triggerJMXInvoke('garbage_collector');"/></div>
 
 <h3>Column Families Stats</h3>
 
@@ -161,6 +161,60 @@
 
 	<div><label for="columnfamily_list">Select a Column Family:</label> <select id="columnfamily_list" onchange="changeColumnFamily();"></select></div>
 </form>
+
+<?php
+	if ($trigger_force_major_compaction === true):
+		echo displaySuccessMessage('invoke_force_major_compaction');
+	elseif ($trigger_force_major_compaction === false):
+		echo displayErrorMessage('invoke_force_major_compaction');
+	endif;
+?>
+<div><input type="button" value="Trigger Force Major Compaction" onclick="triggerJMXInvoke('force_major_compaction');"/></div>
+
+<?php
+	if ($trigger_invalidate_key_cache === true):
+		echo displaySuccessMessage('invoke_invalidate_key_cache');
+	elseif ($trigger_invalidate_key_cache === false):
+		echo displayErrorMessage('invoke_invalidate_key_cache');
+	endif;
+?>
+<div><input type="button" value="Trigger Invalidate Key Cache" onclick="triggerJMXInvoke('invalidate_key_cache');"/></div>
+
+<?php
+	if ($trigger_invalidate_row_cache === true):
+		echo displaySuccessMessage('invoke_invalidate_row_cache');
+	elseif ($trigger_invalidate_row_cache === false):
+		echo displayErrorMessage('invoke_invalidate_row_cache');
+	endif;
+?>
+<div><input type="button" value="Trigger Invalidate Row Cache" onclick="triggerJMXInvoke('invalidate_row_cache');"/></div>
+
+<?php
+	if ($trigger_force_flush === true):
+		echo displaySuccessMessage('invoke_force_flush');
+	elseif ($trigger_force_flush === false):
+		echo displayErrorMessage('invoke_force_flush');
+	endif;
+?>
+<div><input type="button" value="Trigger Force Flush" onclick="triggerJMXInvoke('force_flush');"/></div>
+
+<?php
+	if ($trigger_disable_auto_compaction === true):
+		echo displaySuccessMessage('invoke_disable_auto_compaction');
+	elseif ($trigger_disable_auto_compaction === false):
+		echo displayErrorMessage('invoke_disable_auto_compaction');
+	endif;
+?>
+<div><input type="button" value="Trigger Disable Auto Compaction" onclick="triggerJMXInvoke('disable_auto_compaction');"/></div>
+
+<?php
+	if (is_array($trigger_estimate_keys) && $trigger_estimate_keys['result'] === true):
+		echo displaySuccessMessage('invoke_estimate_keys',array('nb_keys' => $trigger_estimate_keys['return']));
+	elseif (is_array($trigger_estimate_keys) && $trigger_estimate_keys['result'] === false):
+		echo displayErrorMessage('invoke_estimate_keys');
+	endif;
+?>
+<div><input type="button" value="Trigger Estimate Keys" onclick="triggerJMXInvoke('estimate_keys');"/></div>
 
 <h3>Details</h3>
 

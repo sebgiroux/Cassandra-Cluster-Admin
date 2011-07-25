@@ -101,6 +101,24 @@
 		elseif ($index == 'invoke_garbage_collector') {
 			return '<div class="success_message">Garbage collector was invoked succesfully!</div>';
 		}
+		elseif ($index == 'invoke_force_major_compaction') {
+			return '<div class="success_message">Force major compaction was invoked succesfully!</div>';
+		}
+		elseif ($index == 'invoke_invalidate_key_cache') {
+			return '<div class="success_message">Invalidate key cache was invoked succesfully!</div>';
+		}
+		elseif ($index == 'invoke_invalidate_row_cache') {
+			return '<div class="success_message">Invalidate row cache was invoked succesfully!</div>';
+		}
+		elseif ($index == 'invoke_force_flush') {
+			return '<div class="success_message">Force flush was invoked succesfully!</div>';
+		}
+		elseif ($index == 'invoke_disable_auto_compaction') {
+			return '<div class="success_message">Disable auto compaction was invoked succesfully!</div>';
+		}
+		elseif ($index == 'invoke_estimate_keys') {
+			return '<div class="success_message">Estimate keys was invoked succesfully! Estimated keys value is : '.$params['nb_keys'].'</div>';
+		}
 		elseif ($index == 'query_secondary_index') {
 			return '<div class="success_message">Successfully got '.$params['nb_results'].' rows from secondary index</div>';
 		}
@@ -184,6 +202,24 @@
 		}
 		elseif ($index == 'invoke_garbage_collector') {
 			return '<div class="error_message">Invoking garbage collector failed.</div>';
+		}		
+		elseif ($index == 'invoke_force_major_compaction') {
+			return '<div class="error_message">Invoking Force major compaction failed.</div>';
+		}
+		elseif ($index == 'invoke_invalidate_key_cache') {
+			return '<div class="error_message">Invoking invalidate key cache failed.</div>';
+		}
+		elseif ($index == 'invoke_invalidate_row_cache') {
+			return '<div class="error_message">Invoking invalidate row cache failed.</div>';
+		}
+		elseif ($index == 'invoke_force_flush') {
+			return '<div class="error_message">Invoking force flush failed.</div>';
+		}
+		elseif ($index == 'invoke_disable_auto_compaction') {
+			return '<div class="error_message">Invoking disable auto compaction failed.</div>';
+		}
+		elseif ($index == 'invoke_estimate_keys') {
+			return '<div class="error_message">Invoking estimate keys failed.</div>';
 		}
 		elseif ($index == 'query_secondary_index') {
 			return '<div class="error_message">Error while querying secondary index: '.$params['message'].'</div>';

@@ -4,7 +4,7 @@
 		<select name="cluster" id="cluster" onchange="applyClusterChange();">
 			<?php foreach ($cluster_details as $index => $one_cluster): ?>
 				<?php $current_cluster_name = $cluster_helper->getClusterNameForIndex($index); ?>
-				<?php if (!is_null($current_cluster_name)): ?><option value="<?=$index?>" <? if ($cluster_helper->getClusterIndex() == $index) echo 'selected="selected"'; ?>><?=$current_cluster_name?></option><? endif; ?>
+				<?php if (!is_null($current_cluster_name)): ?><option value="<?=$index?>" <?php if ($cluster_helper->getClusterIndex() == $index): echo 'selected="selected"'; endif; ?>><?=$current_cluster_name?></option><? endif; ?>
 			<?php endforeach; ?>
 		</select>
 	<? endif; ?>

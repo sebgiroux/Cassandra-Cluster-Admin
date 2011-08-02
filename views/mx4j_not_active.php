@@ -1,6 +1,6 @@
-<h3><a href="index.php"><?=$cluster_name?></a> &gt; JMX Stats</h3>
+<h3><a href="index.php"><?php echo $cluster_name; ?></a> &gt; JMX Stats</h3>
 
-<p>It looks like MX4J is not actived on the node (<?=$jmx_host?>) you're trying to see JMX stats.</p>
+<p>It looks like MX4J is not actived on the node (<?php echo $jmx_host; ?>) you're trying to see JMX stats.</p>
 
 <p>To install MX4J:</p>
 

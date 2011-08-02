@@ -1,4 +1,4 @@
-<h3><a href="index.php"><?=$cluster_name?></a> &gt; <a href="describe_keyspace.php?keyspace_name=<?=$keyspace_name?>"><?=$keyspace_name?></a> &gt; <a href="describe_columnfamily.php?keyspace_name=<?=$keyspace_name?>&amp;columnfamily_name=<?=$columnfamily_name?>"><?=$columnfamily_name?></a> &gt; Get Key</h3>
+<h3><a href="index.php"><?php echo $cluster_name; ?></a> &gt; <a href="describe_keyspace.php?keyspace_name=<?php echo $keyspace_name; ?>"><?php echo $keyspace_name; ?></a> &gt; <a href="describe_columnfamily.php?keyspace_name=<?php echo $keyspace_name; ?>&amp;columnfamily_name=<?php echo $columnfamily_name; ?>"><?php echo $columnfamily_name; ?></a> &gt; Get Key</h3>
 
 <script type="text/javascript">
 	var num_index_expression = 0;
@@ -7,7 +7,7 @@
 			'<label for="index_expression_' + num_index_expression + '">Index Expression:</label>' +
 			'<select id="index_expression_' + num_index_expression + '" name="index_name_' + num_index_expression + '" style="width: 100px;">' +
 				<?php foreach ($index_name as $one_index_name): ?>
-			'		<option value="<?=$one_index_name?>"><?=$one_index_name?></option>' +
+			'		<option value="<?php echo $one_index_name; ?>"><?php echo $one_index_name; ?></option>' +
 				<?php endforeach; ?>
 			'</select>' +
 			'<select style="width: 50px;" name="operator_' + num_index_expression + '">' +
@@ -28,8 +28,8 @@
 	});
 </script>
 
-<?=$success_message?>
-<?=$error_message?>
+<?php echo $success_message; ?>
+<?php echo $error_message; ?>
 
 <?php if ($results != ''): ?>
 <table border="1" style="min-width: 500px; margin-bottom: 20px;" cellpadding="5">
@@ -37,7 +37,7 @@
 		<td>Key</td>
 		<td>Value</td>
 	</tr>
-	<?=$results?>
+	<?php echo $results; ?>
 </table>
 <?php endif; ?>
 
@@ -56,8 +56,8 @@
 
 <h3 style="margin-top: 45px;">Or Query Secondary Index</h3>
 
-<?=$success_message_secondary_index?>
-<?=$error_message_secondary_index?>
+<?php echo $success_message_secondary_index; ?>
+<?php echo $error_message_secondary_index; ?>
 
 <?php if ($results_secondary_index != ''): ?>
 <table border="1" style="min-width: 500px; margin-bottom: 20px;" cellpadding="5">
@@ -65,7 +65,7 @@
 		<td>Key</td>
 		<td>Value</td>
 	</tr>
-	<?=$results_secondary_index?>
+	<?php echo $results_secondary_index; ?>
 </table>
 <?php endif; ?>
 

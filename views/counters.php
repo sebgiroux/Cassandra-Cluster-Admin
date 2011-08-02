@@ -1,7 +1,7 @@
-<h3><a href="index.php"><?=$cluster_name?></a> &gt; <a href="describe_keyspace.php?keyspace_name=<?=$keyspace_name?>"><?=$keyspace_name?></a> &gt; <a href="describe_columnfamily.php?keyspace_name=<?=$keyspace_name?>&amp;columnfamily_name=<?=$columnfamily_name?>"><?=$columnfamily_name?></a> &gt; Counters</h3>
+<h3><a href="index.php"><?php echo $cluster_name; ?></a> &gt; <a href="describe_keyspace.php?keyspace_name=<?php echo $keyspace_name; ?>"><?php echo $keyspace_name; ?></a> &gt; <a href="describe_columnfamily.php?keyspace_name=<?php echo $keyspace_name; ?>&amp;columnfamily_name=<?php echo $columnfamily_name; ?>"><?php echo $columnfamily_name; ?></a> &gt; Counters</h3>
 
-<?=$success_message?>
-<?=$error_message?>
+<?php echo $success_message; ?>
+<?php echo $error_message; ?>
 
 <form method="post" action="columnfamily_action.php">
 	<div>
@@ -9,12 +9,12 @@
 		<input id="key" name="key" type="text" />
 	</div>
 
-	<? if ($is_super_cf): ?>
+	<?php if ($is_super_cf): ?>
 	<div>
 		<label for="super_column">Super Column Name:</label>
 		<input id="super_column" name="super_column" type="text" />
 	</div>
-	<? endif;?>
+	<?php endif;?>
 	
 	<div>
 		<label for="column">Column name:</label>
@@ -37,7 +37,7 @@
 	<div>
 		<input type="submit" name="btn_modify_counter" value="Modify Counter" />
 		
-		<input type="hidden" name="keyspace_name" value="<?=$keyspace_name?>" />
-		<input type="hidden" name="columnfamily_name" value="<?=$columnfamily_name?>" />
+		<input type="hidden" name="keyspace_name" value="<?php echo $keyspace_name; ?>" />
+		<input type="hidden" name="columnfamily_name" value="<?php echo $columnfamily_name; ?>" />
 	</div>
 </form>

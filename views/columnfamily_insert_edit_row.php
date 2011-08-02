@@ -1,4 +1,4 @@
-<h3><a href="index.php"><?=$cluster_name?></a> &gt; <a href="describe_keyspace.php?keyspace_name=<?=$keyspace_name?>"><?=$keyspace_name?></a> &gt; <a href="describe_columnfamily.php?keyspace_name=<?=$keyspace_name?>&amp;columnfamily_name=<?=$columnfamily_name?>"><?=$columnfamily_name?></a> &gt; <?php if ($mode == 'insert'): ?>Insert a Row<?php elseif ($mode == 'edit'): ?>Edit Row "<?php echo $key; ?>"<?php endif; ?></h3>
+<h3><a href="index.php"><?php echo $cluster_name; ?></a> &gt; <a href="describe_keyspace.php?keyspace_name=<?php echo $keyspace_name; ?>"><?php echo $keyspace_name; ?></a> &gt; <a href="describe_columnfamily.php?keyspace_name=<?php echo $keyspace_name; ?>&amp;columnfamily_name=<?php echo $columnfamily_name; ?>"><?php echo $columnfamily_name; ?></a> &gt; <?php if ($mode == 'insert'): ?>Insert a Row<?php elseif ($mode == 'edit'): ?>Edit Row "<?php echo $key; ?>"<?php endif; ?></h3>
 
 <script type="text/javascript">
 	var num_columns = 0;
@@ -66,9 +66,9 @@
 	});
 </script>
 
-<?=$success_message?>
-<?=$info_message?>
-<?=$error_message?>
+<?php echo $success_message; ?>
+<?php echo $info_message; ?>
+<?php echo $error_message; ?>
 
 <form method="post" action="">
 	<div>
@@ -83,7 +83,7 @@
 	</div>
 	
 	<?php if ($mode == 'edit'): ?><input type="hidden" name="key" value="<?php echo $key; ?>" /><?php endif;?>
-	<input type="hidden" name="keyspace_name" value="<?=$keyspace_name?>" />
-	<input type="hidden" name="columnfamily_name" value="<?=$columnfamily_name?>" />
+	<input type="hidden" name="keyspace_name" value="<?php echo $keyspace_name; ?>" />
+	<input type="hidden" name="columnfamily_name" value="<?php echo $columnfamily_name; ?>" />
 	<input type="hidden" name="mode" value="<?php echo $mode; ?>" />
 </form>

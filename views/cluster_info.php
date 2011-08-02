@@ -1,21 +1,21 @@
 <div id="cluster_selection">
-	<? if (count($cluster_details) > 1): ?>
+	<?php if (count($cluster_details) > 1): ?>
 		Select a cluster:
 		<select name="cluster" id="cluster" onchange="applyClusterChange();">
 			<?php foreach ($cluster_details as $index => $one_cluster): ?>
 				<?php $current_cluster_name = $cluster_helper->getClusterNameForIndex($index); ?>
-				<?php if (!is_null($current_cluster_name)): ?><option value="<?=$index?>" <?php if ($cluster_helper->getClusterIndex() == $index): echo 'selected="selected"'; endif; ?>><?=$current_cluster_name?></option><? endif; ?>
+				<?php if (!is_null($current_cluster_name)): ?><option value="<?php echo $index?>" <?php if ($cluster_helper->getClusterIndex() == $index): echo 'selected="selected"'; endif; ?>><?php echo $current_cluster_name?></option><?php endif; ?>
 			<?php endforeach; ?>
 		</select>
-	<? endif; ?>
+	<?php endif; ?>
 </div>
 
 <div id="cluster_info">
-	<h3>Cluster Name: <?=$cluster_name;?></h3>
+	<h3>Cluster Name: <?php echo $cluster_name; ?></h3>
 
-	Cluster Partitioner: <?=$partitioner;?><br />
-	Cluster Snitch: <?=$snitch;?><br />
-	Thrift API Version: <?=$thrift_api_version?><br />
+	Cluster Partitioner: <?php echo $partitioner; ?><br />
+	Cluster Snitch: <?php echo $snitch; ?><br />
+	Thrift API Version: <?php echo $thrift_api_version; ?><br />
 	Schema Version:
 	<?php 
 		foreach ($schema_version as $version => $servers) {
@@ -26,8 +26,8 @@
 	?>
 </div>
 
-<?=$success_message?>
-<?=$error_message?>
+<?php echo $success_message; ?>
+<?php echo $error_message; ?>
 
 <div id="menu">
 	<div class="menu_item" onclick="location.href='keyspace_action.php?action=create'">
@@ -38,7 +38,7 @@
 
 <h3>Keyspaces and Column Families</h3>	
 <ul id="keyspaces">
-	<?
+	<?php
 		$nb_ks = count($keyspaces_name);
 		for ($i = 0; $i < $nb_ks; $i++):
 			$keyspace_name = $keyspaces_name[$i];

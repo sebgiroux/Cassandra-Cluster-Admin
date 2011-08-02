@@ -1,4 +1,4 @@
-<h3><a href="index.php"><?=$cluster_name?></a> &gt; JMX Stats</h3>
+<h3><a href="index.php"><?php echo $cluster_name; ?></a> &gt; JMX Stats</h3>
 
 <script type="text/javascript">
 	var d = new Date();	
@@ -6,14 +6,14 @@
 	var data_refresh_interval = $('#data_refresh_interval').val();
 	
 	var heap_memory_states = [];
-	heap_memory_states.push([d.getTime() -  $('#data_refresh_interval').val() * 2,"<?=$heap_memory_usage['used']?>"]);
-	heap_memory_states.push([d.getTime() -  $('#data_refresh_interval').val(),"<?=$heap_memory_usage['used']?>"]);
-	heap_memory_states.push([d.getTime(),"<?=$heap_memory_usage['used']?>"]);
+	heap_memory_states.push([d.getTime() -  $('#data_refresh_interval').val() * 2,"<?php echo $heap_memory_usage['used']; ?>"]);
+	heap_memory_states.push([d.getTime() -  $('#data_refresh_interval').val(),"<?php echo $heap_memory_usage['used']; ?>"]);
+	heap_memory_states.push([d.getTime(),"<?php echo $heap_memory_usage['used']?>"]);
 	
 	var non_heap_memory_states = []
-	non_heap_memory_states.push([d.getTime() -  $('#data_refresh_interval').val() * 2,"<?=$non_heap_memory_usage['used']?>"]);
-	non_heap_memory_states.push([d.getTime() -  $('#data_refresh_interval').val(),"<?=$non_heap_memory_usage['used']?>"]);
-	non_heap_memory_states.push([d.getTime(),"<?=$non_heap_memory_usage['used']?>"]);
+	non_heap_memory_states.push([d.getTime() -  $('#data_refresh_interval').val() * 2,"<?php echo $non_heap_memory_usage['used']; ?>"]);
+	non_heap_memory_states.push([d.getTime() -  $('#data_refresh_interval').val(),"<?php echo $non_heap_memory_usage['used']; ?>"]);
+	non_heap_memory_states.push([d.getTime(),"<?php echo $non_heap_memory_usage['used']?>"]);
 	
 	// Build array of keyspaces and column families
 	var keyspaces_name = ['<?php echo implode('\',\'',$ks_and_cf_details['keyspaces_name']); ?>'];
@@ -25,7 +25,7 @@
 			echo 'keyspaces_details['.$key.'] = [];';
 			foreach ($one_keyspace['columnfamilies_name'] as $cf_key => $cf_name):
 	?>
-			keyspaces_details[<?=$key?>][<?=$cf_key?>] = '<?=$cf_name?>';
+			keyspaces_details[<?php echo $key; ?>][<?php echo $cf_key; ?>] = '<?php echo $cf_name; ?>';
 	<?php 
 			endforeach;
 		endforeach;
@@ -80,19 +80,19 @@
 		</tr>
 		<tr>
 			<td>Committed</td>
-			<td id="heap_memory_committed"><?=formatBytes($heap_memory_usage['committed'])?></td>
+			<td id="heap_memory_committed"><?php echo formatBytes($heap_memory_usage['committed']); ?></td>
 		</tr>
 		<tr>
 			<td>Init</td>
-			<td id="heap_memory_init"><?=formatBytes($heap_memory_usage['init'])?></td>
+			<td id="heap_memory_init"><?php echo formatBytes($heap_memory_usage['init']); ?></td>
 		</tr>
 		<tr>
 			<td>Max</td>
-			<td id="heap_memory_max"><?=formatBytes($heap_memory_usage['max'])?></td>
+			<td id="heap_memory_max"><?php echo formatBytes($heap_memory_usage['max']); ?></td>
 		</tr>
 		<tr>
 			<td>Used</td>
-			<td id="heap_memory_used"><?=formatBytes($heap_memory_usage['used'])?></td>
+			<td id="heap_memory_used"><?php echo formatBytes($heap_memory_usage['used']); ?></td>
 		</tr>
 	</table>
 </div>
@@ -107,19 +107,19 @@
 		</tr>
 		<tr>
 			<td>Committed</td>
-			<td id="non_heap_memory_committed"><?=formatBytes($non_heap_memory_usage['committed'])?></td>
+			<td id="non_heap_memory_committed"><?php echo formatBytes($non_heap_memory_usage['committed']); ?></td>
 		</tr>
 		<tr>
 			<td>Init</td>
-			<td id="non_heap_memory_init"><?=formatBytes($non_heap_memory_usage['init'])?></td>
+			<td id="non_heap_memory_init"><?php echo formatBytes($non_heap_memory_usage['init']); ?></td>
 		</tr>
 		<tr>
 			<td>Max</td>
-			<td id="non_heap_memory_max"><?=formatBytes($non_heap_memory_usage['max'])?></t
+			<td id="non_heap_memory_max"><?php echo formatBytes($non_heap_memory_usage['max']); ?></t
 		</tr>
 		<tr>
 			<td>Used</td>
-			<td id="non_heap_memory_used"><?=formatBytes($non_heap_memory_usage['used'])?></td>
+			<td id="non_heap_memory_used"><?php echo formatBytes($non_heap_memory_usage['used']); ?></td>
 		</tr>
 	</table>
 </div>
@@ -135,15 +135,15 @@
 	</tr>
 	<?php foreach ($tp_stats as $one_tp_stat): ?>
 			<tr>
-				<td><?=$one_tp_stat['name']?></td>
-				<td><?=$one_tp_stat['active_count']?></td>
-				<td><?=$one_tp_stat['completed_tasks']?></td>
-				<td><?=$one_tp_stat['pending_tasks']?></td>
+				<td><?php echo $one_tp_stat['name']; ?></td>
+				<td><?php echo $one_tp_stat['active_count']; ?></td>
+				<td><?php echo $one_tp_stat['completed_tasks']; ?></td>
+				<td><?php echo $one_tp_stat['pending_tasks']; ?></td>
 			</tr>
 	<?php endforeach; ?>
 </table>
 
-<p>Number of loaded class: <?=$nb_loaded_class?></p>
+<p>Number of loaded class: <?php echo $nb_loaded_class; ?></p>
 
 <?php
 	if ($trigger_gc === true):

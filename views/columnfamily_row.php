@@ -2,7 +2,7 @@
 	<?php if (!is_null($scf_key)): ?>
 		<tr>
 			<td colspan="2">
-				<div class="float_left"><?=$scf_key?></div>
+				<div class="float_left"><?php echo $scf_key; ?></div>
 				<div class="float_right" style="margin-left: 20px;">
 					<div class="delete_row_icon"></div>
 					<div class="float_left">
@@ -16,8 +16,8 @@
 			
 	<?php foreach ($row as $column => $value): ?>
 		<tr>
-			<td><?=$column?></td>
-			<td><pre><?=$value?></pre></td>
+			<td><?php echo $column; ?></td>
+			<td><pre><?php echo $value; ?></pre></td>
 		</tr>
 	<?php endforeach; ?>
 </table>

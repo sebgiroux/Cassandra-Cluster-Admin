@@ -1,8 +1,8 @@
-<h3><a href="index.php"><?=$cluster_name?></a> &gt; <a href="describe_keyspace.php?keyspace_name=<?=$keyspace_name?>"><?=$keyspace_name?></a> &gt; <a href="describe_columnfamily.php?keyspace_name=<?=$keyspace_name?>&amp;columnfamily_name=<?=$columnfamily_name?>"><?=$columnfamily_name?></a> &gt; Browse Data</h3>
+<h3><a href="index.php"><?php echo $cluster_name; ?></a> &gt; <a href="describe_keyspace.php?keyspace_name=<?php echo $keyspace_name; ?>"><?php echo $keyspace_name; ?></a> &gt; <a href="describe_columnfamily.php?keyspace_name=<?php echo $keyspace_name; ?>&amp;columnfamily_name=<?php echo $columnfamily_name; ?>"><?php echo $columnfamily_name; ?></a> &gt; Browse Data</h3>
 
 <?php if (!$is_counter_column): ?>
 <div id="menu">
-	<div class="menu_item" onclick="location.href='columnfamily_action.php?action=insert_row&amp;keyspace_name=<?=$keyspace_name?>&amp;columnfamily_name=<?=$columnfamily_name?>'">
+	<div class="menu_item" onclick="location.href='columnfamily_action.php?action=insert_row&amp;keyspace_name=<?php echo $keyspace_name; ?>&amp;columnfamily_name=<?php echo $columnfamily_name; ?>'">
 		<div class="icon insert_row"></div> Insert Row
 	</div>
 	<div class="clear_left"></div>
@@ -21,10 +21,10 @@
 		<td>Value</td>
 		<td>Actions</td>
 	</tr>
-	<?=$results?>
+	<?php echo $results; ?>
 </table>
 
-<?php if ($show_begin_page_link): ?><a href="columnfamily_action.php?action=browse_data&amp;keyspace_name=<?=$keyspace_name?>&amp;columnfamily_name=<?=$columnfamily_name?>&amp;pos=begin&nb_rows=<?=$nb_rows?>">&lt;&lt; Begin</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<? endif; ?>
-<?php if ($show_prev_page_link): ?><a href="columnfamily_action.php?action=browse_data&amp;keyspace_name=<?=$keyspace_name?>&amp;columnfamily_name=<?=$columnfamily_name?>&amp;offset_key=<?=$current_offset_key?>&amp;pos=prev&nb_rows=<?=$nb_rows?>">&lt; Prev Page</a><? endif; ?>
+<?php if ($show_begin_page_link): ?><a href="columnfamily_action.php?action=browse_data&amp;keyspace_name=<?php echo $keyspace_name; ?>&amp;columnfamily_name=<?php echo $columnfamily_name; ?>&amp;pos=begin&nb_rows=<?php echo $nb_rows; ?>">&lt;&lt; Begin</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<?php endif; ?>
+<?php if ($show_prev_page_link): ?><a href="columnfamily_action.php?action=browse_data&amp;keyspace_name=<?php echo $keyspace_name; ?>&amp;columnfamily_name=<?php echo $columnfamily_name; ?>&amp;offset_key=<?php echo $current_offset_key; ?>&amp;pos=prev&nb_rows=<?php echo $nb_rows; ?>">&lt; Prev Page</a><?php endif; ?>
 <?php if ($show_prev_page_link && $show_next_page_link): ?>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<?php endif; ?>
-<?php if ($show_next_page_link): ?><a href="columnfamily_action.php?action=browse_data&amp;keyspace_name=<?=$keyspace_name?>&amp;columnfamily_name=<?=$columnfamily_name?>&offset_key=<?=$offset_key?>&pos=next&nb_rows=<?=$nb_rows?>">Next Page &gt;</a><? endif; ?>	
+<?php if ($show_next_page_link): ?><a href="columnfamily_action.php?action=browse_data&amp;keyspace_name=<?php echo $keyspace_name; ?>&amp;columnfamily_name=<?php echo $columnfamily_name; ?>&offset_key=<?php echo $offset_key; ?>&pos=next&nb_rows=<?php echo $nb_rows; ?>">Next Page &gt;</a><?php endif; ?>	

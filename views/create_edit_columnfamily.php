@@ -1,13 +1,13 @@
-<h3><a href="index.php"><?=$cluster_name?></a> &gt; <a href="describe_keyspace.php?keyspace_name=<?=$keyspace_name?>"><?=$keyspace_name?></a> <?if (!empty($columnfamily_name)): echo "&gt; $columnfamily_name"; endif; ?> <?if($mode=='create'): echo '&gt; Create Column Family'; endif;?></h3>
+<h3><a href="index.php"><?php echo $cluster_name; ?></a> &gt; <a href="describe_keyspace.php?keyspace_name=<?php echo $keyspace_name; ?>"><?php echo $keyspace_name; ?></a> <?php if (!empty($columnfamily_name)): echo "&gt; $columnfamily_name"; endif; ?> <?php if($mode=='create'): echo '&gt; Create Column Family'; endif;?></h3>
 
-<?=$success_message?>
-<?=$error_message?>
+<?php echo $success_message; ?>
+<?php echo $error_message; ?>
 
 <form method="post" action="" id="columnfamily_form">
 
 	<div>
 		<label for="columnfamily_name">Column Family Name:</label>
-		<input type="text" id="columnfamily_name" name="columnfamily_name" value="<?=$columnfamily_name?>" />
+		<input type="text" id="columnfamily_name" name="columnfamily_name" value="<?php echo $columnfamily_name; ?>" />
 	</div>
 
 	<div>
@@ -52,7 +52,7 @@
 	
 	<div>
 		<label for="comment">Comment:</label>
-		<input type="text" id="comment" name="comment" value="<?=$comment?>" />
+		<input type="text" id="comment" name="comment" value="<?php echo $comment; ?>" />
 	</div>
 	
 	<div>
@@ -60,7 +60,7 @@
 			<div class="form_label">Row Cache Size:</div>
 			<div class="form_label_help" id="row_cache_size_tooltip">?</div>
 		</label>
-		<input type="text" id="row_cache_size" name="row_cache_size" value="<?=$row_cache_size?>" />
+		<input type="text" id="row_cache_size" name="row_cache_size" value="<?php echo $row_cache_size; ?>" />
 		<div class="clear_label"></div>
 	</div>
 	
@@ -69,7 +69,7 @@
 			<div class="form_label">Row Cached Save Period in Seconds:</div>
 			<div class="form_label_help" id="row_cached_save_period_in_seconds_tooltip">?</div>
 		</label>
-		<input type="text" id="row_cache_save_period_in_seconds" name="row_cache_save_period_in_seconds" value="<?=$row_cache_save_period_in_seconds?>" />
+		<input type="text" id="row_cache_save_period_in_seconds" name="row_cache_save_period_in_seconds" value="<?php echo $row_cache_save_period_in_seconds; ?>" />
 		<div class="clear_label"></div>
 	</div>
 	
@@ -78,7 +78,7 @@
 			<div class="form_label">Key Cache Size:</div>
 			<div class="form_label_help" id="key_cache_size_tooltip">?</div>
 		</label>
-		<input type="text" id="key_cache_size" name="key_cache_size" value="<?=$key_cache_size?>" />
+		<input type="text" id="key_cache_size" name="key_cache_size" value="<?php echo $key_cache_size; ?>" />
 		<div class="clear_label"></div>
 	</div>
 	
@@ -87,7 +87,7 @@
 			<div class="form_label">Key Cached Save Period in Seconds:</div>
 			<div class="form_label_help" id="key_cached_save_period_in_seconds_tooltip">?</div>
 		</label>
-		<input type="text" id="key_cache_save_period_in_seconds" name="key_cache_save_period_in_seconds" value="<?=$key_cache_save_period_in_seconds?>" />
+		<input type="text" id="key_cache_save_period_in_seconds" name="key_cache_save_period_in_seconds" value="<?php echo $key_cache_save_period_in_seconds; ?>" />
 		<div class="clear_label"></div>
 	</div>
 	
@@ -96,7 +96,7 @@
 			<div class="form_label">Read Repair Chance:</div>
 			<div class="form_label_help" id="read_repair_chance_tooltip">?</div>
 		</label>
-		<input type="text" id="read_repair_chance" name="read_repair_chance" value="<?=$read_repair_chance?>" />
+		<input type="text" id="read_repair_chance" name="read_repair_chance" value="<?php echo $read_repair_chance; ?>" />
 		<div class="clear_label"></div>
 	</div>
 	
@@ -105,7 +105,7 @@
 			<div class="form_label">GC Grace Seconds:</div>
 			<div class="form_label_help" id="gc_grace_seconds_tooltip">?</div>
 		</label>
-		<input type="text" id="gc_grace_seconds" name="gc_grace_seconds" value="<?=$gc_grace_seconds?>" />
+		<input type="text" id="gc_grace_seconds" name="gc_grace_seconds" value="<?php echo $gc_grace_seconds; ?>" />
 		<div class="clear_label"></div>
 	</div>
 	
@@ -114,7 +114,7 @@
 			<div class="form_label">Memtable Operations in Millions:</div>
 			<div class="form_label_help" id="memtable_operations_in_millions_tooltip">?</div>
 		</label>
-		<input type="text" id="memtable_operations_in_millions" name="memtable_operations_in_millions" value="<?=$memtable_operations_in_millions?>" />
+		<input type="text" id="memtable_operations_in_millions" name="memtable_operations_in_millions" value="<?php echo $memtable_operations_in_millions; ?>" />
 		<div class="clear_label"></div>
 	</div>
 	
@@ -123,7 +123,7 @@
 			<div class="form_label">Memtable Throughput in MB:</div>
 			<div class="form_label_help" id="memtable_throughput_in_mb_tooltip">?</div>
 		</label>
-		<input type="text" id="memtable_throughput_in_mb" name="memtable_throughput_in_mb" value="<?=$memtable_throughput_in_mb?>" />
+		<input type="text" id="memtable_throughput_in_mb" name="memtable_throughput_in_mb" value="<?php echo $memtable_throughput_in_mb; ?>" />
 		<div class="clear_label"></div>
 	</div>
 	
@@ -132,7 +132,7 @@
 			<div class="form_label">Memtable Flush After Mins:</div>
 			<div class="form_label_help" id="memtable_flush_after_mins_tooltip">?</div>
 		</label>
-		<input type="text" id="memtable_flush_after_mins" name="memtable_flush_after_mins" value="<?=$memtable_flush_after_mins?>" />
+		<input type="text" id="memtable_flush_after_mins" name="memtable_flush_after_mins" value="<?php echo $memtable_flush_after_mins; ?>" />
 		<div class="clear_label"></div>
 	</div>
 	
@@ -141,7 +141,7 @@
 			<div class="form_label">Default Validation Class:</div>
 			<div class="form_label_help" id="default_validation_class_tooltip">?</div>
 		</label>
-		<input type="text" id="default_validation_class" name="default_validation_class" value="<?=$default_validation_class?>" /> <? if ( version_compare($thrift_api_version,MINIMUM_THRIFT_API_VERSION_FOR_COUNTERS,'>=')): ?>* Use "CounterColumnType" for Counter Column<? endif;?>
+		<input type="text" id="default_validation_class" name="default_validation_class" value="<?php echo $default_validation_class; ?>" /> <?php if ( version_compare($thrift_api_version,MINIMUM_THRIFT_API_VERSION_FOR_COUNTERS,'>=')): ?>* Use "CounterColumnType" for Counter Column<?php endif;?>
 		<div class="clear_label"></div>
 	</div>
 	
@@ -150,7 +150,7 @@
 			<div class="form_label">Min Compaction Threshold:</div>
 			<div class="form_label_help" id="min_compaction_threshold_tooltip">?</div>
 		</label>
-		<input type="text" id="min_compaction_threshold" name="min_compaction_threshold" value="<?=$min_compaction_threshold?>" />
+		<input type="text" id="min_compaction_threshold" name="min_compaction_threshold" value="<?php echo $min_compaction_threshold; ?>" />
 		<div class="clear_label"></div>
 	</div>
 	
@@ -159,15 +159,15 @@
 			<div class="form_label">Max Compaction Threshold:</div>
 			<div class="form_label_help" id="max_compaction_threshold_tooltip">?</div>
 		</label>
-		<input type="text" id="max_compaction_threshold" name="max_compaction_threshold" value="<?=$max_compaction_threshold?>" />
+		<input type="text" id="max_compaction_threshold" name="max_compaction_threshold" value="<?php echo $max_compaction_threshold; ?>" />
 		<div class="clear_label"></div>
 	</div>
 	
 	<p class="form_tips">* Any field left blank will use the server default value.</p>
 	
 	<div>
-		<input type="submit" name="<? if ($mode == 'edit'): echo 'btn_edit_columnfamily'; else: echo 'btn_create_columnfamily'; endif; ?>" value="<? if ($mode == 'edit'): echo 'Edit Column Family'; else: echo 'Create Column Family'; endif; ?>" />
-		<input type="hidden" name="keyspace_name" value="<?=$keyspace_name?>" />
+		<input type="submit" name="<?php if ($mode == 'edit'): echo 'btn_edit_columnfamily'; else: echo 'btn_create_columnfamily'; endif; ?>" value="<?php if ($mode == 'edit'): echo 'Edit Column Family'; else: echo 'Create Column Family'; endif; ?>" />
+		<input type="hidden" name="keyspace_name" value="<?php echo $keyspace_name; ?>" />
 	</div>
 </form>
 
@@ -176,14 +176,14 @@
 		/*
 			Set dropdown with right value on page load
 		*/				
-		if ('<?=$column_type?>' != '') $('#column_type').val('<?=$column_type?>');
-		if ('<?=$comparator_type?>' != '') $('#comparator_type').val('<?=$comparator_type?>');
-		if ('<?=$subcomparator_type?>' != '') $('#subcomparator_type').val('<?=$subcomparator_type?>');
+		if ('<?php echo $column_type; ?>' != '') $('#column_type').val('<?php echo $column_type; ?>');
+		if ('<?php echo $comparator_type; ?>' != '') $('#comparator_type').val('<?php echo $comparator_type; ?>');
+		if ('<?php echo $subcomparator_type; ?>' != '') $('#subcomparator_type').val('<?php echo $subcomparator_type; ?>');
 		
 		/*
 			Disable comparator type if in edit mode
 		*/
-		if ('<?=$mode?>' == 'edit') {
+		if ('<?php echo $mode; ?>' == 'edit') {
 			$('#columnfamily_name').attr('disabled','disabled');
 			$('#comparator_type').attr('disabled','disabled');
 			
@@ -194,7 +194,7 @@
 		/*
 			Disable sub comparator type if column family is standard or in edit mode
 		*/		
-		if ($('#column_type').val() == 'Standard' || '<?=$mode?>' == 'edit') {
+		if ($('#column_type').val() == 'Standard' || '<?php echo $mode; ?>' == 'edit') {
 			$('#subcomparator_type').attr('disabled','disabled');
 			
 			$('#subcomparator_type').append($('<input type="hidden" id="hidden_subcomparator_type" name="subcomparator_type" value="' + $('#subcomparator_type').val() + '" />'));
@@ -204,7 +204,7 @@
 			Set right sub comparator type depending on column type and edit mode
 		*/
 		$('#column_type').change(function() {
-			if ($('#column_type').val() == 'Standard' || '<?=$mode?>' == 'edit') {
+			if ($('#column_type').val() == 'Standard' || '<?php echo $mode; ?>' == 'edit') {
 				$('#subcomparator_type').attr('disabled','disabled');
 				
 				$('#subcomparator_type').append($('<input type="hidden" id="hidden_subcomparator_type" name="subcomparator_type" value="' + $('#subcomparator_type').val() + '" />'));

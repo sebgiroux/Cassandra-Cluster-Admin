@@ -4,7 +4,7 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 		
-		<title><?=getPageTitle();?></title>
+		<title><?php echo getPageTitle(); ?></title>
 	
 		<meta name="title" content="Cassandra Cluster Admin" />
 		<script type="text/javascript" src="js/jquery.js"></script>

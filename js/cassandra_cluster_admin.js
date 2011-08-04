@@ -165,6 +165,22 @@ function getNonHeapMemoryUsage() {
 	}, $('#data_refresh_interval').val());
 }
 
+function getTPStats() {
+	$.getJSON('jmx.php?get_tp_stats=1', function(data) {
+		$.each(data,function(name,value) {
+			$.each(value,function(column,value) {
+				if (column != 'name') {
+					$('#tp_stats_' + name + '_' + column).html(value);
+				}
+			});
+		});
+	});
+
+	setTimeout(function() {
+		getTPStats();
+	}, $('#data_refresh_interval').val());
+}
+
 function buildDropDownOfKeyspaces() {
 	var dropdown = $('#keyspace_list');
 	

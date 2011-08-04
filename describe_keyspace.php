@@ -49,8 +49,13 @@
 				$vw_vars['deleted_cf'] = displaySuccessMessage('drop_columnfamily');
 			}
 		
+			$strategy_options = $describe_keyspace->strategy_options;
+			if (is_array($strategy_options) && isset($strategy_options['replication_factor'])) {
+				unset($strategy_options['replication_factor']);
+			}
+		
 			$vw_vars['strategy_class'] = $describe_keyspace->strategy_class;
-			$vw_vars['strategy_options'] = $describe_keyspace->strategy_options;
+			$vw_vars['strategy_options'] = $strategy_options;
 			$vw_vars['replication_factor'] = $describe_keyspace->replication_factor;
 			
 			$vw_vars['cluster_name'] = $sys_manager->describe_cluster_name();

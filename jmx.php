@@ -41,6 +41,10 @@
 			die(json_encode($mx4j->getNonHeapMemoryUsage()));
 		}
 		
+		if (isset($_GET['get_tp_stats']) && $_GET['get_tp_stats'] == 1) {
+			die(json_encode($mx4j->getTpStats()));
+		}
+		
 		if (isset($_GET['columnfamily_details']) && isset($_GET['keyspace_name']) && isset($_GET['columnfamily_name'])) {
 			$keyspace_name = $_GET['keyspace_name'];
 			$columnfamily_name = $_GET['columnfamily_name'];

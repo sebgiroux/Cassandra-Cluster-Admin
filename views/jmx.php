@@ -40,11 +40,15 @@
 		doPlotNonHeapMemory('right');
 		getNonHeapMemoryUsage();
 		
+		getTPStats();
+		
 		buildDropDownOfKeyspaces();
 		
 		changeColumnFamily();
 	});
 </script>
+
+<h3>Cluster Stats</h3>
 
 <div style="margin-bottom: 20px;">
 	Select a node:
@@ -71,7 +75,7 @@
 <div class="clear_left"></div>
 
 <div class="float_left">
-	<h3>Real Time Heap Memory Usage</h3>
+	<h4>Real Time Heap Memory Usage</h4>
 	<div id="heap_memory_usage_graph" style="width:400px; height:200px;margin-bottom: 20px;"></div>
 
 	<table>
@@ -97,8 +101,8 @@
 	</table>
 </div>
 
-<div class="float_left" style="margin-left: 20px; margin-bottom: 20px;">
-	<h3>Real Time Non Heap Memory Usage</h3>
+<div class="float_left" style="margin-left: 40px; margin-bottom: 20px;">
+	<h4>Real Time Non Heap Memory Usage</h4>
 	<div id="non_heap_memory_usage_graph" style="width:400px; height:200px; margin-bottom: 20px;"></div>
 
 	<table>
@@ -124,26 +128,32 @@
 	</table>
 </div>
 
+<div class="float_left" style="margin-left: 40px; margin-bottom: 20px;">
+	<h4>TP Stats</h4>
+
+	<table>
+		<tr>
+			<td>Name</td>
+			<td>Active Count</td>
+			<td>Completed Tasks</td>
+			<td>Pending Tasks</td>
+		</tr>
+		<?php foreach ($tp_stats as $one_tp_stat): ?>
+				<tr>
+					<td><?php echo $one_tp_stat['name']; ?></td>
+					<td id="tp_stats_<?php echo str_replace(' ','_',strtolower($one_tp_stat['name'])); ?>_active_count"><?php echo $one_tp_stat['active_count']; ?></td>
+					<td id="tp_stats_<?php echo str_replace(' ','_',strtolower($one_tp_stat['name'])); ?>_completed_tasks"><?php echo $one_tp_stat['completed_tasks']; ?></td>
+					<td id="tp_stats_<?php echo str_replace(' ','_',strtolower($one_tp_stat['name'])); ?>_pending_tasks"><?php echo $one_tp_stat['pending_tasks']; ?></td>
+				</tr>
+		<?php endforeach; ?>
+	</table>
+</div>
+
 <div class="clear_left"></div>
 
-<table>
-	<tr>
-		<td>Name</td>
-		<td>Active Count</td>
-		<td>Completed Tasks</td>
-		<td>Pending Tasks</td>
-	</tr>
-	<?php foreach ($tp_stats as $one_tp_stat): ?>
-			<tr>
-				<td><?php echo $one_tp_stat['name']; ?></td>
-				<td><?php echo $one_tp_stat['active_count']; ?></td>
-				<td><?php echo $one_tp_stat['completed_tasks']; ?></td>
-				<td><?php echo $one_tp_stat['pending_tasks']; ?></td>
-			</tr>
-	<?php endforeach; ?>
-</table>
-
 <p>Number of loaded class: <?php echo $nb_loaded_class; ?></p>
+
+<h4>Trigger</h4>
 
 <?php
 	if ($trigger_gc === true):
@@ -154,6 +164,7 @@
 ?>
 <div><input type="button" value="Trigger Garbage Collector" onclick="triggerJMXInvoke('garbage_collector');"/></div>
 
+<hr />
 <h3>Column Families Stats</h3>
 
 <form>
@@ -162,6 +173,8 @@
 	<div><label for="columnfamily_list">Select a Column Family:</label> <select id="columnfamily_list" onchange="changeColumnFamily();"></select></div>
 </form>
 
+<h4>Triggers</h4>
+
 <?php
 	if ($trigger_force_major_compaction === true):
 		echo displaySuccessMessage('invoke_force_major_compaction');
@@ -169,7 +182,7 @@
 		echo displayErrorMessage('invoke_force_major_compaction');
 	endif;
 ?>
-<div><input type="button" value="Trigger Force Major Compaction" onclick="triggerJMXInvoke('force_major_compaction');"/></div>
+<div class="float_left" style="margin-right: 10px; margin-bottom: 10px;"><input type="button" value="Trigger Force Major Compaction" onclick="triggerJMXInvoke('force_major_compaction');"/></div>
 
 <?php
 	if ($trigger_invalidate_key_cache === true):
@@ -178,7 +191,7 @@
 		echo displayErrorMessage('invoke_invalidate_key_cache');
 	endif;
 ?>
-<div><input type="button" value="Trigger Invalidate Key Cache" onclick="triggerJMXInvoke('invalidate_key_cache');"/></div>
+<div class="float_left" style="margin-right: 10px; margin-bottom: 10px;"><input type="button" value="Trigger Invalidate Key Cache" onclick="triggerJMXInvoke('invalidate_key_cache');"/></div>
 
 <?php
 	if ($trigger_invalidate_row_cache === true):
@@ -187,7 +200,8 @@
 		echo displayErrorMessage('invoke_invalidate_row_cache');
 	endif;
 ?>
-<div><input type="button" value="Trigger Invalidate Row Cache" onclick="triggerJMXInvoke('invalidate_row_cache');"/></div>
+<div class="float_left" style="margin-right: 10px; margin-bottom: 10px;"><input type="button" value="Trigger Invalidate Row Cache" onclick="triggerJMXInvoke('invalidate_row_cache');"/></div>
+<div class="clear_left"></div>
 
 <?php
 	if ($trigger_force_flush === true):
@@ -196,7 +210,7 @@
 		echo displayErrorMessage('invoke_force_flush');
 	endif;
 ?>
-<div><input type="button" value="Trigger Force Flush" onclick="triggerJMXInvoke('force_flush');"/></div>
+<div class="float_left" style="margin-right: 10px; margin-bottom: 10px;"><input type="button" value="Trigger Force Flush" onclick="triggerJMXInvoke('force_flush');"/></div>
 
 <?php
 	if ($trigger_disable_auto_compaction === true):
@@ -205,7 +219,7 @@
 		echo displayErrorMessage('invoke_disable_auto_compaction');
 	endif;
 ?>
-<div><input type="button" value="Trigger Disable Auto Compaction" onclick="triggerJMXInvoke('disable_auto_compaction');"/></div>
+<div class="float_left" style="margin-right: 10px; margin-bottom: 10px;"><input type="button" value="Trigger Disable Auto Compaction" onclick="triggerJMXInvoke('disable_auto_compaction');"/></div>
 
 <?php
 	if (is_array($trigger_estimate_keys) && $trigger_estimate_keys['result'] === true):
@@ -214,19 +228,27 @@
 		echo displayErrorMessage('invoke_estimate_keys');
 	endif;
 ?>
-<div><input type="button" value="Trigger Estimate Keys" onclick="triggerJMXInvoke('estimate_keys');"/></div>
+<div class="float_left" style="margin-right: 10px; margin-bottom: 10px;"><input type="button" value="Trigger Estimate Keys" onclick="triggerJMXInvoke('estimate_keys');"/></div>
 
-<h3>Details</h3>
+<div class="clear_left"></div>
 
-<!-- Column Family Details -->
-<table id="columnfamily_details"></table>
+<div class="float_left">
+	<h4>Details</h4>
+	
+	<!-- Column Family Details -->
+	<table id="columnfamily_details"></table>
+</div>
 
-<h3>Key Cache</h3>
+<div class="float_left" style="margin-left: 40px;">
+	<h4>Key Cache</h4>
 
-<!-- Column Family Key Cache Details -->
-<table id="column_family_key_cache_details"></table>
+	<!-- Column Family Key Cache Details -->
+	<table id="column_family_key_cache_details"></table>
 
-<h3>Row Cache</h3>
+	<h4>Row Cache</h4>
 
-<!-- Column Family Row Cache Details -->
-<table id="column_family_row_cache_details"></table>
+	<!-- Column Family Row Cache Details -->
+	<table id="column_family_row_cache_details"></table>
+</div> 
+
+<div class="clear_left"></div>

@@ -641,8 +641,9 @@
 				$_SESSION['browse_data_offset_key'][] = '';
 			}
 			else {
-				if (!isset($_SESSION['browse_data_offset_key']) || !is_array($_SESSION['browse_data_offset_key']))
+				if (!isset($_SESSION['browse_data_offset_key']) || !is_array($_SESSION['browse_data_offset_key'])) {
 					$_SESSION['browse_data_offset_key'] = array();
+				}
 				
 				$pos = '';
 				if (isset($_GET['pos'])) $pos = $_GET['pos'];
@@ -820,12 +821,16 @@
 		
 			$column_family->remove($key,null,$super_column_key);
 			
-			redirect('columnfamily_action.php?action=browse_data&&keyspace_name='.$keyspace_name.'&columnfamily_name='.$columnfamily_name);
+			redirect('columnfamily_action.php?action=browse_data&keyspace_name='.$keyspace_name.'&columnfamily_name='.$columnfamily_name);
 		}
 		catch (cassandra_NotFoundException $e) {
+			$included_header = true;
+			echo getHTML('header.php');
 			echo displayErrorMessage('columnfamily_doesnt_exists',array('column_name' => $columnfamily_name));
 		}
 		catch (Exception $e) {
+			$included_header = true;
+			echo getHTML('header.php');
 			echo displayErrorMessage('something_wrong_happened',array('message' => $e->getMessage()));
 		}
 	}

@@ -28,6 +28,11 @@
 		$('#' + p_num_super_columns + '_super_column_data > .btn_add_column').remove();		
 		$('#' + p_num_super_columns + '_super_column_data').append('<div class="clear_left"></div><div class="insert_row_column_name"><input id="column_name_' + num_super_columns + '_' + num_columns + '" name="column_name_' + num_super_columns + '_' + num_columns + '" type="text" class="smaller" value="' + name + '" /></div><input id="column_value_' + num_super_columns + '_' + num_columns + '" name="column_value_' + num_super_columns + '_' + num_columns + '" type="text" class="smaller" value="' + value + '" /> <input class="btn_add_column" type="button" value="Add..." onclick="addColumn(\'\',\'\',\'' + p_num_super_columns + '\');" />');
 	}
+	
+	function addSuperColumnWithColumn() {
+		addSuperColumn('');
+		addColumn('','',num_super_columns);
+	}
 
 	$(document).ready(function() {		
 		<?php if ($mode == 'insert'): ?>
@@ -71,6 +76,13 @@
 <?php echo $error_message; ?>
 
 <form method="post" action="">
+	<?php if ($is_super_cf): ?>
+	<div style="width: 590px;">
+		<input type="button" onclick="addSuperColumnWithColumn();" value="Add Super Column" class="float_right" />
+		<div class="clear_right"></div>
+	</div>
+	<?php endif; ?>
+	
 	<div>
 		<label for="key">Row Key:</label>
 		<input id="key" name="key" type="text" value="<?php echo $key; ?>" <?php if ($mode == 'edit'): ?>disabled="disabled"<?php endif;?> />

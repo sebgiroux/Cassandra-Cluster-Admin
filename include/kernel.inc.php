@@ -66,164 +66,170 @@
 	
 	function displaySuccessMessage($index,$params = array()) {
 		if ($index == 'create_keyspace') {
-			return '<div class="success_message">Keyspace '.$params['keyspace_name'].' has been created successfully!</div>';
+			$return = 'Keyspace '.$params['keyspace_name'].' has been created successfully!';
 		}
 		elseif ($index == 'edit_keyspace') {
-			return '<div class="success_message">Keyspace '.$params['keyspace_name'].' has been edited successfully!</div>';
+			$return = 'Keyspace '.$params['keyspace_name'].' has been edited successfully!';
 		}
 		elseif ($index == 'drop_keyspace') {
-			return '<div class="success_message">Keyspace '.$params['keyspace_name'].' has been dropped successfully!</div>';
+			$return = 'Keyspace '.$params['keyspace_name'].' has been dropped successfully!';
 		}
 		elseif ($index == 'create_columnfamily') {
-			return '<div class="success_message">Column family '.$params['columnfamily_name'].' has been created successfully!</div>';
+			$return = 'Column family '.$params['columnfamily_name'].' has been created successfully!';
 		}
 		elseif ($index == 'edit_columnfamily') {
-			return '<div class="success_message">Column family '.$params['columnfamily_name'].' has been edited successfully!</div>';
+			$return = 'Column family '.$params['columnfamily_name'].' has been edited successfully!';
 		}
 		elseif ($index == 'drop_columnfamily') {
-			return '<div class="success_message">Column family dropped successfully!</div>';
+			$return = 'Column family dropped successfully!';
 		}
 		elseif ($index == 'get_key') {
-			return '<div class="success_message">Successfully got key "'.$params['key'].'"</div>';
+			$return = 'Successfully got key "'.$params['key'].'"';
 		}
 		elseif ($index == 'create_secondary_index') {
-			return '<div class="success_message">Secondary index on column '.$params['column_name'].' has been created succesfully!</div>';
+			$return = 'Secondary index on column '.$params['column_name'].' has been created succesfully!';
 		}
 		elseif ($index == 'insert_row') {
-			return '<div class="success_message">Row inserted successfully!</div>';
+			$return = 'Row inserted successfully!';
 		}
 		elseif ($index == 'edit_row') {
-			return '<div class="success_message">Row "'.$params['key'].'" edited successfully!</div>';
+			$return = 'Row "'.$params['key'].'" edited successfully!';
 		}
 		elseif ($index == 'edit_counter') {
-			return '<div class="success_message">Counter row edited successfully. Value is now '.$params['value'].'!</div>';
+			$return = 'Counter row edited successfully. Value is now '.$params['value'].'!';
 		}
 		elseif ($index == 'invoke_garbage_collector') {
-			return '<div class="success_message">Garbage collector was invoked succesfully!</div>';
+			$return = 'Garbage collector was invoked succesfully!';
 		}
 		elseif ($index == 'invoke_force_major_compaction') {
-			return '<div class="success_message">Force major compaction was invoked succesfully!</div>';
+			$return = 'Force major compaction was invoked succesfully!';
 		}
 		elseif ($index == 'invoke_invalidate_key_cache') {
-			return '<div class="success_message">Invalidate key cache was invoked succesfully!</div>';
+			$return = 'Invalidate key cache was invoked succesfully!';
 		}
 		elseif ($index == 'invoke_invalidate_row_cache') {
-			return '<div class="success_message">Invalidate row cache was invoked succesfully!</div>';
+			$return = 'Invalidate row cache was invoked succesfully!';
 		}
 		elseif ($index == 'invoke_force_flush') {
-			return '<div class="success_message">Force flush was invoked succesfully!</div>';
+			$return = 'Force flush was invoked succesfully!';
 		}
 		elseif ($index == 'invoke_disable_auto_compaction') {
-			return '<div class="success_message">Disable auto compaction was invoked succesfully!</div>';
+			$return = 'Disable auto compaction was invoked succesfully!';
 		}
 		elseif ($index == 'invoke_estimate_keys') {
-			return '<div class="success_message">Estimate keys was invoked succesfully! Estimated keys value is : '.$params['nb_keys'].'</div>';
+			$return = 'Estimate keys was invoked succesfully! Estimated keys value is : '.$params['nb_keys'];
 		}
 		elseif ($index == 'query_secondary_index') {
-			return '<div class="success_message">Successfully got '.$params['nb_results'].' rows from secondary index</div>';
+			$return = 'Successfully got '.$params['nb_results'].' rows from secondary index';
 		}
+		
+		return '<div class="success_message">'.$return.'</div>';
 	}
 	
 	function displayInfoMessage($index,$params = array()) {
 		if ($index == 'edit_keyspace_increased_replication_factor') {
-			return '<div class="info_message">Tips: Looks like you increased the replication factor.<br />You might want to run "nodetool -h localhost repair" on all your Cassandra nodes.</div>';
+			$return = 'Tips: Looks like you increased the replication factor.<br />You might want to run "nodetool -h localhost repair" on all your Cassandra nodes.';
 		}
 		elseif ($index == 'edit_keyspace_decreased_replication_factor') {
-			return '<div class="info_message">Tips: Looks like you decreased the replication factor.<br />You might want to run "nodetool -h localhost cleanup" on all your Cassandra nodes.</div>';
+			$return = 'Tips: Looks like you decreased the replication factor.<br />You might want to run "nodetool -h localhost cleanup" on all your Cassandra nodes.';
 		}
 		elseif ($index == 'get_key_doesnt_exists') {
-			return '<div class="info_message">Key "'.$params['key'].'" doesn\'t exists</div>';
+			$return = 'Key "'.$params['key'].'" doesn\'t exists';
 		}
 		elseif ($index == 'insert_row_not_empty') {
-			return '<div class="info_message">Key must not be empty</div>';
+			$return = 'Key must not be empty';
 		}
+		
+		return '<div class="info_message">'.$return.'</div>';
 	}
 
 	function displayErrorMessage($index,$params = array()) {
 		if ($index == 'create_keyspace') {
-			return '<div class="error_message">Keyspace '.$params['keyspace_name'].' couldn\'t be created.<br /> Reason: '.$params['message'].'</div>';
+			$return = 'Keyspace '.$params['keyspace_name'].' couldn\'t be created.<br /> Reason: '.$params['message'];
 		}
 		elseif ($index == 'edit_keyspace') {
-			return '<div class="error_message">Keyspace '.$params['keyspace_name'].' couldn\'t be edited.<br /> Reason: '.$params['message'].'</div>';
+			$return = 'Keyspace '.$params['keyspace_name'].' couldn\'t be edited.<br /> Reason: '.$params['message'];
 		}
 		elseif ($index == 'drop_keyspace') {
-			return '<div class="error_message">Keyspace '.$params['keyspace_name'].' couldn\'t be dropped.<br /> Reason: '.$params['message'].'</div>';
+			$return = 'Keyspace '.$params['keyspace_name'].' couldn\'t be dropped.<br /> Reason: '.$params['message'];
 		}
 		elseif ($index == 'create_columnfamily') {
-			return '<div class="error_message">Column family '.$params['columnfamily_name'].' couldn\'t be created.<br /> Reason: '.$params['message'].'</div>';
+			$return = 'Column family '.$params['columnfamily_name'].' couldn\'t be created.<br /> Reason: '.$params['message'];
 		}
 		elseif ($index == 'edit_columnfamily') {
-			return '<div class="error_message">Column family '.$params['columnfamily_name'].' couldn\'t be edited.<br /> Reason: '.$params['message'].'</div>';
+			$return = 'Column family '.$params['columnfamily_name'].' couldn\'t be edited.<br /> Reason: '.$params['message'];
 		}
 		elseif ($index == 'get_key') {
-			return '<div class="error_message">Error during getting key: '.$params['message'].'</div>';
+			$return = 'Error during getting key: '.$params['message'];
 		}
 		elseif ($index == 'insert_row') {
-			return '<div class="error_message">Error while inserting row: '.$params['message'].'</div>';
+			$return = 'Error while inserting row: '.$params['message'];
 		}
 		elseif ($index == 'create_secondary_index') {
-			return '<div class="error_message">Couldn\'t create secondary index on column '.$params['column_name'].'<br /> Reason: '.$params['message'].'</div>';
+			$return = 'Couldn\'t create secondary index on column '.$params['column_name'].'<br /> Reason: '.$params['message'];
 		}
 		elseif ($index == 'keyspace_doesnt_exists') {
-			return '<div class="error_message">Keyspace "'.$params['keyspace_name'].'" doesn\'t exists</div>';
+			$return = 'Keyspace "'.$params['keyspace_name'].'" doesn\'t exists';
 		}
 		elseif ($index == 'columnfamily_doesnt_exists') {
-			return '<div class="error_message">Column family "'.$params['column_name'].'" doesn\'t exists</div>';
+			$return = 'Column family "'.$params['column_name'].'" doesn\'t exists';
 		}
 		elseif ($index == 'keyspace_name_must_be_specified') {
-			return '<div class="error_message">You must specify a keyspace name</div>';
+			$return = 'You must specify a keyspace name';
 		}
 		elseif ($index == 'columnfamily_name_must_be_specified') {
-			return '<div class="error_message">You must specify a column family name</div>';
+			$return = 'You must specify a column family name';
 		}
 		elseif ($index == 'login_wrong_username_password') {
-			return '<div class="error_message">Wrong username and/or password!</div>';
+			$return = 'Wrong username and/or password!';
 		}
 		elseif ($index == 'you_must_be_logged') {
-			return '<div class="error_message">You must be logged to access Cassandra Cluster Admin!</div>';
+			$return = 'You must be logged to access Cassandra Cluster Admin!';
 		}
 		elseif ($index == 'invalid_action_specified') {
-			return '<div class="error_message">Invalid action: '.$params['action'].'</div>';
+			$return = 'Invalid action: '.$params['action'];
 		}
 		elseif ($index == 'no_action_specified') {
-			return '<div class="error_message">No action specified</div>';
+			$return = 'No action specified';
 		}
 		elseif ($index == 'cassandra_server_error') {
-			return '<div class="error_message">An error occured while connecting to your Cassandra server: '.$params['error_message'].'</div>';
+			$return = 'An error occured while connecting to your Cassandra server: '.$params['error_message'];
 		}
 		elseif ($index == 'insert_row_incomplete_fields') {
-			return '<div class="error_message">Some fields are empty</div>';
+			$return = 'Some fields are empty';
 		}
 		elseif ($index == 'drop_columnfamily') {
-			return '<div class="error_message">Error while dropping column family: '.$params['message'].'</div>';
+			$return = 'Error while dropping column family: '.$params['message'];
 		}
 		elseif ($index == 'something_wrong_happened') {
-			return '<div class="error_message">Something wrong happened: '.$params['message'].'</div>';
+			$return = 'Something wrong happened: '.$params['message'];
 		}
 		elseif ($index == 'invoke_garbage_collector') {
-			return '<div class="error_message">Invoking garbage collector failed.</div>';
+			$return = 'Invoking garbage collector failed.';
 		}		
 		elseif ($index == 'invoke_force_major_compaction') {
-			return '<div class="error_message">Invoking Force major compaction failed.</div>';
+			$return = 'Invoking Force major compaction failed.';
 		}
 		elseif ($index == 'invoke_invalidate_key_cache') {
-			return '<div class="error_message">Invoking invalidate key cache failed.</div>';
+			$return = 'Invoking invalidate key cache failed.';
 		}
 		elseif ($index == 'invoke_invalidate_row_cache') {
-			return '<div class="error_message">Invoking invalidate row cache failed.</div>';
+			$return = 'Invoking invalidate row cache failed.';
 		}
 		elseif ($index == 'invoke_force_flush') {
-			return '<div class="error_message">Invoking force flush failed.</div>';
+			$return = 'Invoking force flush failed.';
 		}
 		elseif ($index == 'invoke_disable_auto_compaction') {
-			return '<div class="error_message">Invoking disable auto compaction failed.</div>';
+			$return = 'Invoking disable auto compaction failed.';
 		}
 		elseif ($index == 'invoke_estimate_keys') {
-			return '<div class="error_message">Invoking estimate keys failed.</div>';
+			$return = 'Invoking estimate keys failed.';
 		}
 		elseif ($index == 'query_secondary_index') {
-			return '<div class="error_message">Error while querying secondary index: '.$params['message'].'</div>';
+			$return = 'Error while querying secondary index: '.$params['message'];
 		}
+		
+		return '<div class="error_message">'.$return.'</div>';
 	}
 	
 	$current_page_title = 'Cassandra Cluster Admin';

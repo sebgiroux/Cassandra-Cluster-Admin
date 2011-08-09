@@ -22,20 +22,10 @@
 	if ($keyspace_name == '') {
 		echo displayErrorMessage('keyspace_name_must_be_specified');
 	}
-	else {	
-		$not_found = false;
-		
+	else {			
 		try {
-			$describe_keyspace = $sys_manager->describe_keyspace($keyspace_name);
-		}
-		catch(cassandra_NotFoundException $e) {
-			$not_found = true;
-		}
-	
-		if ($not_found) {
-			echo displayErrorMessage('keyspace_doesnt_exists',array('keyspace_name' => $keyspace_name));
-		}
-		else {
+			$describe_keyspace = $sys_manager->describe_keyspace($keyspace_name);			
+			
 			// CF created successfully
 			$vw_vars['added_cf'] = '';
 			if (isset($_GET['create_cf']) == 1) {
@@ -50,14 +40,19 @@
 				$vw_vars['deleted_cf'] = displaySuccessMessage('drop_columnfamily');
 			}
 		
+			$vw_vars['strategy_class'] = $describe_keyspace->strategy_class;
+			
 			$strategy_options = $describe_keyspace->strategy_options;
+			
+			$replication_factor = $describe_keyspace->replication_factor;
+			if ($replication_factor == '' && isset($strategy_options['replication_factor'])) $replication_factor = $strategy_options['replication_factor'];		
+			if ($replication_factor == '') $replication_factor = 1;
+			$vw_vars['replication_factor'] = $replication_factor;			
+			
 			if (is_array($strategy_options) && isset($strategy_options['replication_factor'])) {
 				unset($strategy_options['replication_factor']);
 			}
-		
-			$vw_vars['strategy_class'] = $describe_keyspace->strategy_class;
 			$vw_vars['strategy_options'] = $strategy_options;
-			$vw_vars['replication_factor'] = $describe_keyspace->replication_factor;
 			
 			$vw_vars['cluster_name'] = $sys_manager->describe_cluster_name();
 			$vw_vars['keyspace_name'] = $keyspace_name;
@@ -108,8 +103,11 @@
 				$vw_vars['ring'] = $e->getMessage();
 			}
 				
-			echo getHTML('describe_keyspace.php',$vw_vars);	
-		}		
+			echo getHTML('describe_keyspace.php',$vw_vars);			
+		}
+		catch(cassandra_NotFoundException $e) {
+			echo displayErrorMessage('keyspace_doesnt_exists',array('keyspace_name' => $keyspace_name));
+		}
 	}
 	
 	echo getHTML('footer.php');

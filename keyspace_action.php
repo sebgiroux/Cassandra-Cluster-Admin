@@ -264,7 +264,13 @@
 			if ($found) {
 				$vw_vars['cluster_name'] = $sys_manager->describe_cluster_name();
 				$vw_vars['keyspace_name'] = $keyspace_name;
-				$vw_vars['replication_factor'] = $describe_keyspace->replication_factor;
+				
+				$strategy_options = $describe_keyspace->strategy_options;
+			
+				$replication_factor = $describe_keyspace->replication_factor;
+				if ($replication_factor == '' && isset($strategy_options['replication_factor'])) $replication_factor = $strategy_options['replication_factor'];		
+				if ($replication_factor == '') $replication_factor = 1;
+				$vw_vars['replication_factor'] = $replication_factor;			
 				
 				$vw_vars['strategy_class'] = $describe_keyspace->strategy_class;
 				

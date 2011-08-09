@@ -24,7 +24,10 @@
 		$success_message = $_GET['success_message'];
 		
 		if ($success_message == 'drop_keyspace') {
-			$vw_vars['success_message'] = displaySuccessMessage('drop_keyspace',array('keyspace_name' => $_SESSION['keyspace_name']));
+			$keyspace_name = $_SESSION['keyspace_name'];
+			$query_time = $_SESSION['query_time'];
+			
+			$vw_vars['success_message'] = displaySuccessMessage('drop_keyspace',array('keyspace_name' => $keyspace_name,'query_time' => $query_time));
 		}
 	}	
 	

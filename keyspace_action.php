@@ -84,9 +84,12 @@
 		if (!empty($max_compaction_threshold)) $attrs['max_compaction_threshold'] = $max_compaction_threshold;
 		
 		try {
+			$time_start = microtime(true);
 			$sys_manager->create_column_family($keyspace_name, $columnfamily_name, $attrs);
+			$time_end = microtime(true);
 			
 			$_SESSION['message'] = $columnfamily_name;
+			$_SESSION['query_time'] = getQueryTime($time_start,$time_end);
 			
 			redirect('describe_keyspace.php?keyspace_name='.$keyspace_name.'&create_cf=1');
 		}
@@ -154,9 +157,11 @@
 		
 		$attrs = array('replication_factor' => $replication_factor,'strategy_class' => $strategy);
 		try {
+			$time_start = microtime(true);
 			$sys_manager->create_keyspace($keyspace_name, $attrs);
+			$time_end = microtime(true);
 			
-			$vw_vars['success_message'] = displaySuccessMessage('create_keyspace',array('keyspace_name' => $keyspace_name));
+			$vw_vars['success_message'] = displaySuccessMessage('create_keyspace',array('keyspace_name' => $keyspace_name,'query_time' => getQueryTime($time_start,$time_end)));
 		}
 		catch (Exception $e) {
 			$vw_vars['error_message'] = displayErrorMessage('create_keyspace',array('keyspace_name' => $keyspace_name,'message' => $e->getMessage()));
@@ -201,9 +206,11 @@
 		$describe_keyspace = $sys_manager->describe_keyspace($keyspace_name);
 		
 		try {	
+			$time_start = microtime(true);
 			$sys_manager->alter_keyspace($keyspace_name, $attrs);
+			$time_end = microtime(true);			
 			
-			$vw_vars['success_message'] = displaySuccessMessage('edit_keyspace',array('keyspace_name' => $keyspace_name));
+			$vw_vars['success_message'] = displaySuccessMessage('edit_keyspace',array('keyspace_name' => $keyspace_name,'query_time' => getQueryTime($time_start,$time_end)));
 			
 			$old_replication_factor = $describe_keyspace->replication_factor;
 			$new_replication_factor = $replication_factor;
@@ -288,9 +295,13 @@
 		}
 		
 		try {
+			$time_start = microtime(true);			
 			$sys_manager->drop_keyspace($keyspace_name);
+			$time_end = microtime(true);
+			
 			$_SESSION['success_message'] = 'drop_keyspace';
 			$_SESSION['keyspace_name'] = $keyspace_name;
+			$_SESSION['query_time'] = getQueryTime($time_start,$time_end);
 			
 			redirect('index.php?success_message=drop_keyspace');
 		}

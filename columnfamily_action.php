@@ -64,9 +64,11 @@
 		}
 		
 		try {
+			$time_start = microtime(true);
 			$sys_manager->alter_column_family($keyspace_name, $columnfamily_name, $attrs);
+			$time_end = microtime(true);
 			
-			$vw_vars['success_message'] = displaySuccessMessage('edit_columnfamily',array('columnfamily_name' => $columnfamily_name));
+			$vw_vars['success_message'] = displaySuccessMessage('edit_columnfamily',array('columnfamily_name' => $columnfamily_name,'query_time' => getQueryTime($time_start,$time_end)));
 		}
 		catch(Exception $e) {
 			$vw_vars['error_message'] = displayErrorMessage('edit_columnfamily',array('columnfamily_name' => $columnfamily_name,'message' => $e->getMessage()));
@@ -183,8 +185,11 @@
 		$index_name = $_POST['index_name'];
 		
 		try {
-			$sys_manager->create_index($keyspace_name,$columnfamily_name,$column_name,$data_type,$index_name,IndexType::KEYS);			
-			$vw_vars['success_message'] = displaySuccessMessage('create_secondary_index',array('column_name' => $column_name));
+			$time_start = microtime(true);
+			$sys_manager->create_index($keyspace_name,$columnfamily_name,$column_name,$data_type,$index_name,IndexType::KEYS);		
+			$time_end = microtime(true);
+			
+			$vw_vars['success_message'] = displaySuccessMessage('create_secondary_index',array('column_name' => $column_name,'query_time' => getQueryTime($time_start,$time_end)));
 		}
 		catch (Exception $e) {
 			$vw_vars['error_message'] = displayErrorMessage('create_secondary_index',array('column_name' => $column_name,'message' => $e->getMessage()));
@@ -251,7 +256,9 @@
 			
 			$vw_vars['results'] = '';	
 			
+			$time_start = microtime(true);
 			$output = $column_family->get($key);	
+			$time_end = microtime(true);
 			
 			$vw_row_vars['key'] = $key;
 			$vw_row_vars['value'] = $output;
@@ -267,7 +274,7 @@
 			
 			$vw_vars['results'] = getHTML('columnfamily_browse_data_row.php',$vw_row_vars);
 			
-			$vw_vars['success_message'] = displaySuccessMessage('get_key',array('key' => $key));
+			$vw_vars['success_message'] = displaySuccessMessage('get_key',array('key' => $key, 'query_time' => getQueryTime($time_start,$time_end)));
 		}
 		catch (cassandra_NotFoundException $e) {
 			$vw_vars['success_message'] = displayInfoMessage('get_key_doesnt_exists',array('key' => $key));
@@ -340,7 +347,9 @@
 			
 			$index_clause = CassandraUtil::create_index_clause($arr_index_expression,'',$nb_rows);
 			
+			$time_start = microtime(true);
 			$result = $column_family->get_indexed_slices($index_clause);
+			$time_end = microtime(true);
 			
 			$vw_row_vars['is_super_cf'] = $column_family->cfdef->column_type == 'Super';     
 			$vw_row_vars['is_counter_column'] = $column_family->cfdef->default_validation_class == 'org.apache.cassandra.db.marshal.CounterColumnType';
@@ -364,7 +373,7 @@
 				$nb_results++;
 			}		
 			
-			$vw_vars['error_message_secondary_index'] = displaySuccessMessage('query_secondary_index',array('nb_results' => $nb_results));
+			$vw_vars['error_message_secondary_index'] = displaySuccessMessage('query_secondary_index',array('nb_results' => $nb_results,'query_time' => getQueryTime($time_start,$time_end)));
 		}
 		catch (Exception $e) {
 			$vw_vars['error_message_secondary_index'] = displayErrorMessage('query_secondary_index',array('message' => $e->getMessage()));
@@ -482,15 +491,17 @@
 						$column_family->remove($key);
 					}
 					
+					$time_start = microtime(true);
 					$column_family->insert($key,$data);
+					$time_end = microtime(true);
 					
 					// Insert successful
 					if (isset($_POST['mode']) && $_POST['mode'] == 'insert') {
-						$vw_vars['success_message'] = displaySuccessMessage('insert_row');
+						$vw_vars['success_message'] = displaySuccessMessage('insert_row',array('query_time' => getQueryTime($time_start,$time_end)));
 					}
 					// Edit successful
 					else {
-						$vw_vars['success_message'] = displaySuccessMessage('edit_row',array('key' => $key));
+						$vw_vars['success_message'] = displaySuccessMessage('edit_row',array('key' => $key,'query_time' => getQueryTime($time_start,$time_end)));
 					}
 				}
 				// Some fields are not filled

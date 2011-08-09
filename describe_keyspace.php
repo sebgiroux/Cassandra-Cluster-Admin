@@ -40,7 +40,8 @@
 			$vw_vars['added_cf'] = '';
 			if (isset($_GET['create_cf']) == 1) {
 				$columnfamily_name = $_SESSION['message'];
-				$vw_vars['added_cf'] = displaySuccessMessage('create_columnfamily',array('columnfamily_name' => $columnfamily_name));
+				$query_time = $_SESSION['query_time'];
+				$vw_vars['added_cf'] = displaySuccessMessage('create_columnfamily',array('columnfamily_name' => $columnfamily_name,'query_time' => $query_time));
 			}
 		
 			// CF deleted successfully

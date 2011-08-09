@@ -66,34 +66,34 @@
 	
 	function displaySuccessMessage($index,$params = array()) {
 		if ($index == 'create_keyspace') {
-			$return = 'Keyspace '.$params['keyspace_name'].' has been created successfully!';
+			$return = 'Keyspace '.$params['keyspace_name'].' has been created successfully!<br />Query took '.$params['query_time'];
 		}
 		elseif ($index == 'edit_keyspace') {
-			$return = 'Keyspace '.$params['keyspace_name'].' has been edited successfully!';
+			$return = 'Keyspace '.$params['keyspace_name'].' has been edited successfully!<br />Query took '.$params['query_time'];
 		}
 		elseif ($index == 'drop_keyspace') {
-			$return = 'Keyspace '.$params['keyspace_name'].' has been dropped successfully!';
+			$return = 'Keyspace '.$params['keyspace_name'].' has been dropped successfully!<br />Query took '.$params['query_time'];
 		}
 		elseif ($index == 'create_columnfamily') {
-			$return = 'Column family '.$params['columnfamily_name'].' has been created successfully!';
+			$return = 'Column family '.$params['columnfamily_name'].' has been created successfully!<br />Query took '.$params['query_time'];
 		}
 		elseif ($index == 'edit_columnfamily') {
-			$return = 'Column family '.$params['columnfamily_name'].' has been edited successfully!';
+			$return = 'Column family '.$params['columnfamily_name'].' has been edited successfully!<br />Query took '.$params['query_time'];
 		}
 		elseif ($index == 'drop_columnfamily') {
 			$return = 'Column family dropped successfully!';
 		}
 		elseif ($index == 'get_key') {
-			$return = 'Successfully got key "'.$params['key'].'"';
+			$return = 'Successfully got key "'.$params['key'].'"<br />Query took '.$params['query_time'];
 		}
 		elseif ($index == 'create_secondary_index') {
-			$return = 'Secondary index on column '.$params['column_name'].' has been created succesfully!';
+			$return = 'Secondary index on column '.$params['column_name'].' has been created succesfully!<br />Query took '.$params['query_time'];
 		}
 		elseif ($index == 'insert_row') {
-			$return = 'Row inserted successfully!';
+			$return = 'Row inserted successfully!<br />Query took '.$params['query_time'];
 		}
 		elseif ($index == 'edit_row') {
-			$return = 'Row "'.$params['key'].'" edited successfully!';
+			$return = 'Row "'.$params['key'].'" edited successfully!<br />Query took '.$params['query_time'];
 		}
 		elseif ($index == 'edit_counter') {
 			$return = 'Counter row edited successfully. Value is now '.$params['value'].'!';
@@ -120,7 +120,7 @@
 			$return = 'Estimate keys was invoked succesfully! Estimated keys value is : '.$params['nb_keys'];
 		}
 		elseif ($index == 'query_secondary_index') {
-			$return = 'Successfully got '.$params['nb_results'].' rows from secondary index';
+			$return = 'Successfully got '.$params['nb_results'].' rows from secondary index<br />Query took '.$params['query_time'];
 		}
 		
 		return '<div class="success_message">'.$return.'</div>';
@@ -238,5 +238,9 @@
 		global $current_page_title;
 		
 		return $current_page_title;
+	}
+	
+	function getQueryTime($time_start,$time_end) {
+		return round($time_end - $time_start,4).'sec';
 	}
 ?>

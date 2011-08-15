@@ -38,6 +38,8 @@ If you want to see JMX stats in Cassandra Cluster Admin, you will need to activa
 
 Thrift C extension
 ------------------------------------------------
+If you're in a test environnement or just want to get started with Cassandra, I suggest you skip this step as it's for performance improvement only. No extra feature by installing this.
+
 The C extension is crucial for phpcassa's performance.
 
 You need to configure and make to be able to use the C extension.

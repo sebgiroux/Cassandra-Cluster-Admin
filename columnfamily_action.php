@@ -236,7 +236,12 @@
 		Submit form get key
 	*/	
 	if (isset($_POST['btn_get_key'])) {
-		$key = $_POST['key'];		
+		$i = 0;
+		$tab_keys = array();
+		while (isset($_POST['key_'.$i])) {
+			$tab_keys[] = $_POST['key_'.$i];
+			$i++;
+		}
 		
 		$keyspace_name = '';
 		if (isset($_GET['keyspace_name'])) {
@@ -257,27 +262,39 @@
 			$vw_vars['results'] = '';	
 			
 			$time_start = microtime(true);
-			$output = $column_family->get($key);	
+			if (count($tab_keys) == 1) {
+				$output = $column_family->get($tab_keys[0]);	
+				$output = array($tab_keys[0] => $output);
+			}
+			else {
+				$output = $column_family->multiget($tab_keys);
+			}
+			
 			$time_end = microtime(true);
 			
-			$vw_row_vars['key'] = $key;
-			$vw_row_vars['value'] = $output;
-			
 			$cf_def = ColumnFamilyHelper::getCFInKeyspace($keyspace_name,$columnfamily_name);
-			$vw_row_vars['is_super_cf'] = $cf_def->column_type == 'Super';
 			
-			$vw_row_vars['keyspace_name'] = $keyspace_name;
-			$vw_row_vars['columnfamily_name'] = $columnfamily_name;
-			$vw_row_vars['show_actions_link'] = false;
+			$results = '';
+			foreach ($output as $key => $value) {
+				$vw_row_vars['key'] = $key;
+				$vw_row_vars['value'] = $value;				
+				
+				$vw_row_vars['is_super_cf'] = $cf_def->column_type == 'Super';
+				
+				$vw_row_vars['keyspace_name'] = $keyspace_name;
+				$vw_row_vars['columnfamily_name'] = $columnfamily_name;
+				$vw_row_vars['show_actions_link'] = true;
+				
+				$vw_row_vars['is_counter_column'] = false;
+				$results .= getHTML('columnfamily_browse_data_row.php',$vw_row_vars);
+			}
 			
-			$vw_row_vars['is_counter_column'] = false;
+			$vw_vars['results'] = $results;
 			
-			$vw_vars['results'] = getHTML('columnfamily_browse_data_row.php',$vw_row_vars);
-			
-			$vw_vars['success_message'] = displaySuccessMessage('get_key',array('key' => $key, 'query_time' => getQueryTime($time_start,$time_end)));
+			$vw_vars['success_message'] = displaySuccessMessage('get_key',array('keys' => $tab_keys, 'query_time' => getQueryTime($time_start,$time_end)));
 		}
 		catch (cassandra_NotFoundException $e) {
-			$vw_vars['success_message'] = displayInfoMessage('get_key_doesnt_exists',array('key' => $key));
+			$vw_vars['success_message'] = displayInfoMessage('get_key_doesnt_exists',array('key' => $tab_keys[0]));
 		}
 		catch (Exception $e) {
 			$vw_vars['error_message'] = displayErrorMessage('get_key',array('message' => $e->getMessage()));

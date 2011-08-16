@@ -84,7 +84,7 @@
 			$return = 'Column family dropped successfully!';
 		}
 		elseif ($index == 'get_key') {
-			$return = 'Successfully got key "'.$params['key'].'"<br />Query took '.$params['query_time'];
+			$return = 'Successfully got key "'.implode(',',$params['keys']).'"<br />Query took '.$params['query_time'];
 		}
 		elseif ($index == 'create_secondary_index') {
 			$return = 'Secondary index on column '.$params['column_name'].' has been created succesfully!<br />Query took '.$params['query_time'];

@@ -1,5 +1,6 @@
 <h3><a href="index.php"><?php echo $cluster_name; ?></a> &gt; <?php echo $keyspace_name; ?></h3>
 
+<?php if (!isReadyOnlyKeyspace($keyspace_name)): ?>
 <div id="menu">
 	<div class="menu_item" style="width: 220px;" onclick="location.href='keyspace_action.php?action=create_cf&amp;keyspace_name=<?php echo $keyspace_name; ?>'">
 		<div class="icon create_column_family"></div> Create New Column Family
@@ -12,6 +13,7 @@
 	</div>
 	<div class="clear_left"></div>
 </div>
+<?php endif; ?>
 
 <?php echo $added_cf; ?>
 <?php echo $deleted_cf; ?>

@@ -2,7 +2,7 @@
 	/*
 		Cassandra Cluster Admin
 		
-		@author Sébastien Giroux
+		@author SÃ©bastien Giroux
 		@copyright All rights reserved - 2011
 	*/	
 

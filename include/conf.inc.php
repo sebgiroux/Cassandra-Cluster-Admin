@@ -24,6 +24,14 @@
 								     'password' => ''));
 	
 	/*
+		Read-only keyspace
+		
+		Some keyspace can be set to read-only so nothing can be added/edited/deleted from them.
+	*/
+	
+	define('READ_ONLY_KEYSPACES','system'); // Seperate by comma (,)
+	
+	/*
 		Enter your Cassandra Cluster Admin credentials here
 	*/
 	define('CCA_LOGIN_REQUIRED',false);

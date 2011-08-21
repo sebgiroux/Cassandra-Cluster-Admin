@@ -60,6 +60,8 @@
 			$vw_vars['ring'] = array();
 			$vw_vars['list_column_families'] = '';
 			
+			$vw_vars['is_readonly_keyspace'] = isReadyOnlyKeyspace($keyspace_name);
+			
 			$nb_cfs = count($describe_keyspace->cf_defs);
 			if ($nb_cfs == 0) {
 				$vw_vars['list_column_families'] = 'There is no column family in this keyspace.';

@@ -129,6 +129,14 @@
 	}
 	
 	/*
+		Return true if a keyspace is read-only, false otherwise
+	*/
+	
+	function isReadyOnlyKeyspace($keyspace_name) {
+		return in_array($keyspace_name,explode(',',READ_ONLY_KEYSPACES));
+	}
+	
+	/*
 		Return the number of seconds elapsed between the time start and time end
 	*/
 	function getQueryTime($time_start,$time_end) {

@@ -103,6 +103,8 @@
 				
 				$vw_vars['is_counter_column'] = $vw_cf_vars['default_validation_class'] == 'org.apache.cassandra.db.marshal.CounterColumnType';
 				
+				$vw_vars['is_read_only_keyspace'] = isReadOnlyKeyspace($keyspace_name);
+				
 				echo getHTML('describe_columnfamily.php',$vw_vars);
 			}
 			else {

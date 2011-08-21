@@ -132,7 +132,7 @@
 		Return true if a keyspace is read-only, false otherwise
 	*/
 	
-	function isReadyOnlyKeyspace($keyspace_name) {
+	function isReadOnlyKeyspace($keyspace_name) {
 		return in_array($keyspace_name,explode(',',READ_ONLY_KEYSPACES));
 	}
 	

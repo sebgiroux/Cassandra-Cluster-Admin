@@ -1,7 +1,7 @@
 <?php if ($show_edit_link): ?>
 	<h4>
 		<a href="describe_columnfamily.php?keyspace_name=<?php echo $keyspace_name; ?>&amp;columnfamily_name=<?php echo $columnfamily_name; ?>"><?php echo $columnfamily_name; ?></a> 
-		<?php if (!isReadyOnlyKeyspace($keyspace_name)): ?>- <a href="columnfamily_action.php?action=edit&amp;keyspace_name=<?php echo $keyspace_name; ?>&amp;columnfamily_name=<?php echo $columnfamily_name; ?>">Edit</a><?php endif; ?>
+		<?php if (!$is_read_only_keyspace): ?>- <a href="columnfamily_action.php?action=edit&amp;keyspace_name=<?php echo $keyspace_name; ?>&amp;columnfamily_name=<?php echo $columnfamily_name; ?>">Edit</a><?php endif; ?>
 	</h4>
 <?php endif; ?>
 

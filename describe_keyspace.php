@@ -60,7 +60,7 @@
 			$vw_vars['ring'] = array();
 			$vw_vars['list_column_families'] = '';
 			
-			$vw_vars['is_readonly_keyspace'] = isReadyOnlyKeyspace($keyspace_name);
+			$vw_vars['is_read_only_keyspace'] = isReadOnlyKeyspace($keyspace_name);
 			
 			$nb_cfs = count($describe_keyspace->cf_defs);
 			if ($nb_cfs == 0) {

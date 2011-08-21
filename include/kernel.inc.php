@@ -10,6 +10,8 @@
     require('include/phpcassa/columnfamily.php');
 	require('include/phpcassa/sysmanager.php');
 	
+	require('include/lang/english.php');
+	
 	require('helper/ClusterHelper.php');
 	require('helper/ColumnFamilyHelper.php');
 	require('helper/MX4J.php');
@@ -36,6 +38,9 @@
 		die(getHTML('header.php').getHTML('server_error.php',array('error_message' => displayErrorMessage('cassandra_server_error',array('error_message' => $e->getMessage())))).getHTML('footer.php'));
 	}
 	
+	/*
+		Get the specified view and replace the php variables
+	*/	
 	function getHTML($filename, $php_params = array()) {
 		if (!file_exists('views/'.$filename))
 			die ('The view ' . $filename . ' doesn\'t exist');
@@ -51,6 +56,9 @@
 		return $content;
 	} 
 	
+	/*
+		Return a human readable file format from a number of bytes
+	*/
 	function formatBytes($bytes) {
 		if ($bytes < 1024) return $bytes.' B';
 		elseif ($bytes < 1048576) return round($bytes / 1024, 2).' KB';
@@ -59,187 +67,70 @@
 		else return round($bytes / 1099511627776, 2).' TB';
 	}
 	
+	/*
+		Redirect the user to the specified URL
+	*/
 	function redirect($url) {
 		header('Location: '.$url);
 		exit();
 	}
 	
-	function displaySuccessMessage($index,$params = array()) {
-		if ($index == 'create_keyspace') {
-			$return = 'Keyspace '.$params['keyspace_name'].' has been created successfully!<br />Query took '.$params['query_time'];
-		}
-		elseif ($index == 'edit_keyspace') {
-			$return = 'Keyspace '.$params['keyspace_name'].' has been edited successfully!<br />Query took '.$params['query_time'];
-		}
-		elseif ($index == 'drop_keyspace') {
-			$return = 'Keyspace '.$params['keyspace_name'].' has been dropped successfully!<br />Query took '.$params['query_time'];
-		}
-		elseif ($index == 'create_columnfamily') {
-			$return = 'Column family '.$params['columnfamily_name'].' has been created successfully!<br />Query took '.$params['query_time'];
-		}
-		elseif ($index == 'edit_columnfamily') {
-			$return = 'Column family '.$params['columnfamily_name'].' has been edited successfully!<br />Query took '.$params['query_time'];
-		}
-		elseif ($index == 'drop_columnfamily') {
-			$return = 'Column family dropped successfully!';
-		}
-		elseif ($index == 'get_key') {
-			$return = 'Successfully got key "'.implode(',',$params['keys']).'"<br />Query took '.$params['query_time'];
-		}
-		elseif ($index == 'create_secondary_index') {
-			$return = 'Secondary index on column '.$params['column_name'].' has been created succesfully!<br />Query took '.$params['query_time'];
-		}
-		elseif ($index == 'insert_row') {
-			$return = 'Row inserted successfully!<br />Query took '.$params['query_time'];
-		}
-		elseif ($index == 'edit_row') {
-			$return = 'Row "'.$params['key'].'" edited successfully!<br />Query took '.$params['query_time'];
-		}
-		elseif ($index == 'edit_counter') {
-			$return = 'Counter row edited successfully. Value is now '.$params['value'].'!';
-		}
-		elseif ($index == 'invoke_garbage_collector') {
-			$return = 'Garbage collector was invoked succesfully!';
-		}
-		elseif ($index == 'invoke_force_major_compaction') {
-			$return = 'Force major compaction was invoked succesfully!';
-		}
-		elseif ($index == 'invoke_invalidate_key_cache') {
-			$return = 'Invalidate key cache was invoked succesfully!';
-		}
-		elseif ($index == 'invoke_invalidate_row_cache') {
-			$return = 'Invalidate row cache was invoked succesfully!';
-		}
-		elseif ($index == 'invoke_force_flush') {
-			$return = 'Force flush was invoked succesfully!';
-		}
-		elseif ($index == 'invoke_disable_auto_compaction') {
-			$return = 'Disable auto compaction was invoked succesfully!';
-		}
-		elseif ($index == 'invoke_estimate_keys') {
-			$return = 'Estimate keys was invoked succesfully! Estimated keys value is : '.$params['nb_keys'];
-		}
-		elseif ($index == 'query_secondary_index') {
-			$return = 'Successfully got '.$params['nb_results'].' rows from secondary index<br />Query took '.$params['query_time'];
+	/*
+		Return the text for the index in the current language the user is using
+	*/
+	function getLang($index,$params) {	
+		global $lang;
+		
+		$output = $lang[$index];
+		
+		foreach ($params as $key => $value) {
+			$output = str_replace('%'.$key.'%',$value,$output);
 		}
 		
-		return '<div class="success_message">'.$return.'</div>';
+		return $output;
 	}
 	
+	/*
+		Return a message for a form success
+	*/
+	function displaySuccessMessage($index,$params = array()) {
+		global $lang;
+	
+		return '<div class="success_message">'.getLang('form_success_'.$index,$params).'</div>';
+	}
+	
+	/*
+		Return a message for a form info
+	*/
 	function displayInfoMessage($index,$params = array()) {
-		if ($index == 'edit_keyspace_increased_replication_factor') {
-			$return = 'Tips: Looks like you increased the replication factor.<br />You might want to run "nodetool -h localhost repair" on all your Cassandra nodes.';
-		}
-		elseif ($index == 'edit_keyspace_decreased_replication_factor') {
-			$return = 'Tips: Looks like you decreased the replication factor.<br />You might want to run "nodetool -h localhost cleanup" on all your Cassandra nodes.';
-		}
-		elseif ($index == 'get_key_doesnt_exists') {
-			$return = 'Key "'.$params['key'].'" doesn\'t exists';
-		}
-		elseif ($index == 'insert_row_not_empty') {
-			$return = 'Key must not be empty';
-		}
-		
-		return '<div class="info_message">'.$return.'</div>';
+		global $lang;
+	
+		return '<div class="info_message">'.getLang('form_info_'.$index,$params).'</div>';
 	}
 
+	/*
+		Return a message for a form error
+	*/
 	function displayErrorMessage($index,$params = array()) {
-		if ($index == 'create_keyspace') {
-			$return = 'Keyspace '.$params['keyspace_name'].' couldn\'t be created.<br /> Reason: '.$params['message'];
-		}
-		elseif ($index == 'edit_keyspace') {
-			$return = 'Keyspace '.$params['keyspace_name'].' couldn\'t be edited.<br /> Reason: '.$params['message'];
-		}
-		elseif ($index == 'drop_keyspace') {
-			$return = 'Keyspace '.$params['keyspace_name'].' couldn\'t be dropped.<br /> Reason: '.$params['message'];
-		}
-		elseif ($index == 'create_columnfamily') {
-			$return = 'Column family '.$params['columnfamily_name'].' couldn\'t be created.<br /> Reason: '.$params['message'];
-		}
-		elseif ($index == 'edit_columnfamily') {
-			$return = 'Column family '.$params['columnfamily_name'].' couldn\'t be edited.<br /> Reason: '.$params['message'];
-		}
-		elseif ($index == 'get_key') {
-			$return = 'Error during getting key: '.$params['message'];
-		}
-		elseif ($index == 'insert_row') {
-			$return = 'Error while inserting row: '.$params['message'];
-		}
-		elseif ($index == 'create_secondary_index') {
-			$return = 'Couldn\'t create secondary index on column '.$params['column_name'].'<br /> Reason: '.$params['message'];
-		}
-		elseif ($index == 'keyspace_doesnt_exists') {
-			$return = 'Keyspace "'.$params['keyspace_name'].'" doesn\'t exists';
-		}
-		elseif ($index == 'columnfamily_doesnt_exists') {
-			$return = 'Column family "'.$params['column_name'].'" doesn\'t exists';
-		}
-		elseif ($index == 'keyspace_name_must_be_specified') {
-			$return = 'You must specify a keyspace name';
-		}
-		elseif ($index == 'columnfamily_name_must_be_specified') {
-			$return = 'You must specify a column family name';
-		}
-		elseif ($index == 'login_wrong_username_password') {
-			$return = 'Wrong username and/or password!';
-		}
-		elseif ($index == 'you_must_be_logged') {
-			$return = 'You must be logged to access Cassandra Cluster Admin!';
-		}
-		elseif ($index == 'invalid_action_specified') {
-			$return = 'Invalid action: '.$params['action'];
-		}
-		elseif ($index == 'no_action_specified') {
-			$return = 'No action specified';
-		}
-		elseif ($index == 'cassandra_server_error') {
-			$return = 'An error occured while connecting to your Cassandra server: '.$params['error_message'];
-		}
-		elseif ($index == 'insert_row_incomplete_fields') {
-			$return = 'Some fields are empty';
-		}
-		elseif ($index == 'drop_columnfamily') {
-			$return = 'Error while dropping column family: '.$params['message'];
-		}
-		elseif ($index == 'something_wrong_happened') {
-			$return = 'Something wrong happened: '.$params['message'];
-		}
-		elseif ($index == 'invoke_garbage_collector') {
-			$return = 'Invoking garbage collector failed.';
-		}		
-		elseif ($index == 'invoke_force_major_compaction') {
-			$return = 'Invoking Force major compaction failed.';
-		}
-		elseif ($index == 'invoke_invalidate_key_cache') {
-			$return = 'Invoking invalidate key cache failed.';
-		}
-		elseif ($index == 'invoke_invalidate_row_cache') {
-			$return = 'Invoking invalidate row cache failed.';
-		}
-		elseif ($index == 'invoke_force_flush') {
-			$return = 'Invoking force flush failed.';
-		}
-		elseif ($index == 'invoke_disable_auto_compaction') {
-			$return = 'Invoking disable auto compaction failed.';
-		}
-		elseif ($index == 'invoke_estimate_keys') {
-			$return = 'Invoking estimate keys failed.';
-		}
-		elseif ($index == 'query_secondary_index') {
-			$return = 'Error while querying secondary index: '.$params['message'];
-		}
-		
-		return '<div class="error_message">'.$return.'</div>';
+		global $lang;
+	
+		return '<div class="error_message">'.getLang('form_error_'.$index,$params).'</div>';
 	}
 	
 	$current_page_title = 'Cassandra Cluster Admin';
 	
+	/*
+		Get the currrent page title for the HTML page
+	*/
 	function getPageTitle() {
 		global $current_page_title;
 		
 		return $current_page_title;
 	}
 	
+	/*
+		Return the number of seconds elapsed between the time start and time end
+	*/
 	function getQueryTime($time_start,$time_end) {
 		return round($time_end - $time_start,4).'sec';
 	}

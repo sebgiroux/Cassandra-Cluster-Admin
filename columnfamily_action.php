@@ -291,7 +291,7 @@
 			
 			$vw_vars['results'] = $results;
 			
-			$vw_vars['success_message'] = displaySuccessMessage('get_key',array('keys' => $tab_keys, 'query_time' => getQueryTime($time_start,$time_end)));
+			$vw_vars['success_message'] = displaySuccessMessage('get_key',array('keys' => implode(',',$tab_keys), 'query_time' => getQueryTime($time_start,$time_end)));
 		}
 		catch (cassandra_NotFoundException $e) {
 			$vw_vars['success_message'] = displayInfoMessage('get_key_doesnt_exists',array('key' => $tab_keys[0]));

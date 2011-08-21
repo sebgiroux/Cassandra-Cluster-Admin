@@ -11,7 +11,7 @@ Bug report and/or pull request are always welcome!
 Screenshots
 ------------------------------------------------
 
-[![Cassandra Cluster Admin Homepage](http://img64.imageshack.us/img64/9024/49cassandraclusteradmin.th.png)](http://img64.imageshack.us/img64/9024/49cassandraclusteradmin.png) [![Cassandra Cluster Admin Column family Definition and Actions](http://img813.imageshack.us/img813/1186/66cassandraclusteradmin.th.png)](http://img813.imageshack.us/img813/1186/66cassandraclusteradmin.png)  [![Cassandra Cluster Admin List of Column Families in a Keyspace](http://img151.imageshack.us/img151/464/31cassandraclusteradmin.th.png)](http://img151.imageshack.us/img151/464/31cassandraclusteradmin.png) [![Cassandra Cluster Admin Edit a Column Family](http://img714.imageshack.us/img714/3434/76cassandraclusteradmin.th.png)](http://img714.imageshack.us/img714/3434/76cassandraclusteradmin.png)
+[![Cassandra Cluster Admin Homepage](http://img708.imageshack.us/img708/7939/screenshot1kk.th.png)](http://img708.imageshack.us/img708/7939/screenshot1kk.png) [![Cassandra Cluster Admin Column family Definition and Actions](http://img24.imageshack.us/img24/7249/screenshot2po.th.png)](http://img24.imageshack.us/img24/7249/screenshot2po.png)  [![Cassandra Cluster Admin List of Column Families in a Keyspace](http://img855.imageshack.us/img855/3512/screenshot3tc.th.png)](http://img855.imageshack.us/img855/3512/screenshot3tc.png) [![Cassandra Cluster Admin Edit a Column Family](http://img52.imageshack.us/img52/6885/screenshot4kr.th.png)](http://img52.imageshack.us/img52/6885/screenshot4kr.png)
 
 Supported actions
 ------------------------------------------------

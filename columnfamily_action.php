@@ -256,7 +256,7 @@
 		$cf = ColumnFamilyHelper::getCFInKeyspace($keyspace_name,$columnfamily_name);
 	
 		try {		
-			$pool = new ConnectionPool($keyspace_name, $cluster_helper->getArrayOfNodesForCurrentCluster());
+			$pool = new ConnectionPool($keyspace_name, $cluster_helper->getArrayOfNodesForCurrentCluster(),null,5,5000,5000,10000,$cluster_helper->getCredentialsForCurrentCluster());
 			$column_family = new ColumnFamily($pool, $columnfamily_name);
 			
 			$vw_vars['results'] = '';	
@@ -320,7 +320,7 @@
 		}
 		
 		try {		
-			$pool = new ConnectionPool($keyspace_name, $cluster_helper->getArrayOfNodesForCurrentCluster());
+			$pool = new ConnectionPool($keyspace_name, $cluster_helper->getArrayOfNodesForCurrentCluster(),null,5,5000,5000,10000,$cluster_helper->getCredentialsForCurrentCluster());
 			$column_family = new ColumnFamily($pool, $columnfamily_name);
 		
 			$no_index_expression = 0;
@@ -464,7 +464,7 @@
 		
 		$key = $_POST['key'];
 		
-		$pool = new ConnectionPool($keyspace_name, $cluster_helper->getArrayOfNodesForCurrentCluster());
+		$pool = new ConnectionPool($keyspace_name, $cluster_helper->getArrayOfNodesForCurrentCluster(),null,5,5000,5000,10000,$cluster_helper->getCredentialsForCurrentCluster());
 		$column_family = new ColumnFamily($pool, $columnfamily_name);
 		
 		$no_column = 1;
@@ -624,7 +624,7 @@
 		$vw_vars['columnfamily_name'] = $columnfamily_name;
 				
 		try {		
-			$pool = new ConnectionPool($keyspace_name, $cluster_helper->getArrayOfNodesForCurrentCluster());
+			$pool = new ConnectionPool($keyspace_name, $cluster_helper->getArrayOfNodesForCurrentCluster(),null,5,5000,5000,10000,$cluster_helper->getCredentialsForCurrentCluster());
 			$column_family = new ColumnFamily($pool, $columnfamily_name);
 		
 			// Increment counter
@@ -797,7 +797,7 @@
 		$vw_vars['mode'] = 'edit';
 		
 		try {		
-			$pool = new ConnectionPool($keyspace_name, $cluster_helper->getArrayOfNodesForCurrentCluster());
+			$pool = new ConnectionPool($keyspace_name, $cluster_helper->getArrayOfNodesForCurrentCluster(),null,5,5000,5000,10000,$cluster_helper->getCredentialsForCurrentCluster());
 			$column_family = new ColumnFamily($pool, $columnfamily_name);
 			
 			$vw_vars['results'] = '';	
@@ -844,7 +844,7 @@
 		}
 		
 		try {
-			$pool = new ConnectionPool($keyspace_name, $cluster_helper->getArrayOfNodesForCurrentCluster());
+			$pool = new ConnectionPool($keyspace_name, $cluster_helper->getArrayOfNodesForCurrentCluster(),null,5,5000,5000,10000,$cluster_helper->getCredentialsForCurrentCluster());
 			$column_family = new ColumnFamily($pool, $columnfamily_name);	
 		
 			$column_family->remove($key,null,$super_column_key);
@@ -891,7 +891,7 @@
 		if (isset($_POST['columnfamily_name'])) $columnfamily_name = $_POST['columnfamily_name'];
 		
 		try {
-			$pool = new ConnectionPool($keyspace_name, $cluster_helper->getArrayOfNodesForCurrentCluster());
+			$pool = new ConnectionPool($keyspace_name, $cluster_helper->getArrayOfNodesForCurrentCluster(),null,5,5000,5000,10000,$cluster_helper->getCredentialsForCurrentCluster());
 			$column_family = new ColumnFamily($pool, $columnfamily_name);	
 			
 			if ($action == 'dec') {

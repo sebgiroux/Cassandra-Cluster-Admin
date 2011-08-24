@@ -40,23 +40,28 @@
 		public static function getKeyspacesAndColumnFamiliesDetails() {
 			global $sys_manager;
 		
-			$keyspaces = $sys_manager->describe_keyspaces();
-			$keyspaces_name = array();
-			$keyspaces_details = array();
-			
-			foreach ($keyspaces as $keyspace) {
-				$keyspaces_name[] = $keyspace->name;
+			try {
+				$keyspaces = $sys_manager->describe_keyspaces();
+				$keyspaces_name = array();
+				$keyspaces_details = array();
 				
-				$columnfamilies_name = array();
-				
-				foreach ($keyspace->cf_defs as $columnfamily) {
-					$columnfamilies_name[] = $columnfamily->name;
+				foreach ($keyspaces as $keyspace) {
+					$keyspaces_name[] = $keyspace->name;
+					
+					$columnfamilies_name = array();
+					
+					foreach ($keyspace->cf_defs as $columnfamily) {
+						$columnfamilies_name[] = $columnfamily->name;
+					}
+					
+					$keyspaces_details[] = array('columnfamilies_name' => $columnfamilies_name);
 				}
 				
-				$keyspaces_details[] = array('columnfamilies_name' => $columnfamilies_name);
+				return array('keyspaces_name' => $keyspaces_name, 'keyspaces_details' => $keyspaces_details);
 			}
-			
-			return array('keyspaces_name' => $keyspaces_name, 'keyspaces_details' => $keyspaces_details);
+			catch(cassandra_InvalidRequestException $e) {
+				die(getHTML('server_error.php',array('error_message' => displayErrorMessage('cassandra_server_error',array('error_message' => $e->getMessage())))).getHTML('footer.php'));
+			}
 		}
 	
 		/*

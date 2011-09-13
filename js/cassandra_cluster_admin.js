@@ -59,25 +59,25 @@ function triggerJMXInvoke(action) {
 	var columnfamily_name = keyspaces_details[index_keyspace][index_columnfamily];
 
 	if (action == 'garbage_collector') {
-		location.href = 'jmx.php?trigger_gc=1';
+		location.href = 'jmx.php?trigger_gc=1#trigger_invoke';
 	}
 	else if (action == 'force_major_compaction') {
-		location.href = 'jmx.php?trigger_force_major_compaction=1&keyspace_name=' + keyspace_name + '&columnfamily_name=' + columnfamily_name;
+		location.href = 'jmx.php?trigger_force_major_compaction=1&keyspace_name=' + keyspace_name + '&columnfamily_name=' + columnfamily_name + '#trigger_invoke';
 	}
 	else if (action == 'invalidate_key_cache') {
-		location.href = 'jmx.php?trigger_invalidate_key_cache=1&keyspace_name=' + keyspace_name + '&columnfamily_name=' + columnfamily_name;
+		location.href = 'jmx.php?trigger_invalidate_key_cache=1&keyspace_name=' + keyspace_name + '&columnfamily_name=' + columnfamily_name + '#trigger_invoke';
 	}
 	else if (action == 'invalidate_row_cache') {
-		location.href = 'jmx.php?trigger_invalidate_row_cache=1&keyspace_name=' + keyspace_name + '&columnfamily_name=' + columnfamily_name;
+		location.href = 'jmx.php?trigger_invalidate_row_cache=1&keyspace_name=' + keyspace_name + '&columnfamily_name=' + columnfamily_name + '#trigger_invoke';
 	}
 	else if (action == 'force_flush') {
-		location.href = 'jmx.php?trigger_force_flush=1&keyspace_name=' + keyspace_name + '&columnfamily_name=' + columnfamily_name;
+		location.href = 'jmx.php?trigger_force_flush=1&keyspace_name=' + keyspace_name + '&columnfamily_name=' + columnfamily_name + '#trigger_invoke';
 	}
 	else if (action == 'disable_auto_compaction') {
-		location.href = 'jmx.php?trigger_disable_auto_compaction=1&keyspace_name=' + keyspace_name + '&columnfamily_name=' + columnfamily_name;
+		location.href = 'jmx.php?trigger_disable_auto_compaction=1&keyspace_name=' + keyspace_name + '&columnfamily_name=' + columnfamily_name + '#trigger_invoke';
 	}
 	else if (action == 'estimate_keys') {
-		location.href = 'jmx.php?trigger_estimate_keys=1&keyspace_name=' + keyspace_name + '&columnfamily_name=' + columnfamily_name;
+		location.href = 'jmx.php?trigger_estimate_keys=1&keyspace_name=' + keyspace_name + '&columnfamily_name=' + columnfamily_name + '#trigger_invoke';
 	}
 }
 

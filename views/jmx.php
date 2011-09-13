@@ -173,7 +173,7 @@
 	<div><label for="columnfamily_list">Select a Column Family:</label> <select id="columnfamily_list" onchange="changeColumnFamily();"></select></div>
 </form>
 
-<h4>Triggers</h4>
+<h4><a name="trigger_invoke">Triggers</a></h4>
 
 <?php
 	if ($trigger_force_major_compaction === true):
@@ -181,55 +181,46 @@
 	elseif ($trigger_force_major_compaction === false):
 		echo displayErrorMessage('invoke_force_major_compaction');
 	endif;
-?>
-<div class="float_left" style="margin-right: 10px; margin-bottom: 10px;"><input type="button" value="Trigger Force Major Compaction" onclick="triggerJMXInvoke('force_major_compaction');"/></div>
 
-<?php
 	if ($trigger_invalidate_key_cache === true):
 		echo displaySuccessMessage('invoke_invalidate_key_cache');
 	elseif ($trigger_invalidate_key_cache === false):
 		echo displayErrorMessage('invoke_invalidate_key_cache');
 	endif;
-?>
-<div class="float_left" style="margin-right: 10px; margin-bottom: 10px;"><input type="button" value="Trigger Invalidate Key Cache" onclick="triggerJMXInvoke('invalidate_key_cache');"/></div>
 
-<?php
 	if ($trigger_invalidate_row_cache === true):
 		echo displaySuccessMessage('invoke_invalidate_row_cache');
 	elseif ($trigger_invalidate_row_cache === false):
 		echo displayErrorMessage('invoke_invalidate_row_cache');
 	endif;
-?>
-<div class="float_left" style="margin-right: 10px; margin-bottom: 10px;"><input type="button" value="Trigger Invalidate Row Cache" onclick="triggerJMXInvoke('invalidate_row_cache');"/></div>
-<div class="clear_left"></div>
 
-<?php
 	if ($trigger_force_flush === true):
 		echo displaySuccessMessage('invoke_force_flush');
 	elseif ($trigger_force_flush === false):
 		echo displayErrorMessage('invoke_force_flush');
 	endif;
-?>
-<div class="float_left" style="margin-right: 10px; margin-bottom: 10px;"><input type="button" value="Trigger Force Flush" onclick="triggerJMXInvoke('force_flush');"/></div>
 
-<?php
 	if ($trigger_disable_auto_compaction === true):
 		echo displaySuccessMessage('invoke_disable_auto_compaction');
 	elseif ($trigger_disable_auto_compaction === false):
 		echo displayErrorMessage('invoke_disable_auto_compaction');
 	endif;
-?>
-<div class="float_left" style="margin-right: 10px; margin-bottom: 10px;"><input type="button" value="Trigger Disable Auto Compaction" onclick="triggerJMXInvoke('disable_auto_compaction');"/></div>
-
-<?php
+	
 	if (is_array($trigger_estimate_keys) && $trigger_estimate_keys['result'] === true):
 		echo displaySuccessMessage('invoke_estimate_keys',array('nb_keys' => $trigger_estimate_keys['return']));
 	elseif (is_array($trigger_estimate_keys) && $trigger_estimate_keys['result'] === false):
 		echo displayErrorMessage('invoke_estimate_keys');
 	endif;
 ?>
-<div class="float_left" style="margin-right: 10px; margin-bottom: 10px;"><input type="button" value="Trigger Estimate Keys" onclick="triggerJMXInvoke('estimate_keys');"/></div>
 
+<div class="float_left" style="margin-right: 10px; margin-bottom: 10px;"><input type="button" value="Trigger Force Major Compaction" onclick="triggerJMXInvoke('force_major_compaction');"/></div>
+<div class="float_left" style="margin-right: 10px; margin-bottom: 10px;"><input type="button" value="Trigger Invalidate Key Cache" onclick="triggerJMXInvoke('invalidate_key_cache');"/></div>
+<div class="float_left" style="margin-right: 10px; margin-bottom: 10px;"><input type="button" value="Trigger Invalidate Row Cache" onclick="triggerJMXInvoke('invalidate_row_cache');"/></div>
+<div class="clear_left"></div>
+
+<div class="float_left" style="margin-right: 10px; margin-bottom: 10px;"><input type="button" value="Trigger Force Flush" onclick="triggerJMXInvoke('force_flush');"/></div>
+<div class="float_left" style="margin-right: 10px; margin-bottom: 10px;"><input type="button" value="Trigger Disable Auto Compaction" onclick="triggerJMXInvoke('disable_auto_compaction');"/></div>
+<div class="float_left" style="margin-right: 10px; margin-bottom: 10px;"><input type="button" value="Trigger Estimate Keys" onclick="triggerJMXInvoke('estimate_keys');"/></div>
 <div class="clear_left"></div>
 
 <div class="float_left">

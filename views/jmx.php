@@ -173,7 +173,7 @@
 	<div><label for="columnfamily_list">Select a Column Family:</label> <select id="columnfamily_list" onchange="changeColumnFamily();"></select></div>
 </form>
 
-<h4><a name="trigger_invoke">Triggers</a></h4>
+<h4><a name="trigger_invoke" style="color: #000;">Triggers</a></h4>
 
 <?php
 	if ($trigger_force_major_compaction === true):

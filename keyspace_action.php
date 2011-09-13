@@ -202,9 +202,7 @@
 		$strategy = $_POST['strategy'];
 		
 		$attrs = array('replication_factor' => $replication_factor,'strategy_class' => $strategy);
-		
-		$describe_keyspace = $sys_manager->describe_keyspace($keyspace_name);
-		
+				
 		try {	
 			$time_start = microtime(true);
 			$sys_manager->alter_keyspace($keyspace_name, $attrs);
@@ -212,7 +210,14 @@
 			
 			$vw_vars['success_message'] = displaySuccessMessage('edit_keyspace',array('keyspace_name' => $keyspace_name,'query_time' => getQueryTime($time_start,$time_end)));
 			
+			$describe_keyspace = $sys_manager->describe_keyspace($keyspace_name);
+			$old_replication_factor = $describe_keyspace->replication_factor;			
+			
 			$old_replication_factor = $describe_keyspace->replication_factor;
+			$strategy_options = $describe_keyspace->strategy_options;
+			if ($old_replication_factor == '' && isset($strategy_options['replication_factor'])) $old_replication_factor = $strategy_options['replication_factor'];		
+			if ($old_replication_factor == '') $old_replication_factor = 1;						
+			
 			$new_replication_factor = $replication_factor;
 			
 			// Display tips about the replication factor that has been increased

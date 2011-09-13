@@ -6,7 +6,7 @@
 <form method="post" action="">
 	<div>
 		<label for="keyspace_name">Keyspace Name:</label>
-		<input type="text" id="keyspace_name" name="keyspace_name" value="<?php echo $keyspace_name; ?>" />
+		<input type="text" id="keyspace_name" name="keyspace_name" value="<?php echo $keyspace_name; ?>" <?php if($mode == 'edit'): echo 'disabled="disabled"'; endif; ?> />
 	</div>
 	
 	<div>
@@ -27,6 +27,11 @@
 	<div>
 		<input type="submit" name="<?php if($mode == 'edit'): echo 'btn_edit_keyspace'; else: echo 'btn_create_keyspace'; endif; ?>" value="<?php if($mode == 'edit'): echo 'Edit Keyspace'; else: echo 'Create Keyspace'; endif; ?>" />
 	</div>	
+	
+	<?php if($mode == 'edit'): ?>
+	<input type="hidden" name="keyspace_name" value="<?php echo $keyspace_name; ?>" />
+	<?php endif; ?>
+	
 </form>
 
 <script type="text/javascript">

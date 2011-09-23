@@ -71,5 +71,6 @@
 	$lang['form_error_invoke_disable_auto_compaction'] = 'Invoking disable auto compaction failed.';
 	$lang['form_error_invoke_estimate_keys'] = 'Invoking estimate keys failed.';
 	$lang['form_error_query_secondary_index'] = 'Error while querying secondary index: %message%';
+	$lang['form_error_jmx_missing_curl_php_extension'] = 'It looks like you\'re missing a dependency to be able to see this page: <ul><li>cURL PHP extension</li><ul>';
 	
 ?>

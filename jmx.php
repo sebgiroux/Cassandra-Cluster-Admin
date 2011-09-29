@@ -13,7 +13,7 @@
 	$first_host = explode(':',$all_nodes[0]);
 	$first_host = $first_host[0];
 	
-	if (isset($_GET['change_mx4j_node'])) $_SESSION['mx4j_node'] = $_GET['mx4j_node'];
+	if (isset($_GET['change_mx4j_node'])) $_SESSION['mx4j_node'] = $_GET['change_mx4j_node'];
 	elseif (!isset($_SESSION['mx4j_node'])) $_SESSION['mx4j_node'] = $first_host;
 	
 	// If user come from another cluster, we need to refresh the node in the session

@@ -21,9 +21,26 @@
 <h3>Keyspace Details</h3>
 <div>
 	<table>
-		<tr><td>Strategy Class:</td><td><?php echo $strategy_class; ?></td></tr>
-		<tr><td>Strategy Options:</td><td><?php if (empty($strategy_options)): echo 'None'; else: echo $strategy_options; endif;?></td></tr>
-		<tr><td>Replication Factor:</td><td><?php echo $replication_factor; ?></td></tr>
+		<tr>
+			<td>Strategy Class:</td>
+			<td><?php echo $strategy_class; ?></td>
+		</tr>
+		<tr>
+			<td>Strategy Options:</td>
+			<td>
+				<?php
+					if (empty($strategy_options)): echo 'None';
+					elseif (is_array($strategy_options)):
+						foreach ($strategy_options as $one_strategy => $value):
+							echo $one_strategy.' => '.$value.'<br />';
+						endforeach;
+					else: echo $strategy_options; endif;
+				?>
+			</td>
+		</tr>
+		<tr>
+			<td>Replication Factor:</td><td><?php echo $replication_factor; ?></td>
+		</tr>
 	</table>
 </div>
 

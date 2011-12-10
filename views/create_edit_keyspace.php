@@ -17,10 +17,10 @@
 	<div>
 		<label for="strategy">Strategy:</label>
 		<select id="strategy" name="strategy">
+			<option value="org.apache.cassandra.locator.SimpleStrategy">Simple Strategy</option>
 			<option value="org.apache.cassandra.locator.LocalStrategy">Local Strategy</option>
 			<option value="org.apache.cassandra.locator.NetworkTopologyStrategy">Network Topology Strategy</option>
 			<option value="org.apache.cassandra.locator.OldNetworkTopologyStrategy">Old Network Topology Strategy</option>
-			<option value="org.apache.cassandra.locator.SimpleStrategy">Simple Strategy</option>
 		</select>
 	</div>
 	

@@ -1,4 +1,4 @@
-<h3><a href="index.php"><?php echo $cluster_name; ?></a> &gt; <a href="describe_keyspace.php?keyspace_name=<?php echo $keyspace_name; ?>"><?php echo $keyspace_name; ?></a> <?php if (!empty($columnfamily_name)): echo "&gt; $columnfamily_name"; endif; ?> <?php if($mode=='create'): echo '&gt; Create Column Family'; endif;?></h3>
+<h3><a href="index.php"><?php echo $cluster_name; ?></a> &gt; <a href="describe_keyspace.php?keyspace_name=<?php echo $keyspace_name; ?>"><?php echo $keyspace_name; ?></a> <?php if (!empty($columnfamily_name)): echo '&gt; <a href="describe_columnfamily.php?keyspace_name='.$keyspace_name.'&columnfamily_name='.$columnfamily_name.'">'.$columnfamily_name.'</a>'; endif; ?> <?php if ($mode=='create'): echo '&gt; Create Column Family'; else: echo ' &gt; Edit Column Family'; endif;?></h3>
 
 <?php echo $success_message; ?>
 <?php echo $error_message; ?>

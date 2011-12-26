@@ -13,21 +13,35 @@
 	<tr><td>Row Cache Size</td><td><?php echo $row_cache_size; ?></td></tr>
 	<tr><td>Key Cache Size</td><td><?php echo $key_cache_size; ?></td></tr>
 	<tr><td>Read Repair Chance</td><td><?php echo $read_repair_chance; ?></td></tr>
-	<tr><td>Column Metadata</td><td>
+	<tr><td valign="top">Column Metadata</td><td>
 		<?php
-			if (is_array($column_metadata)) {
-				if (count($column_metadata) > 0) {
-					foreach ($column_metadata as $key => $value) {
-						echo $key.': '. print_r($value,true).'<br />';
-					}
-				}
-				else {
+			if (is_array($column_metadata)):
+				if (count($column_metadata) > 0):
+					for ($i = 0; $i < count($column_metadata); $i++):
+						$value = $column_metadata[$i];
+						if (is_array($value)):
+							foreach ($value as $key => $one_value):
+								echo $key.': '.$value.'<br />';
+							endforeach;
+						elseif (is_object($value)):
+							$class_vars = get_object_vars($value);
+							foreach ($class_vars as $key => $value):
+								echo $key.': '.$value.'<br />';
+							endforeach;
+						else:
+							echo $value.'<br />';
+						endif;
+						
+						if ($i < count($column_metadata) - 1):
+							echo '<hr size="1" />';
+						endif;
+					endfor;
+				else:
 					echo 'None';
-				}
-			}
-			else {
+				endif;
+			else:
 				echo $column_metadata;
-			}
+			endif;
 		?>
 	</td></tr>
 	<tr><td>GC Grace Seconds</td><td><?php echo $gc_grace_seconds; ?></td></tr>

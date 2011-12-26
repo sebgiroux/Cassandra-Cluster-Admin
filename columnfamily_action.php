@@ -806,7 +806,7 @@
 			$output = $column_family->get($key);
 			$vw_vars['output'] = $output;
 		}
-		catch(Exception $e) {
+		catch (Exception $e) {
 			echo displayErrorMessage('something_wrong_happened',array('message' => $e->getMessage()));
 		}
 		

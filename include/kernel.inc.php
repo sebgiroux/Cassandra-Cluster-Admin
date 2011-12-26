@@ -114,7 +114,7 @@
 	function displayErrorMessage($index,$params = array()) {
 		global $lang;
 	
-		return '<div class="error_message">'.getLang('form_error_'.$index,$params).'</div>';
+		return '<div class="error_message">'.nl2br(getLang('form_error_'.$index,$params)).'</div>';
 	}
 	
 	$current_page_title = 'Cassandra Cluster Admin';
@@ -130,8 +130,7 @@
 	
 	/*
 		Return true if a keyspace is read-only, false otherwise
-	*/
-	
+	*/	
 	function isReadOnlyKeyspace($keyspace_name) {
 		return in_array($keyspace_name,explode(',',READ_ONLY_KEYSPACES));
 	}

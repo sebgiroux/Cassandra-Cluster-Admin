@@ -26,8 +26,13 @@
             curl_close($ch); 
 			
 			// Convert XML to Array
-			if ($return_as_array)
-				return json_decode(json_encode(simplexml_load_string($data)),1);
+			if ($return_as_array) {
+				libxml_use_internal_errors(true);
+				$array_data = simplexml_load_string($data);
+				libxml_clear_errors();
+				
+				return json_decode(json_encode($array_data),1);
+			}
 			else
 				return $data;
 		}

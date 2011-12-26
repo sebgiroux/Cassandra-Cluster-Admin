@@ -141,4 +141,11 @@
 	function getQueryTime($time_start,$time_end) {
 		return round($time_end - $time_start,4).'sec';
 	}
+	
+	/*
+		Return the column family definition in a user-readable format
+	*/
+	function displayOneCfDef($key) {
+		return ucwords(str_replace('_',' ',$key));
+	}
 ?>

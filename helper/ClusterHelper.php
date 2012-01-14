@@ -11,6 +11,11 @@
 	class ClusterHelper {		
 		private $cassandra_clusters = array();
 		
+		/*
+			Constructor
+			
+			@param $cassandra_clusters 	The array of Cassandra nodes to manage
+		*/
 		public function __construct($cassandra_clusters) {
 			$this->cassandra_clusters = $cassandra_clusters;
 		}
@@ -28,6 +33,8 @@
 			
 		/*
 			Get the name of the cluster at $index
+			
+			@param $index 	Index of the cluster name to get
 		*/
 		public function getClusterNameForIndex($index) {
 			try {
@@ -54,6 +61,8 @@
 		
 		/*
 			Get a random Cassandra node at $index
+			
+			@param $index 	Index of the cluster to get a random node from
 		*/
 		public function getRandomNodeForIndex($index) {			
 			$all_nodes = $this->cassandra_clusters[$index]['nodes'];
@@ -71,6 +80,8 @@
 		
 		/*
 			Get the Cassandra cluster credentials at $index
+			
+			@param $index 	Get the specified credentials for the cluster at the specified index
 		*/
 		public function getCredentialsForIndex($index) {			
 			$cluster = $this->cassandra_clusters[$index];

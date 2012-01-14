@@ -24,11 +24,11 @@
 	echo getHTML('header.php');
 		
 	// Make sure a keyspace name has been specified
-	if ($keyspace_name == '') {
+	if (empty($keyspace_name)) {
 		echo displayErrorMessage('keyspace_name_must_be_specified');
 	}
 	else {
-		if ($columnfamily_name == '') {
+		if (empty($columnfamily_name)) {
 			echo displayErrorMessage('columnfamily_name_must_be_specified');
 		}
 		else {			

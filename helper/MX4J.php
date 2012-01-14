@@ -1,30 +1,54 @@
 <?php
+	/*
+		Cassandra Cluster Admin
+		
+		MX4J helper class to extract data from JMX about a Cassandra node
+		
+		@author Sébastien Giroux
+		@copyright All rights reserved - 2011
+	*/
+	
 	class MX4J {
 		private $host = '';
 		private $port = 0;
 	
+		/*
+			Constructor
+		
+			@param $host Host of the MX4J instance
+			@param $port Port of the MX4J instance
+		*/
 		public function __construct($host, $port = MX4J_HTTP_ADAPTOR_PORT) {
 			$this->host = $host;
 			$this->port = $port;
 		}
 		
+		/*
+			Return the current MX4J url
+		*/
 		private function getUrl() {
 			return 'http://'.$this->host.':'.$this->port;
 		}
 		
+		/*
+			Helper function used to call the MX4J instance and return the result
+		
+			@param $url					The URL to be called
+			@param $return_as_array		True if the result should be an array, false otherwise
+		*/
 		private function doCall($url,$return_as_array = true) {
 			$ch = curl_init();
-			
-            curl_setopt($ch, CURLOPT_URL, $url);
-            curl_setopt($ch, CURLOPT_HEADER, false);
-            curl_setopt($ch, CURLOPT_NOBODY, false); 
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+			curl_setopt($ch, CURLOPT_URL, $url);
+			curl_setopt($ch, CURLOPT_HEADER, false);
+			curl_setopt($ch, CURLOPT_NOBODY, false); 
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 			curl_setopt($ch, CURLOPT_TIMEOUT, 3);
-            $data = curl_exec($ch);
-            $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-			
-            curl_close($ch); 
-			
+			$data = curl_exec($ch);
+			$http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
+			curl_close($ch); 
+
 			// Convert XML to Array
 			if ($return_as_array) {
 				libxml_use_internal_errors(true);
@@ -37,6 +61,11 @@
 				return $data;
 		}
 		
+		/*
+			Extract the RAM usage info from a string
+		
+			@param $memory_string	String to extract the info from
+		*/
 		private function extractMemoryInfo($memory_string) {
 			// Extract memory info				
 			preg_match('/contents={.*}/',$memory_string,$matches);
@@ -53,16 +82,29 @@
 			return $memory_output;
 		}
 		
+		/*
+			Helper function to extract the value of a property
+		
+			@param $data 	The array of data
+			@param $index	The index that the attribute is in
+			@param $name	The name of the attribute to get
+		*/
 		private function extractProperty($data,$index,$name) {						
 			if (isset($data['Attribute'][$index]['@attributes']) && $data['Attribute'][$index]['@attributes']['name'] == $name) {
 				return $data['Attribute'][$index]['@attributes']['value'];
 			}
 		}
 		
+		/*
+			Return true if MX4J is active, false otherwise
+		*/
 		public function isActive() {
 			return $this->doCall($this->getUrl(),false) != '';
 		}
 	
+		/*
+			Return the heap memory usage of the current MX4J instance
+		*/
 		public function getHeapMemoryUsage() {
 			$data = $this->doCall($this->getUrl().'/mbean?objectname=java.lang%3Atype%3DMemory&template=identity');
 			
@@ -73,6 +115,9 @@
 			}
 		}
 		
+		/*
+			Return the non-heap memory usage of the current MX4J instance
+		*/
 		public function getNonHeapMemoryUsage() {
 			$data = $this->doCall($this->getUrl().'/mbean?objectname=java.lang%3Atype%3DMemory&template=identity');
 			
@@ -83,12 +128,18 @@
 			}
 		}
 				
+		/*
+			Return the number of loaded class for the current MX4J instance
+		*/
 		public function getLoadedClassCount() {
 			$data = $this->doCall($this->getUrl().'/mbean?objectname=java.lang%3Atype%3DClassLoading&template=identity');
 			
 			return $this->extractProperty($data,1,'TotalLoadedClassCount');
 		}
 		
+		/*
+			Return the TP stats information for the current MX4J instance
+		*/
 		public function getTpStats() {
 			$tp_stats = array();
 
@@ -218,6 +269,9 @@
 			return $tp_stats;
 		}
 		
+		/*
+			Trigger the garbage collection for the current MX4J instance
+		*/
 		public function triggerGarbageCollection() {
 			$data = $this->doCall($this->getUrl().'/invoke?operation=gc&objectname=java.lang%3Atype%3DMemory&template=identity');
 		
@@ -228,6 +282,12 @@
 			}
 		}
 		
+		/*
+			Return details about a column family
+			
+			@param $keyspace_name		The keyspace the column family is in
+			@param columnfamily_name 	The column family to get the detials for
+		*/
 		public function getColumnFamilyDetails($keyspace_name,$columnfamily_name) {
 			$data = $this->doCall($this->getUrl().'/mbean?objectname=org.apache.cassandra.db:type=ColumnFamilies,keyspace='.$keyspace_name.',columnfamily='.$columnfamily_name.'&template=identity');
 			
@@ -243,6 +303,12 @@
 			return $return;
 		}
 		
+		/*
+			Return details about key cache of a column family
+			
+			@param $keyspace_name		The keyspace the column family is in
+			@param columnfamily_name 	The column family to get the key cache detials for
+		*/
 		public function getColumnFamilyKeyCacheDetails($keyspace_name,$columnfamily_name) {
 			$data = $this->doCall($this->getUrl().'/mbean?objectname=org.apache.cassandra.db:type=Caches,keyspace='.$keyspace_name.',cache='.$columnfamily_name.'KeyCache&template=identity');
 			
@@ -258,6 +324,12 @@
 			return $return;
 		}
 		
+		/*
+			Return details about row cache of a column family
+			
+			@param $keyspace_name		The keyspace the column family is in
+			@param columnfamily_name 	The column family to get the row cache detials for
+		*/
 		public function getColumnFamilyRowCacheDetails($keyspace_name,$columnfamily_name) {
 			$data = $this->doCall($this->getUrl().'/mbean?objectname=org.apache.cassandra.db:type=Caches,keyspace='.$keyspace_name.',cache='.$columnfamily_name.'RowCache&template=identity');
 			
@@ -273,6 +345,12 @@
 			return $return;
 		}
 		
+		/*
+			Force a major compaction for the specified column family
+			
+			@param $keyspace_name		The keyspace the column family is in
+			@param columnfamily_name 	The column family to force major compaction
+		*/
 		public function forceMajorCompaction($keyspace_name,$columnfamily_name) {
 			$data = $this->doCall($this->getUrl().'/invoke?operation=forceMajorCompaction&objectname=org.apache.cassandra.db:type=ColumnFamilies,keyspace='.$keyspace_name.',columnfamily='.$columnfamily_name.'&template=identity');
 			
@@ -283,6 +361,12 @@
 			}
 		}
 		
+		/*
+			Invalidate the key cache for the specified column family
+			
+			@param $keyspace_name		The keyspace the column family is in
+			@param columnfamily_name 	The column family invalide key cache
+		*/
 		public function invalidateKeyCache($keyspace_name,$columnfamily_name) {
 			$data = $this->doCall($this->getUrl().'/invoke?operation=invalidateKeyCache&objectname=org.apache.cassandra.db:type=ColumnFamilies,keyspace='.$keyspace_name.',columnfamily='.$columnfamily_name.'&template=identity');
 			
@@ -293,6 +377,12 @@
 			}
 		}
 		
+		/*
+			Invalidate the row cache for the specified column family
+			
+			@param $keyspace_name		The keyspace the column family is in
+			@param columnfamily_name 	The column family invalide row cache
+		*/
 		public function invalidateRowCache($keyspace_name,$columnfamily_name) {
 			$data = $this->doCall($this->getUrl().'/invoke?operation=invalidateRowCache&objectname=org.apache.cassandra.db:type=ColumnFamilies,keyspace='.$keyspace_name.',columnfamily='.$columnfamily_name.'&template=identity');
 			
@@ -303,6 +393,12 @@
 			}
 		}
 		
+		/*
+			Force a flush of the specified column family
+			
+			@param $keyspace_name		The keyspace the column family is in
+			@param columnfamily_name 	The column family to flush
+		*/
 		public function forceFlush($keyspace_name,$columnfamily_name) {
 			$data = $this->doCall($this->getUrl().'/invoke?operation=forceFlush&objectname=org.apache.cassandra.db:type=ColumnFamilies,keyspace='.$keyspace_name.',columnfamily='.$columnfamily_name.'&template=identity');
 			
@@ -313,6 +409,12 @@
 			}
 		}
 		
+		/*
+			Disable auto compaction for the specified column family
+			
+			@param $keyspace_name		The keyspace the column family is in
+			@param columnfamily_name 	The column family to disable auto compaction
+		*/
 		public function disableAutoCompaction($keyspace_name,$columnfamily_name) {
 			$data = $this->doCall($this->getUrl().'/invoke?operation=disableAutoCompaction&objectname=org.apache.cassandra.db:type=ColumnFamilies,keyspace='.$keyspace_name.',columnfamily='.$columnfamily_name.'&template=identity');
 			
@@ -323,6 +425,12 @@
 			}
 		}
 		
+		/*
+			Get an estimated number of keys for the specified column family
+			
+			@param $keyspace_name		The keyspace the column family is in
+			@param columnfamily_name 	The column family to estimate the number of keys
+		*/
 		public function estimateKeys($keyspace_name,$columnfamily_name) {
 			$data = $this->doCall($this->getUrl().'/invoke?operation=estimateKeys&objectname=org.apache.cassandra.db:type=ColumnFamilies,keyspace='.$keyspace_name.',columnfamily='.$columnfamily_name.'&template=identity');
 			

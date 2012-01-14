@@ -664,7 +664,7 @@
 			
 			$vw_vars['current_offset_key'] = $offset_key;
 		
-			if ($offset_key == '') {
+			if (empty($offset_key)) {
 				$_SESSION['browse_data_offset_key'] = array();
 				$_SESSION['browse_data_offset_key'][] = '';
 			}

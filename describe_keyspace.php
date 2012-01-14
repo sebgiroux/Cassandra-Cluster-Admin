@@ -19,7 +19,7 @@
 	
 	$vw_vars = array();
 	
-	if ($keyspace_name == '') {
+	if (empty($keyspace_name)) {
 		echo displayErrorMessage('keyspace_name_must_be_specified');
 	}
 	else {			
@@ -28,7 +28,7 @@
 			
 			// CF created successfully
 			$vw_vars['added_cf'] = '';
-			if (isset($_GET['create_cf']) == 1) {
+			if (isset($_GET['create_cf'])) {
 				$columnfamily_name = $_SESSION['message'];
 				$query_time = $_SESSION['query_time'];
 				$vw_vars['added_cf'] = displaySuccessMessage('create_columnfamily',array('columnfamily_name' => $columnfamily_name,'query_time' => $query_time));

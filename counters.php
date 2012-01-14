@@ -22,11 +22,11 @@
 	echo getHTML('header.php');
 	
 	// Make sure a keyspace name has been specified
-	if ($keyspace_name == '') {
+	if (empty($keyspace_name)) {
 		echo displayErrorMessage('keyspace_name_must_be_specified');
 	}
 	else {
-		if ($columnfamily_name == '') {
+		if (empty($columnfamily_name)) {
 			echo displayErrorMessage('columnfamily_name_must_be_specified');
 		}
 		else {					
@@ -44,7 +44,7 @@
 				}
 				
 				// Error
-				if (isset($_GET['error']) == 1) {
+				if (isset($_GET['error'])) {
 					$vw_vars['error_message'] = displayErrorMessage('something_wrong_happened',array('message' => $_SESSION['message']));
 				}
 			

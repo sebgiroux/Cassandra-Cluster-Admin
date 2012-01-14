@@ -11,6 +11,9 @@
 	class ColumnFamilyHelper {
 		/*
 			Return the column family definition for the specified keyspace name and column family name
+			
+			@param $keyspace_name 		The keyspace name that the column family is in
+			@param $columnfamily_name 	The column family name to get
 		*/	
 		public static function getCFInKeyspace($keyspace_name,$columnfamily_name) {
 			global $sys_manager;
@@ -66,6 +69,13 @@
 	
 		/*
 			Display a row out of a column family
+			
+			@param $row_key				The key of the row to display
+			@param $keyspace_name		The keyspace name that row was in
+			@param $columnfamily_name	The column family name that row was in
+			@param $row					The complete row
+			@param $scf_key				The key of the super column family, if it apply
+			@param $is_counter_column 	True if the column family is a counter column, false otherwise
 		*/
 		public static function displayCFRow($row_key,$keyspace_name,$columnfamily_name,$row,$scf_key = null,$is_counter_column = false) {		
 			$vw_vars['scf_key'] = $scf_key;
@@ -85,6 +95,12 @@
 		
 		/*
 			Display a row out of a super column family
+			
+			@param $row_key				The key of the row to display
+			@param $keyspace_name		The keyspace name that row was in
+			@param $columnfamily_name	The column family name that row was in
+			@param $row					The complete row
+			@param $is_counter_column 	True if the column family is a counter column, false otherwise
 		*/
 		public static function displaySCFRow($row_key,$keyspace_name,$columnfamily_name,$row,$is_counter_column = false) {
 			$output = '';

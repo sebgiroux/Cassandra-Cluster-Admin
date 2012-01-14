@@ -76,7 +76,7 @@
 
 <div class="float_left">
 	<h4>Real Time Heap Memory Usage</h4>
-	<div id="heap_memory_usage_graph" style="width:400px; height:200px;margin-bottom: 20px;"></div>
+	<div id="heap_memory_usage_graph"></div>
 
 	<table>
 		<tr>
@@ -103,7 +103,7 @@
 
 <div class="float_left" style="margin-left: 40px; margin-bottom: 20px;">
 	<h4>Real Time Non Heap Memory Usage</h4>
-	<div id="non_heap_memory_usage_graph" style="width:400px; height:200px; margin-bottom: 20px;"></div>
+	<div id="non_heap_memory_usage_graph"></div>
 
 	<table>
 		<tr>
@@ -128,7 +128,7 @@
 	</table>
 </div>
 
-<div class="float_left" style="margin-left: 40px; margin-bottom: 20px;">
+<div class="jmx_tp_stats_container">
 	<h4>TP Stats</h4>
 
 	<table>
@@ -213,14 +213,14 @@
 	endif;
 ?>
 
-<div class="float_left" style="margin-right: 10px; margin-bottom: 10px;"><input type="button" value="Trigger Force Major Compaction" onclick="triggerJMXInvoke('force_major_compaction');"/></div>
-<div class="float_left" style="margin-right: 10px; margin-bottom: 10px;"><input type="button" value="Trigger Invalidate Key Cache" onclick="triggerJMXInvoke('invalidate_key_cache');"/></div>
-<div class="float_left" style="margin-right: 10px; margin-bottom: 10px;"><input type="button" value="Trigger Invalidate Row Cache" onclick="triggerJMXInvoke('invalidate_row_cache');"/></div>
+<div class="jmx_trigger_button"><input type="button" value="Trigger Force Major Compaction" onclick="triggerJMXInvoke('force_major_compaction');"/></div>
+<div class="jmx_trigger_button"><input type="button" value="Trigger Invalidate Key Cache" onclick="triggerJMXInvoke('invalidate_key_cache');"/></div>
+<div class="jmx_trigger_button"><input type="button" value="Trigger Invalidate Row Cache" onclick="triggerJMXInvoke('invalidate_row_cache');"/></div>
 <div class="clear_left"></div>
 
-<div class="float_left" style="margin-right: 10px; margin-bottom: 10px;"><input type="button" value="Trigger Force Flush" onclick="triggerJMXInvoke('force_flush');"/></div>
-<div class="float_left" style="margin-right: 10px; margin-bottom: 10px;"><input type="button" value="Trigger Disable Auto Compaction" onclick="triggerJMXInvoke('disable_auto_compaction');"/></div>
-<div class="float_left" style="margin-right: 10px; margin-bottom: 10px;"><input type="button" value="Trigger Estimate Keys" onclick="triggerJMXInvoke('estimate_keys');"/></div>
+<div class="jmx_trigger_button"><input type="button" value="Trigger Force Flush" onclick="triggerJMXInvoke('force_flush');"/></div>
+<div class="jmx_trigger_button"><input type="button" value="Trigger Disable Auto Compaction" onclick="triggerJMXInvoke('disable_auto_compaction');"/></div>
+<div class="jmx_trigger_button"><input type="button" value="Trigger Estimate Keys" onclick="triggerJMXInvoke('estimate_keys');"/></div>
 <div class="clear_left"></div>
 
 <div class="float_left">

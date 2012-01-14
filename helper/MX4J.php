@@ -18,7 +18,7 @@
 			@param $host Host of the MX4J instance
 			@param $port Port of the MX4J instance
 		*/
-		public function __construct($host, $port = MX4J_HTTP_ADAPTOR_PORT) {
+		public function __construct($host,$port = MX4J_HTTP_ADAPTOR_PORT) {
 			$this->host = $host;
 			$this->port = $port;
 		}
@@ -286,7 +286,7 @@
 			Return details about a column family
 			
 			@param $keyspace_name		The keyspace the column family is in
-			@param columnfamily_name 	The column family to get the detials for
+			@param $columnfamily_name 	The column family to get the detials for
 		*/
 		public function getColumnFamilyDetails($keyspace_name,$columnfamily_name) {
 			$data = $this->doCall($this->getUrl().'/mbean?objectname=org.apache.cassandra.db:type=ColumnFamilies,keyspace='.$keyspace_name.',columnfamily='.$columnfamily_name.'&template=identity');
@@ -307,7 +307,7 @@
 			Return details about key cache of a column family
 			
 			@param $keyspace_name		The keyspace the column family is in
-			@param columnfamily_name 	The column family to get the key cache detials for
+			@param $columnfamily_name 	The column family to get the key cache detials for
 		*/
 		public function getColumnFamilyKeyCacheDetails($keyspace_name,$columnfamily_name) {
 			$data = $this->doCall($this->getUrl().'/mbean?objectname=org.apache.cassandra.db:type=Caches,keyspace='.$keyspace_name.',cache='.$columnfamily_name.'KeyCache&template=identity');
@@ -328,7 +328,7 @@
 			Return details about row cache of a column family
 			
 			@param $keyspace_name		The keyspace the column family is in
-			@param columnfamily_name 	The column family to get the row cache detials for
+			@param $columnfamily_name 	The column family to get the row cache detials for
 		*/
 		public function getColumnFamilyRowCacheDetails($keyspace_name,$columnfamily_name) {
 			$data = $this->doCall($this->getUrl().'/mbean?objectname=org.apache.cassandra.db:type=Caches,keyspace='.$keyspace_name.',cache='.$columnfamily_name.'RowCache&template=identity');
@@ -349,7 +349,7 @@
 			Force a major compaction for the specified column family
 			
 			@param $keyspace_name		The keyspace the column family is in
-			@param columnfamily_name 	The column family to force major compaction
+			@param $columnfamily_name 	The column family to force major compaction
 		*/
 		public function forceMajorCompaction($keyspace_name,$columnfamily_name) {
 			$data = $this->doCall($this->getUrl().'/invoke?operation=forceMajorCompaction&objectname=org.apache.cassandra.db:type=ColumnFamilies,keyspace='.$keyspace_name.',columnfamily='.$columnfamily_name.'&template=identity');
@@ -365,7 +365,7 @@
 			Invalidate the key cache for the specified column family
 			
 			@param $keyspace_name		The keyspace the column family is in
-			@param columnfamily_name 	The column family invalide key cache
+			@param $columnfamily_name 	The column family invalide key cache
 		*/
 		public function invalidateKeyCache($keyspace_name,$columnfamily_name) {
 			$data = $this->doCall($this->getUrl().'/invoke?operation=invalidateKeyCache&objectname=org.apache.cassandra.db:type=ColumnFamilies,keyspace='.$keyspace_name.',columnfamily='.$columnfamily_name.'&template=identity');
@@ -381,7 +381,7 @@
 			Invalidate the row cache for the specified column family
 			
 			@param $keyspace_name		The keyspace the column family is in
-			@param columnfamily_name 	The column family invalide row cache
+			@param $columnfamily_name 	The column family invalide row cache
 		*/
 		public function invalidateRowCache($keyspace_name,$columnfamily_name) {
 			$data = $this->doCall($this->getUrl().'/invoke?operation=invalidateRowCache&objectname=org.apache.cassandra.db:type=ColumnFamilies,keyspace='.$keyspace_name.',columnfamily='.$columnfamily_name.'&template=identity');
@@ -397,7 +397,7 @@
 			Force a flush of the specified column family
 			
 			@param $keyspace_name		The keyspace the column family is in
-			@param columnfamily_name 	The column family to flush
+			@param $columnfamily_name 	The column family to flush
 		*/
 		public function forceFlush($keyspace_name,$columnfamily_name) {
 			$data = $this->doCall($this->getUrl().'/invoke?operation=forceFlush&objectname=org.apache.cassandra.db:type=ColumnFamilies,keyspace='.$keyspace_name.',columnfamily='.$columnfamily_name.'&template=identity');
@@ -413,7 +413,7 @@
 			Disable auto compaction for the specified column family
 			
 			@param $keyspace_name		The keyspace the column family is in
-			@param columnfamily_name 	The column family to disable auto compaction
+			@param $columnfamily_name 	The column family to disable auto compaction
 		*/
 		public function disableAutoCompaction($keyspace_name,$columnfamily_name) {
 			$data = $this->doCall($this->getUrl().'/invoke?operation=disableAutoCompaction&objectname=org.apache.cassandra.db:type=ColumnFamilies,keyspace='.$keyspace_name.',columnfamily='.$columnfamily_name.'&template=identity');
@@ -429,7 +429,7 @@
 			Get an estimated number of keys for the specified column family
 			
 			@param $keyspace_name		The keyspace the column family is in
-			@param columnfamily_name 	The column family to estimate the number of keys
+			@param $columnfamily_name 	The column family to estimate the number of keys
 		*/
 		public function estimateKeys($keyspace_name,$columnfamily_name) {
 			$data = $this->doCall($this->getUrl().'/invoke?operation=estimateKeys&objectname=org.apache.cassandra.db:type=ColumnFamilies,keyspace='.$keyspace_name.',columnfamily='.$columnfamily_name.'&template=identity');

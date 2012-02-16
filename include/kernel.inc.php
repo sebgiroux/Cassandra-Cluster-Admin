@@ -114,7 +114,13 @@
 	function displayErrorMessage($index,$params = array()) {
 		global $lang;
 	
-		return '<div class="error_message">'.nl2br(getLang('form_error_'.$index,$params)).'</div>';
+		$message = nl2br(getLang('form_error_'.$index,$params));
+	
+		if ($index == 'something_wrong_happened' && isset($params['message'])) {
+			$message .= ' '.getCassandraMessage($params['message']);
+		}
+	
+		return '<div class="error_message">'.$message.'</div>';
 	}
 	
 	$current_page_title = 'Cassandra Cluster Admin';
@@ -147,5 +153,39 @@
 	*/
 	function displayOneCfDef($key) {
 		return ucwords(str_replace('_',' ',$key));
+	}
+	
+	function getCassandraMessage($exception_message) {
+		preg_match('/The last error was (.*):/',$exception_message,$matches);
+	
+		if (isset($matches[1])) {
+			switch ($matches[1]) {
+				case 'cassandra_NotFoundException':
+					return 'A specific column was requested that does not exist.';
+
+				case 'cassandra_InvalidRequestException':
+					return 'Invalid request could mean keyspace or column family does not exist, required parameters are missing, or a parameter is malformed. why contains an associated error message.';
+
+				case 'cassandra_UnavailableException':
+					return 'Not all the replicas required could be created and/or read.';
+
+				case 'cassandra_TimedOutException':
+					return 'The node responsible for the write or read did not respond during the rpc interval specified in your configuration (default 10s). This can happen if the request is too large, the node is oversaturated with requests, or the node is down but the failure detector has not yet realized it (usually this takes < 30s).';
+
+				case 'cassandra_TApplicationException':
+					return 'Internal server error or invalid Thrift method (possible if you are using an older version of a Thrift client with a newer build of the Cassandra server).';
+
+				case 'cassandra_AuthenticationException':
+					return 'Invalid authentication request (user does not exist or credentials invalid)';
+
+				case 'cassandra_AuthorizationException':
+					return 'Invalid authorization request (user does not have access to keyspace)';
+
+				case 'cassandra_SchemaDisagreementException':
+					return 'Schemas are not in agreement across all nodes';					
+			}
+			
+			return '';
+		}
 	}
 ?>

@@ -703,6 +703,9 @@
 
 			$vw_row_vars['is_super_cf'] = $cf_def->column_type == 'Super';     
 			$vw_row_vars['is_counter_column'] = $column_family->cfdef->default_validation_class == 'org.apache.cassandra.db.marshal.CounterColumnType';
+			
+			$included_header = true;
+			echo getHTML('header.php');
 		
 			$result = $column_family->get_range($offset_key,'',$nb_rows);		
 			
@@ -742,8 +745,6 @@
 			
 			$vw_vars['is_counter_column'] = $vw_row_vars['is_counter_column'];
 			
-			$included_header = true;
-			echo getHTML('header.php');
 			echo getHTML('columnfamily_browse_data.php',$vw_vars);
 		}
 		catch (cassandra_NotFoundException $e) {

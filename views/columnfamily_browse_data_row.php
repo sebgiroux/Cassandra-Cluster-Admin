@@ -1,5 +1,5 @@
 <tr>
-	<td><?php echo $key; ?></td>
+	<td><?php echo htmlentities($key,ENT_COMPAT,'UTF-8'); ?></td>
 	<td><?php if ($is_super_cf): echo ColumnFamilyHelper::displaySCFRow($key,$keyspace_name,$columnfamily_name,$value,$is_counter_column); else: echo ColumnFamilyHelper::displayCFRow($key,$keyspace_name,$columnfamily_name,$value,null,$is_counter_column); endif;?></td>
 	<?php if ($show_actions_link): ?>
 	<td>

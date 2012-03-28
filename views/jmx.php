@@ -48,15 +48,18 @@
 	});
 </script>
 
-<h3>Cluster Stats</h3>
+<h3>Cluster node stats</h3>
 
 <div style="margin-bottom: 20px;">
-	Select a node:
+	Select another node:
 	<select id="node" onchange="changeMX4JNode();">
 		<?php
 			foreach ($all_nodes as $one_node):
-				list($host,$port) = explode(':',$one_node);				
-				echo '<option value="'.$host.'">'.$host.'</option>';
+				list($host,$port) = explode(':',$one_node);
+				if ($host == $jmx_host)
+					echo '<option value="'.$host.'" selected>'.$host.'</option>';
+				else
+					echo '<option value="'.$host.'">'.$host.'</option>';
 			endforeach;
 		?>
 	</select>

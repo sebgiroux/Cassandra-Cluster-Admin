@@ -7,7 +7,7 @@
 	*/	
 
 	require('include/phpcassa/connection.php');
-    require('include/phpcassa/columnfamily.php');
+    	require('include/phpcassa/columnfamily.php');
 	require('include/phpcassa/sysmanager.php');
 	
 	require('include/lang/english.php');
@@ -30,9 +30,7 @@
 	}
 	
 	try {	
-		$random_server = $cluster_helper->getRandomNodeForCurrentCluster();
-	
-		$sys_manager = new SystemManager($random_server,$cluster_helper->getCredentialsForCurrentCluster(),1500,1500);
+		$sys_manager = new SystemManagerPool($cluster_helper->getArrayOfNodesForCurrentCluster(),$cluster_helper->getCredentialsForCurrentCluster(),1500,1500);
 	}
 	catch (TException $e) {
 		die(getHTML('header.php').getHTML('server_error.php',array('error_message' => displayErrorMessage('cassandra_server_error',array('error_message' => $e->getMessage())))).getHTML('footer.php'));

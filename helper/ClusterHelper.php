@@ -42,7 +42,7 @@
 				
 				return $sys_manager->describe_cluster_name();
 			}
-			catch (TException $e) {
+			catch (NoServerAvailable $e) {
 				return null;
 			}		
 		}
@@ -56,14 +56,16 @@
 			return $all_nodes;
 		}
 		
-                /*
-                        Get an array of Cassandra nodes (IP:port) for cluster at $index
-                */
-                public function getArrayOfNodesForIndex($index) {
-                        $all_nodes = $this->cassandra_clusters[$index]['nodes'];
+		/*
+			Get an array of Cassandra nodes (IP:port) for cluster at $index
+			
+			@param $index 	Index of the cluster name to get
+		*/
+		public function getArrayOfNodesForIndex($index) {
+			$all_nodes = $this->cassandra_clusters[$index]['nodes'];
 
-                        return $all_nodes;
-                }
+			return $all_nodes;
+		}
 
 		/*
 			Get a random Cassandra node at $index

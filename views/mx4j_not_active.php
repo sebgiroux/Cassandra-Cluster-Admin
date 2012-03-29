@@ -1,6 +1,21 @@
 <h3><a href="index.php"><?php echo $cluster_name; ?></a> &gt; JMX Stats</h3>
 
-<p>It looks like MX4J is not actived on the node (<?php echo $jmx_host; ?>) you're trying to see JMX stats.</p>
+<p>It looks like MX4J is not actived on the node (<?php echo $jmx_host; ?>) you're trying to see JMX stats, or node is not alive.</p>
+
+<div style="margin-bottom: 20px;">
+        Select another node:
+        <select id="node" onchange="changeMX4JNode();">
+                <?php
+                        foreach ($all_nodes as $one_node):
+                                list($host,$port) = explode(':',$one_node);
+                                if ($host == $jmx_host)
+                                   echo '<option value="'.$host.'" selected>'.$host.'</option>';
+                               else
+                                   echo '<option value="'.$host.'">'.$host.'</option>';
+                        endforeach;
+                ?>
+        </select>
+</div>
 
 <p>To install MX4J:</p>
 

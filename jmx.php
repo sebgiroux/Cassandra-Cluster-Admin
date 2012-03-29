@@ -149,13 +149,15 @@
 			$ks_and_cf_details = ColumnFamilyHelper::getKeyspacesAndColumnFamiliesDetails();
 			
 			$vw_vars['ks_and_cf_details'] = $ks_and_cf_details;
+			$vw_vars['jmx_host'] = $host;
 			
 			echo getHTML('header.php');
 			echo getHTML('jmx.php',$vw_vars);
 		}
 		else {
 			$vw_vars['cluster_name'] = $sys_manager->describe_cluster_name();
-			$vw_vars['jmx_host'] = $first_host;
+			$vw_vars['all_nodes'] = $all_nodes;
+			$vw_vars['jmx_host'] = $host;
 			
 			echo getHTML('header.php');
 			echo getHTML('mx4j_not_active.php',$vw_vars);

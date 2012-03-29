@@ -30,9 +30,9 @@
 	}
 	
 	try {	
-		$sys_manager = new SystemManagerPool($cluster_helper->getArrayOfNodesForCurrentCluster(),$cluster_helper->getCredentialsForCurrentCluster(),1500,1500);
+		$sys_manager = new SystemManager($cluster_helper->getArrayOfNodesForCurrentCluster(),$cluster_helper->getCredentialsForCurrentCluster(),1500,1500);
 	}
-	catch (TException $e) {
+	catch (NoServerAvailable $e) {
 		die(getHTML('header.php').getHTML('server_error.php',array('error_message' => displayErrorMessage('cassandra_server_error',array('error_message' => $e->getMessage())))).getHTML('footer.php'));
 	}
 	

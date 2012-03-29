@@ -38,10 +38,7 @@
 		*/
 		public function getClusterNameForIndex($index) {
 			try {
-				$random_server = $this->getRandomNodeForIndex($index);
-				$credentials = $this->getCredentialsForIndex($index);
-		
-				$sys_manager = new SystemManager($random_server,$credentials,1500,1500);
+				$sys_manager = new SystemManager($this->getArrayOfNodesForIndex($index),$this->getCredentialsForIndex($index),1500,1500);
 				
 				return $sys_manager->describe_cluster_name();
 			}
@@ -59,6 +56,15 @@
 			return $all_nodes;
 		}
 		
+                /*
+                        Get an array of Cassandra nodes (IP:port) for cluster at $index
+                */
+                public function getArrayOfNodesForIndex($index) {
+                        $all_nodes = $this->cassandra_clusters[$index]['nodes'];
+
+                        return $all_nodes;
+                }
+
 		/*
 			Get a random Cassandra node at $index
 			

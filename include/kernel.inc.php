@@ -7,7 +7,7 @@
 	*/	
 
 	require('include/phpcassa/connection.php');
-    	require('include/phpcassa/columnfamily.php');
+    require('include/phpcassa/columnfamily.php');
 	require('include/phpcassa/sysmanager.php');
 	
 	require('include/lang/english.php');

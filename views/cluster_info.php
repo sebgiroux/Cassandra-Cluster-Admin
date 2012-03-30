@@ -23,9 +23,9 @@
                         foreach ($servers as $server) {
                                 echo '<tr>';
                                 if ($version == 'UNREACHABLE')
-                                        echo "<td class=node-down>$server</td><td class=node-down>$version</td>";
+                                        echo "<td class='node-down'>$server</td><td class='node-down'>$version</td>";
                                 else
-                                        echo "<td class=node-ok>$server</td><td class=node-ok>$version</td>";
+                                        echo "<td class='node-ok'>$server</td><td class='node-ok'>$version</td>";
                                 echo '</tr>';
                         }
                 }

@@ -44,7 +44,8 @@ td {
 	width: 200px;
 	padding: 5px;
 	cursor: pointer;
-	color: #fff;
+	color: #000;
+	font-weight: bold;
 	
 	border-radius: 5px;
 	-moz-border-radius: 5px;
@@ -59,7 +60,7 @@ td {
 	float: left;
 	width: 16px;
 	height: 16px;
-	margin-top: 4px;
+	margin-top: 2px;
 	margin-right: 5px;
 }
 
@@ -325,4 +326,23 @@ a, a:visited {
 	float: left;
 	margin-left: 40px;
 	margin-bottom: 20px;
+}
+
+#columnfamily_details {
+        max-width: 400px;
+}
+
+.cluster-status {
+        border-collapse: collapse;
+        border-style: none;
+}
+
+.node-ok {
+        background-color: #60D060;
+        border-style: none;
+}
+
+.node-down {
+        background-color: #D06060;
+        border-style: none;
 }

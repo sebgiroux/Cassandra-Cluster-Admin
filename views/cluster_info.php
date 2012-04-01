@@ -16,14 +16,21 @@
 	Cluster Partitioner: <?php echo $partitioner; ?><br />
 	Cluster Snitch: <?php echo $snitch; ?><br />
 	Thrift API Version: <?php echo $thrift_api_version; ?><br />
-	Schema Version:
-	<?php 
-		foreach ($schema_version as $version => $servers) {
-			foreach ($servers as $one_server) {
-				echo $version.' ';
-			}
-		}
-	?>
+        Schema Versions: <br />
+        <table width="100%" class="cluster-status">
+        <?php
+                foreach ($schema_version as $version => $servers) {
+                        foreach ($servers as $server) {
+                                echo '<tr>';
+                                if ($version == 'UNREACHABLE')
+                                        echo "<td class=node-down>&#215;</td><td>$server</td><td>$version</td>";
+                                else
+                                        echo "<td class=node-ok>&#10003;</td><td>$server</td><td>$version</td>";
+                                echo '</tr>';
+                        }
+                }
+        ?>
+        </table>
 </div>
 
 <?php echo $success_message; ?>

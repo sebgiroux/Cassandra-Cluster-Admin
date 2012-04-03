@@ -329,20 +329,20 @@ a, a:visited {
 }
 
 #columnfamily_details {
-        max-width: 400px;
+	max-width: 400px;
 }
 
-.cluster-status {
-        border-collapse: collapse;
-        border-style: none;
+.cluster_status {
+	border-collapse: collapse;
+	border-style: none;
 }
 
-.node-ok {
-        background-color: #60D060;
-        border-style: none;
+.node_ok {
+	background-color: #60D060;
+	border-style: none;
 }
 
-.node-down {
-        background-color: #D06060;
-        border-style: none;
+.node_down {
+	background-color: #D06060;
+	border-style: none;
 }

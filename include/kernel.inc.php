@@ -186,4 +186,12 @@
 			return '';
 		}
 	}
+	
+	function escapeNameForJs($name) {
+		return str_replace('\'','\\\'',$name);
+	}
+	
+	function escapeValueForJs($value) {
+		return str_replace(array('\'',"\r\n","\n"),array('\\\'','\r\n','\n'),$value);
+	}
 ?>

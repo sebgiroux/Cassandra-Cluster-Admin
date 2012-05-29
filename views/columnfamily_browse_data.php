@@ -10,7 +10,7 @@
 <?php endif; ?>
 
 <div style="width: 500px;">
-	<p class="float_left">Show <input type="text" name="show_nb_rows" id="show_nb_rows" class="tiny" onkeydown="if (event.keyCode == 13) $('#btn_change_rows').click();" value="<?php echo $nb_rows; ?>" /> rows <input type="button" value="Go" id="btn_change_rows" onclick="changeRowsPerPage('<?php echo $keyspace_name; ?>','<?php echo $columnfamily_name; ?>','<?php echo $current_offset_key; ?>');" /></p>
+	<p class="float_left">Show <input type="text" name="show_nb_rows" id="show_nb_rows" class="tiny" onkeydown="if (event.keyCode == 13) $('#btn_change_rows').click();" value="<?php echo $nb_rows; ?>" /> rows <input type="button" value="Go" id="btn_change_rows" onclick="changeRowsPerPage('<?php echo $keyspace_name; ?>','<?php echo $columnfamily_name; ?>','<?php echo escapeNameForJs($current_offset_key); ?>');" /></p>
 	<p class="float_right">Go to Key <input type="text" id="go_to_key" style="width: 120px;" /> <input type="button" value="Go" onclick="changeRowsPerPage('<?php echo $keyspace_name; ?>','<?php echo $columnfamily_name; ?>',$('#go_to_key').val());" /></p>
 	<div class="clear_both"></div>
 </div>

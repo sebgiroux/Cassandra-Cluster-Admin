@@ -178,6 +178,7 @@
 		$vw_vars['cluster_name'] = $sys_manager->describe_cluster_name();
 		$vw_vars['keyspace_name'] = '';
 		$vw_vars['replication_factor'] = '';
+		$vw_vars['strategy_class'] = '';
 		
 		$vw_vars['mode'] = 'create';
 		

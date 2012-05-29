@@ -263,11 +263,30 @@
 			
 			$time_start = microtime(true);
 			if (count($tab_keys) == 1) {
-				$output = $column_family->get($tab_keys[0]);	
+				$output = array();								
+				$nb_iterations = 0;
+				$last_column_name = '';
+				
+				do {
+					$output = array_merge($output,$column_family->get($tab_keys[0],null,$last_column_name,'',false,COLUMNS_TO_FETCH_PER_ITERATION));
+					end($output);
+					$last_column_name = key($output);
+					$nb_iterations++;
+				} while (count($output) == COLUMNS_TO_FETCH_PER_ITERATION && $nb_iterations < (MAXIMUM_COLUMNS_TO_FETCH / COLUMNS_TO_FETCH_PER_ITERATION));
+	
 				$output = array($tab_keys[0] => $output);
 			}
 			else {
-				$output = $column_family->multiget($tab_keys);
+				$output = array();								
+				$nb_iterations = 0;
+				$last_column_name = '';
+				
+				do {
+					$output = array_merge($output,$column_family->multiget($tab_keys,null,$last_column_name,'',false,COLUMNS_TO_FETCH_PER_ITERATION));
+					end($output);
+					$last_column_name = key($output);
+					$nb_iterations++;
+				} while (count($output) == COLUMNS_TO_FETCH_PER_ITERATION && $nb_iterations < (MAXIMUM_COLUMNS_TO_FETCH / COLUMNS_TO_FETCH_PER_ITERATION));
 			}
 			
 			$time_end = microtime(true);
@@ -706,13 +725,29 @@
 			
 			$included_header = true;
 			echo getHTML('header.php');
-		
-			$result = $column_family->get_range($offset_key,'',$nb_rows);		
+							  
+			$output = array();								
+			$nb_iterations = 0;
+			$last_column_name = '';
 			
+			do {
+				$output_to_merge = $column_family->get_range($offset_key,'',$nb_rows,null,$last_column_name,'',false,COLUMNS_TO_FETCH_PER_ITERATION);
+				
+				$count = 0;				
+				foreach ($output_to_merge as $key => $value) {
+					$output[$key] = $value;
+					$count++;
+				}
+				
+				end($output_to_merge);
+				$last_column_name = key($output_to_merge);
+				$nb_iterations++;
+			} while ($count == COLUMNS_TO_FETCH_PER_ITERATION && $nb_iterations < (MAXIMUM_COLUMNS_TO_FETCH / COLUMNS_TO_FETCH_PER_ITERATION));
+				
 			$vw_vars['results'] = '';	
 			$nb_results = 0;
 			
-			foreach ($result as $key => $value) {
+			foreach ($output as $key => $value) {
 				$vw_row_vars['key'] = $key;
 				$vw_row_vars['value'] = $value;
 				
@@ -801,10 +836,19 @@
 			$pool = new ConnectionPool($keyspace_name, $cluster_helper->getArrayOfNodesForCurrentCluster(),null,5,5000,5000,10000,$cluster_helper->getCredentialsForCurrentCluster());
 			$column_family = new ColumnFamily($pool, $columnfamily_name);
 			
-			$vw_vars['results'] = '';	
-			$vw_vars['output'] = '';		
-					
-			$output = $column_family->get($key);
+			$vw_vars['results'] = '';
+			
+			$output = array();								
+			$nb_iterations = 0;
+			$last_column_name = '';
+			
+			do {
+				$output = array_merge($output,$column_family->get($key,null,$last_column_name,'',false,COLUMNS_TO_FETCH_PER_ITERATION));
+				end($output);
+				$last_column_name = key($output);
+				$nb_iterations++;
+			} while (count($output) == COLUMNS_TO_FETCH_PER_ITERATION && $nb_iterations < (MAXIMUM_COLUMNS_TO_FETCH / COLUMNS_TO_FETCH_PER_ITERATION));
+			
 			$vw_vars['output'] = $output;
 		}
 		catch (Exception $e) {

@@ -46,9 +46,7 @@ class SystemManager {
                                 $send_timeout=15000,
                                 $recv_timeout=15000)
     {
-        $pool = new ConnectionPool(
-            NULL, $servers, $credentials, True,
-            $send_timeout, $recv_timeout);
+        $pool = new ConnectionPool(null, $servers, null, 3, $send_timeout, $recv_timeout, 10000, $credentials);
         $this->conn = $pool->get();
         $this->client = $this->conn->client;
     }

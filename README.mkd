@@ -64,3 +64,4 @@ Credits
 ------------------------------------------------
 * The Apache Cassandra project - http://cassandra.apache.org/
 * Tyler Hobbs (thobbs) - phpcassa - https://github.com/thobbs/phpcassa
+* Twitter Bootstrap - https://github.com/twitter/bootstrap/

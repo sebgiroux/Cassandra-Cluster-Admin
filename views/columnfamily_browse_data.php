@@ -34,7 +34,16 @@
 	<?php echo $results; ?>
 </table>
 
-<?php if ($show_begin_page_link): ?><a href="columnfamily_action.php?action=browse_data&amp;keyspace_name=<?php echo $keyspace_name; ?>&amp;columnfamily_name=<?php echo $columnfamily_name; ?>&amp;pos=begin&nb_rows=<?php echo $nb_rows; ?>">&lt;&lt; Begin</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<?php endif; ?>
-<?php if ($show_prev_page_link): ?><a href="columnfamily_action.php?action=browse_data&amp;keyspace_name=<?php echo $keyspace_name; ?>&amp;columnfamily_name=<?php echo $columnfamily_name; ?>&amp;offset_key=<?php echo $current_offset_key; ?>&amp;pos=prev&nb_rows=<?php echo $nb_rows; ?>">&lt; Prev Page</a><?php endif; ?>
-<?php if ($show_prev_page_link && $show_next_page_link): ?>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<?php endif; ?>
-<?php if ($show_next_page_link): ?><a href="columnfamily_action.php?action=browse_data&amp;keyspace_name=<?php echo $keyspace_name; ?>&amp;columnfamily_name=<?php echo $columnfamily_name; ?>&offset_key=<?php echo $offset_key; ?>&pos=next&nb_rows=<?php echo $nb_rows; ?>">Next Page &gt;</a><?php endif; ?>	
+<ul class="pager">
+	<?php if ($show_begin_page_link): ?>
+		<li><a href="columnfamily_action.php?action=browse_data&amp;keyspace_name=<?php echo $keyspace_name; ?>&amp;columnfamily_name=<?php echo $columnfamily_name; ?>&amp;pos=begin&nb_rows=<?php echo $nb_rows; ?>">&lt;&lt; Begin</a></li>
+	<?php endif; ?>
+	<?php if ($show_prev_page_link): ?>
+		<li><a href="columnfamily_action.php?action=browse_data&amp;keyspace_name=<?php echo $keyspace_name; ?>&amp;columnfamily_name=<?php echo $columnfamily_name; ?>&amp;offset_key=<?php echo $current_offset_key; ?>&amp;pos=prev&nb_rows=<?php echo $nb_rows; ?>">&lt; Prev Page</a></li>
+	<?php endif; ?>
+	<?php if ($show_next_page_link): ?>
+		<li><a href="columnfamily_action.php?action=browse_data&amp;keyspace_name=<?php echo $keyspace_name; ?>&amp;columnfamily_name=<?php echo $columnfamily_name; ?>&offset_key=<?php echo $offset_key; ?>&pos=next&nb_rows=<?php echo $nb_rows; ?>">Next Page &gt;</a></li>
+	<?php endif; ?>
+</ul>
+
+	

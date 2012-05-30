@@ -9,8 +9,8 @@
 		<meta name="title" content="Cassandra Cluster Admin" />
 		<script type="text/javascript" src="js/jquery.js"></script>
 		<script type="text/javascript" src="js/jquery.flot.js"></script>
-		<script type="text/javascript" src="js/jquery.simpletip.js"></script>
 		<script type="text/javascript" src="js/cassandra_cluster_admin.js"></script>
+		<script type="text/javascript" src="js/bootstrap.min.js"></script>
 		
 		<link rel="stylesheet" type="text/css" href="css/style.css" />
 		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />

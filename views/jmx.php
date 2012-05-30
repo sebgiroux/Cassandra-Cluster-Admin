@@ -1,4 +1,11 @@
-<h3><a href="index.php"><?php echo $cluster_name; ?></a> &gt; JMX Stats</h3>
+<ul class="breadcrumb">
+	<li>
+		<a href="index.php"><?php echo $cluster_name; ?></a> <span class="divider">/</span>
+	</li>
+	<li class="active">
+		JMX Stats
+	</li>
+</ul>
 
 <script type="text/javascript">
 	var d = new Date();	
@@ -81,9 +88,11 @@
 	<h4>Real Time Heap Memory Usage</h4>
 	<div id="heap_memory_usage_graph"></div>
 
-	<table>
+	<table class="table table-bordered table-striped">
 		<tr>
-			<td colspan="2">Heap Memory Usage</td>
+			<thead>
+				<th colspan="2">Heap Memory Usage</th>
+			</thead>
 		</tr>
 		<tr>
 			<td>Committed</td>
@@ -108,9 +117,11 @@
 	<h4>Real Time Non Heap Memory Usage</h4>
 	<div id="non_heap_memory_usage_graph"></div>
 
-	<table>
+	<table class="table table-bordered table-striped">
 		<tr>
-			<td colspan="2">Non Heap Memory Usage</td>
+			<thead>
+				<th colspan="2">Non Heap Memory Usage</th>
+			</thead>
 		</tr>
 		<tr>
 			<td>Committed</td>
@@ -134,12 +145,14 @@
 <div class="jmx_tp_stats_container">
 	<h4>TP Stats</h4>
 
-	<table>
+	<table class="table table-bordered table-striped">
 		<tr>
-			<td>Name</td>
-			<td>Active Count</td>
-			<td>Completed Tasks</td>
-			<td>Pending Tasks</td>
+			<thead>
+				<th>Name</th>
+				<th>Active Count</th>
+				<th>Completed Tasks</th>
+				<th>Pending Tasks</th>
+			</thead>
 		</tr>
 		<?php foreach ($tp_stats as $one_tp_stat): ?>
 				<tr>
@@ -165,7 +178,7 @@
 		echo displayErrorMessage('invoke_garbage_collector');
 	endif;
 ?>
-<div><input type="button" value="Trigger Garbage Collector" onclick="triggerJMXInvoke('garbage_collector');"/></div>
+<div><input type="button" class="btn" value="Trigger Garbage Collector" onclick="triggerJMXInvoke('garbage_collector');"/></div>
 
 <hr />
 <h3>Column Families Stats</h3>
@@ -216,14 +229,14 @@
 	endif;
 ?>
 
-<div class="jmx_trigger_button"><input type="button" value="Trigger Force Major Compaction" onclick="triggerJMXInvoke('force_major_compaction');"/></div>
-<div class="jmx_trigger_button"><input type="button" value="Trigger Invalidate Key Cache" onclick="triggerJMXInvoke('invalidate_key_cache');"/></div>
-<div class="jmx_trigger_button"><input type="button" value="Trigger Invalidate Row Cache" onclick="triggerJMXInvoke('invalidate_row_cache');"/></div>
+<div class="jmx_trigger_button"><input type="button" class="btn" value="Trigger Force Major Compaction" onclick="triggerJMXInvoke('force_major_compaction');"/></div>
+<div class="jmx_trigger_button"><input type="button" class="btn" value="Trigger Invalidate Key Cache" onclick="triggerJMXInvoke('invalidate_key_cache');"/></div>
+<div class="jmx_trigger_button"><input type="button" class="btn" value="Trigger Invalidate Row Cache" onclick="triggerJMXInvoke('invalidate_row_cache');"/></div>
 <div class="clear_left"></div>
 
-<div class="jmx_trigger_button"><input type="button" value="Trigger Force Flush" onclick="triggerJMXInvoke('force_flush');"/></div>
-<div class="jmx_trigger_button"><input type="button" value="Trigger Disable Auto Compaction" onclick="triggerJMXInvoke('disable_auto_compaction');"/></div>
-<div class="jmx_trigger_button"><input type="button" value="Trigger Estimate Keys" onclick="triggerJMXInvoke('estimate_keys');"/></div>
+<div class="jmx_trigger_button"><input type="button" class="btn" value="Trigger Force Flush" onclick="triggerJMXInvoke('force_flush');"/></div>
+<div class="jmx_trigger_button"><input type="button" class="btn" value="Trigger Disable Auto Compaction" onclick="triggerJMXInvoke('disable_auto_compaction');"/></div>
+<div class="jmx_trigger_button"><input type="button" class="btn" value="Trigger Estimate Keys" onclick="triggerJMXInvoke('estimate_keys');"/></div>
 <div class="clear_left"></div>
 
 <div class="float_left">

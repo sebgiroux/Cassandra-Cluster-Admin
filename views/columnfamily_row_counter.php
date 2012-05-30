@@ -1,4 +1,4 @@
-<table border="1" cellpadding="5">
+<table border="1" cellpadding="5" class="table table-bordered table-striped">
 	<?php if (!is_null($scf_key)): ?>
 		<tr>
 			<td colspan="3">

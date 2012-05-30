@@ -1,4 +1,17 @@
-<h3><a href="index.php"><?php echo $cluster_name; ?></a> &gt; <a href="describe_keyspace.php?keyspace_name=<?php echo $keyspace_name; ?>"><?php echo $keyspace_name; ?></a> &gt; <a href="describe_columnfamily.php?keyspace_name=<?php echo $keyspace_name; ?>&amp;columnfamily_name=<?php echo $columnfamily_name; ?>"><?php echo $columnfamily_name; ?></a> &gt; Get Key</h3>
+<ul class="breadcrumb">
+	<li>
+		<a href="index.php"><?php echo $cluster_name; ?></a> <span class="divider">/</span>
+	</li>
+	<li>
+		<a href="describe_keyspace.php?keyspace_name=<?php echo $keyspace_name; ?>"><?php echo $keyspace_name; ?></a> <span class="divider">/</span>
+	</li>
+	<li>
+		<a href="describe_columnfamily.php?keyspace_name=<?php echo $keyspace_name; ?>&amp;columnfamily_name=<?php echo $columnfamily_name; ?>"><?php echo $columnfamily_name; ?></a> <span class="divider">/</span>
+	</li>
+	<li class="active">
+		Get Key
+	</li>
+</ul>
 
 <script type="text/javascript">
 	var num_key = 0;
@@ -7,7 +20,7 @@
 	function addKey() {
 		$('#keys_list').append('<div>' +
 									'<label for="key">Key:</label>' +
-									'<input id="key" name="key_' + num_key + '" type="text" /><input type="button" value="Add..." id="btn_add_key_' + num_key + '" onclick="addKey();" />' +
+									'<input id="key" name="key_' + num_key + '" type="text" /><input type="button" class="btn" value="Add..." id="btn_add_key_' + num_key + '" onclick="addKey();" />' +
 								'</div>');
 								
 		var prev_num_key = num_key - 1;			
@@ -28,7 +41,7 @@
 			'	<option value="eq">=</option><option value="gte">&gt;=</option><option value="gt">&gt;</option><option value="lte">&lt;=</option><option value="lt">&lt;</option>' +
 			'</select>' +
 			'<input type="text" name="column_value_' + num_index_expression + '" style="width: 100px;" />' +
-			'<input type="button" value="Add..." id="btn_add_index_expression_' + num_index_expression + '" onclick="addIndexExpression();" />' +
+			'<input type="button" class="btn" value="Add..." id="btn_add_index_expression_' + num_index_expression + '" onclick="addIndexExpression();" />' +
 		'</div>');
 		
 		var prev_num_index_expression = num_index_expression - 1;
@@ -47,21 +60,23 @@
 <?php echo $error_message; ?>
 
 <?php if ($results != ''): ?>
-<table border="1" style="min-width: 500px; margin-bottom: 20px;" cellpadding="5">
+<table border="1" style="min-width: 500px; margin-bottom: 20px;" cellpadding="5" class="table table-bordered">
 	<tr>
-		<td>Key</td>
-		<td>Value</td>
-		<td>Actions</td>
+		<thead>
+			<th>Key</th>
+			<th>Value</th>
+			<th>Actions</th>
+		</thead>
 	</tr>
 	<?php echo $results; ?>
 </table>
 <?php endif; ?>
 
-<form method="post" action="">
+<form method="post" action="" class="well">
 	<div id="keys_list"></div>
 
 	<div>
-		<input type="submit" name="btn_get_key" value="Get" />
+		<input type="submit" class="btn btn-primary" name="btn_get_key" value="Get" />
 	</div>	
 </form>
 
@@ -73,7 +88,7 @@
 <?php echo $error_message_secondary_index; ?>
 
 <?php if ($results_secondary_index != ''): ?>
-<table border="1" style="min-width: 500px; margin-bottom: 20px;" cellpadding="5">
+<table border="1" style="min-width: 500px; margin-bottom: 20px;" cellpadding="5" class="table table-bordered">
 	<tr>
 		<td>Key</td>
 		<td>Value</td>
@@ -82,7 +97,7 @@
 </table>
 <?php endif; ?>
 
-<form method="post" action="">
+<form method="post" action="" class="well">
 	<div id="index_expression_list"></div>
 	
 	<div>
@@ -91,7 +106,7 @@
 	</div>
 	
 	<div>
-		<input type="submit" name="btn_query_secondary_index" value="Get" />
+		<input type="submit" class="btn btn-primary" name="btn_query_secondary_index" value="Get" />
 	</div>
 </form>
 

@@ -1,18 +1,17 @@
-<h3><a href="index.php"><?php echo $cluster_name; ?></a> &gt; <?php echo $keyspace_name; ?></h3>
+<ul class="breadcrumb">
+	<li>
+		<a href="index.php"><?php echo $cluster_name; ?></a> <span class="divider">/</span>
+	</li>
+	<li class="active">
+		<?php echo $keyspace_name; ?>
+	</li>
+</ul>
+
 
 <?php if (!$is_read_only_keyspace): ?>
-<div id="menu">
-	<div class="menu_item" style="width: 220px;" onclick="location.href='keyspace_action.php?action=create_cf&amp;keyspace_name=<?php echo $keyspace_name; ?>'">
-		<div class="icon create_column_family"></div> Create New Column Family
-	</div>
-	<div class="menu_item" onclick="location.href='keyspace_action.php?action=edit&amp;keyspace_name=<?php echo $keyspace_name; ?>'">
-		<div class="icon edit_keyspace"></div> Edit Keyspace
-	</div>
-	<div class="menu_item" onclick="return dropKeyspace('<?php echo $keyspace_name; ?>');">
-		<div class="icon drop_keyspace"></div> Drop Keyspace
-	</div>
-	<div class="clear_left"></div>
-</div>
+	<a href="keyspace_action.php?action=create_cf&amp;keyspace_name=<?php echo $keyspace_name; ?>" class="btn btn-large btn-primary" style="color: #fff; text-decoration: none;">Create New Column Family</a>
+	<a href="keyspace_action.php?action=edit&amp;keyspace_name=<?php echo $keyspace_name; ?>" class="btn btn-large btn-primary" style="color: #fff; text-decoration: none;">Edit Keyspace</a>
+	<a href="#" onclick="return dropKeyspace('<?php echo $keyspace_name; ?>');" class="btn btn-large btn-primary" style="color: #fff; text-decoration: none;">Drop Keyspace</a>
 <?php endif; ?>
 
 <?php echo $added_cf; ?>

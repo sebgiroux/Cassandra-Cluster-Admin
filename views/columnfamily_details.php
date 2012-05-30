@@ -5,7 +5,7 @@
 	</h4>
 <?php endif; ?>
 
-<table>
+<table class="table table-bordered table-striped">
 <?php
 	$class_vars = get_object_vars($cf_def);
 	

@@ -1,4 +1,17 @@
-<h3><a href="index.php"><?php echo $cluster_name; ?></a> &gt; <a href="describe_keyspace.php?keyspace_name=<?php echo $keyspace_name; ?>"><?php echo $keyspace_name; ?></a> &gt; <a href="describe_columnfamily.php?keyspace_name=<?php echo $keyspace_name; ?>&amp;columnfamily_name=<?php echo $columnfamily_name; ?>"><?php echo $columnfamily_name; ?></a> &gt; <?php if ($mode == 'insert'): ?>Insert a Row<?php elseif ($mode == 'edit'): ?>Edit Row "<?php echo htmlentities($key,ENT_COMPAT,'UTF-8'); ?>"<?php endif; ?></h3>
+<ul class="breadcrumb">
+	<li>
+		<a href="index.php"><?php echo $cluster_name; ?></a> <span class="divider">/</span>
+	</li>
+	<li>
+		<a href="describe_keyspace.php?keyspace_name=<?php echo $keyspace_name; ?>"><?php echo $keyspace_name; ?></a> <span class="divider">/</span>
+	</li>
+	<li>
+		<a href="describe_columnfamily.php?keyspace_name=<?php echo $keyspace_name; ?>&amp;columnfamily_name=<?php echo $columnfamily_name; ?>"><?php echo $columnfamily_name; ?></a> <span class="divider">/</span>
+	</li>
+	<li class="active">
+		<?php if ($mode == 'insert'): ?>Insert a Row<?php elseif ($mode == 'edit'): ?>Edit Row "<?php echo htmlentities($key,ENT_COMPAT,'UTF-8'); ?>"<?php endif; ?>
+	</li>
+</ul>
 
 <script type="text/javascript">
 	var num_columns = 0;
@@ -26,7 +39,7 @@
 		num_columns++;		
 		
 		$('#' + p_num_super_columns + '_super_column_data > .btn_add_column').remove();		
-		$('#' + p_num_super_columns + '_super_column_data').append('<div class="clear_left"></div><div class="insert_row_column_name"><input id="column_name_' + num_super_columns + '_' + num_columns + '" name="column_name_' + num_super_columns + '_' + num_columns + '" type="text" class="smaller" value="' + name + '" /></div><textarea id="column_value_' + num_super_columns + '_' + num_columns + '" name="column_value_' + num_super_columns + '_' + num_columns + '" type="text" class="float_left smaller">' + value + '</textarea> <input class="btn_add_column" type="button" value="Add Column..." onclick="addColumn(\'\',\'\',\'' + p_num_super_columns + '\');" style="margin-left: 15px;" /> <div class="clear_both"></div>');
+		$('#' + p_num_super_columns + '_super_column_data').append('<div class="clear_left"></div><div class="insert_row_column_name"><input id="column_name_' + num_super_columns + '_' + num_columns + '" name="column_name_' + num_super_columns + '_' + num_columns + '" type="text" class="smaller" value="' + name + '" /></div><textarea id="column_value_' + num_super_columns + '_' + num_columns + '" name="column_value_' + num_super_columns + '_' + num_columns + '" type="text" class="float_left smaller">' + value + '</textarea> <input class="btn btn_add_column" type="button" value="Add Column..." onclick="addColumn(\'\',\'\',\'' + p_num_super_columns + '\');" style="margin-left: 15px;" /> <div class="clear_both"></div>');
 	}
 	
 	function addSuperColumnWithColumn() {
@@ -74,10 +87,10 @@
 <?php echo $info_message; ?>
 <?php echo $error_message; ?>
 
-<form method="post" action="">
+<form method="post" action="" class="well">
 	<?php if ($is_super_cf): ?>
 	<div style="width: 590px;">
-		<input type="button" onclick="addSuperColumnWithColumn();" value="Add Super Column..." class="float_right" />
+		<input type="button" onclick="addSuperColumnWithColumn();" value="Add Super Column..." class="float_right btn" />
 		<div class="clear_right"></div>
 	</div>
 	<?php endif; ?>
@@ -90,7 +103,7 @@
 	<div id="data"></div>
 	
 	<div>
-		<input type="submit" name="btn_insert_row" value="<?php if ($mode == 'insert'): ?>Insert Row<?php elseif ($mode == 'edit'): ?>Edit Row<?php endif; ?>" />
+		<input type="submit" class="btn btn-primary" name="btn_insert_row" value="<?php if ($mode == 'insert'): ?>Insert Row<?php elseif ($mode == 'edit'): ?>Edit Row<?php endif; ?>" />
 	</div>
 	
 	<?php if ($mode == 'edit'): ?><input type="hidden" name="key" value="<?php echo $key; ?>" /><?php endif;?>

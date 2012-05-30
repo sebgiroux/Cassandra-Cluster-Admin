@@ -1,9 +1,23 @@
-<h3><a href="index.php"><?php echo $cluster_name; ?></a> &gt; <a href="describe_keyspace.php?keyspace_name=<?php echo $keyspace_name; ?>"><?php echo $keyspace_name; ?></a> &gt; <a href="describe_columnfamily.php?keyspace_name=<?php echo $keyspace_name; ?>&amp;columnfamily_name=<?php echo $columnfamily_name; ?>"><?php echo $columnfamily_name; ?></a> &gt; Create Secondary Index</h3>
+<ul class="breadcrumb">
+	<li>
+		<a href="index.php"><?php echo $cluster_name; ?></a> <span class="divider">/</span>
+	</li>
+	<li>
+		<a href="describe_keyspace.php?keyspace_name=<?php echo $keyspace_name; ?>"><?php echo $keyspace_name; ?></a> <span class="divider">/</span>
+	</li>
+	<li>
+		<a href="describe_columnfamily.php?keyspace_name=<?php echo $keyspace_name; ?>&amp;columnfamily_name=<?php echo $columnfamily_name; ?>"><?php echo $columnfamily_name; ?></a> <span class="divider">/</span>
+	</li>
+	<li class="active">
+		Create Secondary Index
+	</li>
+</ul>
+
 
 <?php echo $success_message; ?>
 <?php echo $error_message; ?>
 
-<form method="post" action="">
+<form method="post" action="" class="well">
 
 	<div>
 		<label for="column_name">Column Name:</label>
@@ -36,7 +50,7 @@
 	</div>	
 	
 	<div>
-		<input type="submit" name="<?php if ($mode == 'edit'): echo 'btn_edit_secondary_index'; else: echo 'btn_create_secondary_index'; endif; ?>" value="<?php if ($mode == 'edit'): echo 'Edit Secondary Index'; else: echo 'Add Secondary Index'; endif; ?>" />
+		<input type="submit" class="btn btn-primary" name="<?php if ($mode == 'edit'): echo 'btn_edit_secondary_index'; else: echo 'btn_create_secondary_index'; endif; ?>" value="<?php if ($mode == 'edit'): echo 'Edit Secondary Index'; else: echo 'Add Secondary Index'; endif; ?>" />
 		<input type="hidden" name="keyspace_name" value="<?php echo $keyspace_name; ?>" />
 		<input type="hidden" name="columnfamily_name" value="<?php echo $columnfamily_name; ?>" />
 	</div>	

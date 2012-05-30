@@ -1,48 +1,38 @@
-<h3><a href="index.php"><?php echo $cluster_name; ?></a> &gt; <a href="describe_keyspace.php?keyspace_name=<?php echo $keyspace_name; ?>"><?php echo $keyspace_name; ?></a> &gt; <?php echo $columnfamily_name; ?></h3>
+<ul class="breadcrumb">
+	<li>
+		<a href="index.php"><?php echo $cluster_name; ?></a> <span class="divider">/</span>
+	</li>
+	<li>
+		<a href="describe_keyspace.php?keyspace_name=<?php echo $keyspace_name; ?>"><?php echo $keyspace_name; ?></a> <span class="divider">/</span>
+	</li>
+	<li class="active">
+		<?php echo $columnfamily_name; ?>
+	</li>
+</ul>
 
-<div id="menu">
-	<div class="menu_item" onclick="location.href='columnfamily_action.php?action=browse_data&amp;keyspace_name=<?php echo $keyspace_name; ?>&amp;columnfamily_name=<?php echo $columnfamily_name; ?>'">
-		<div class="icon browse_data"></div> Browse Data
-	</div>
+<a href="columnfamily_action.php?action=browse_data&amp;keyspace_name=<?php echo $keyspace_name; ?>&amp;columnfamily_name=<?php echo $columnfamily_name; ?>" class="btn btn-large btn-primary" style="color: #fff; text-decoration: none;">Browse Data</a>
+
+<?php if (!$is_read_only_keyspace): ?>
+	<a href="columnfamily_action.php?action=create_secondary_index&amp;keyspace_name=<?php echo $keyspace_name; ?>&amp;columnfamily_name=<?php echo $columnfamily_name; ?>" class="btn btn-large btn-primary" style="color: #fff; text-decoration: none;">Create Secondary Index</a>
+<?php endif; ?>
+
+<a href="columnfamily_action.php?action=get_key&amp;keyspace_name=<?php echo $keyspace_name; ?>&amp;columnfamily_name=<?php echo $columnfamily_name; ?>" class="btn btn-large btn-primary" style="color: #fff; text-decoration: none;">Get Key</a>
+
+<?php if (!$is_read_only_keyspace && $is_counter_column): ?>
+	<a href="counters.php?keyspace_name=<?php echo $keyspace_name; ?>&amp;columnfamily_name=<?php echo $columnfamily_name; ?>" class="btn btn-large btn-primary" style="color: #fff; text-decoration: none;">Counters</a>
+<?php endif; ?>
+
+<?php if (!$is_read_only_keyspace && !$is_counter_column): ?>
+	<a href="columnfamily_action.php?action=insert_row&amp;keyspace_name=<?php echo $keyspace_name; ?>&amp;columnfamily_name=<?php echo $columnfamily_name; ?>" class="btn btn-large btn-primary" style="color: #fff; text-decoration: none;">Insert Row</a>
+<?php endif; ?>
+
+<?php if (!$is_read_only_keyspace): ?>
+	<a href="columnfamily_action.php?action=edit&amp;keyspace_name=<?php echo $keyspace_name; ?>&amp;columnfamily_name=<?php echo $columnfamily_name; ?>" class="btn btn-large btn-primary" style="color: #fff; text-decoration: none;">Edit Column Family</a>
+
+	<a href="#" onclick="return truncateColumnFamily('<?php echo $keyspace_name; ?>','<?php echo $columnfamily_name; ?>');" class="btn btn-large btn-primary" style="color: #fff; text-decoration: none;">Truncate Column Family</a>
 	
-	<?php if (!$is_read_only_keyspace): ?>
-		<div class="menu_item" onclick="location.href='columnfamily_action.php?action=create_secondary_index&amp;keyspace_name=<?php echo $keyspace_name; ?>&amp;columnfamily_name=<?php echo $columnfamily_name; ?>'">
-			<div class="icon create_secondary_index"></div> Create Secondary Index
-		</div>
-	<?php endif; ?>
-	
-	<div class="menu_item" onclick="location.href='columnfamily_action.php?action=get_key&amp;keyspace_name=<?php echo $keyspace_name; ?>&amp;columnfamily_name=<?php echo $columnfamily_name; ?>'">
-		<div class="icon get_key"></div> Get Key
-	</div>
-	
-	<?php if (!$is_read_only_keyspace && $is_counter_column): ?>
-	<div class="menu_item" onclick="location.href='counters.php?keyspace_name=<?php echo $keyspace_name; ?>&amp;columnfamily_name=<?php echo $columnfamily_name; ?>'">
-		<div class="icon counters"></div> Counters
-	</div>
-	<?php endif; ?>
-	
-	<?php if (!$is_read_only_keyspace && !$is_counter_column): ?>
-	<div class="menu_item" onclick="location.href='columnfamily_action.php?action=insert_row&amp;keyspace_name=<?php echo $keyspace_name; ?>&amp;columnfamily_name=<?php echo $columnfamily_name; ?>'">
-		<div class="icon insert_row"></div> Insert Row
-	</div>
-	<?php endif; ?>
-	
-	<?php if (!$is_read_only_keyspace): ?>
-		<div class="menu_item" onclick="location.href='columnfamily_action.php?action=edit&amp;keyspace_name=<?php echo $keyspace_name; ?>&amp;columnfamily_name=<?php echo $columnfamily_name; ?>'">
-			<div class="icon edit_column_family"></div> Edit Column Family
-		</div>	
-	
-		<div class="menu_item" onclick="return truncateColumnFamily('<?php echo $keyspace_name; ?>','<?php echo $columnfamily_name; ?>');">
-			<div class="icon truncate_column_family"></div> Truncate Column Family
-		</div>
-		
-		<div class="menu_item" onclick="return dropColumnFamily('<?php echo $keyspace_name; ?>','<?php echo $columnfamily_name; ?>');">
-			<div class="icon drop_column_family"></div> Drop Column Family
-		</div>
-	<?php endif; ?>
-	
-	<div class="clear_left"></div>
-</div>
+	<a href="#" onclick="return dropColumnFamily('<?php echo $keyspace_name; ?>','<?php echo $columnfamily_name; ?>');" class="btn btn-large btn-primary" style="color: #fff; text-decoration: none;">Drop Column Family</a>
+<?php endif; ?>
 
 <h3>Column Family Details</h3>
 <?php echo $columnfamily_def; ?>

@@ -94,7 +94,7 @@
 	function displaySuccessMessage($index,$params = array()) {
 		global $lang;
 	
-		return '<div class="success_message">'.getLang('form_success_'.$index,$params).'</div>';
+		return '<div class="alert alert-success">'.getLang('form_success_'.$index,$params).'</div>';
 	}
 	
 	/*
@@ -103,7 +103,7 @@
 	function displayInfoMessage($index,$params = array()) {
 		global $lang;
 	
-		return '<div class="info_message">'.getLang('form_info_'.$index,$params).'</div>';
+		return '<div class="alert alert-info">'.getLang('form_info_'.$index,$params).'</div>';
 	}
 
 	/*
@@ -118,7 +118,7 @@
 			$message .= ' '.getCassandraMessage($params['message']);
 		}
 	
-		return '<div class="error_message">'.$message.'</div>';
+		return '<div class="alert alert-error">'.$message.'</div>';
 	}
 	
 	$current_page_title = 'Cassandra Cluster Admin';

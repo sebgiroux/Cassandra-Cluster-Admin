@@ -10,22 +10,22 @@
 	<?php endif; ?>
 </div>
 
-<div id="cluster_info">
+<div id="cluster_info" class="well">
 	<h3>Cluster Name: <?php echo $cluster_name; ?></h3>
 
 	Cluster Partitioner: <?php echo $partitioner; ?><br />
 	Cluster Snitch: <?php echo $snitch; ?><br />
 	Thrift API Version: <?php echo $thrift_api_version; ?><br />
 	Schema Versions: <br />
-	<table width="100%" class="cluster_status">
+	<table width="100%" class="cluster_status table table-bordered table-striped">
         <?php
 			foreach ($schema_version as $version => $servers):
 				foreach ($servers as $server):
 						echo '<tr>';
 							if ($version == 'UNREACHABLE'):
-								echo '<td class="node_down">&#215;</td><td>'.$server.'</td><td>'.$version.'</td>';
+								echo '<td><span class="badge badge-important">&#215;</span></td><td>'.$server.'</td><td>'.$version.'</td>';
 							else:
-								echo '<td class="node_ok">&#10003;</td><td>'.$server.'</td><td>'.$version.'</td>';
+								echo '<td><span class="badge badge-success">&#10003;</span></td><td>'.$server.'</td><td>'.$version.'</td>';
 							endif;
 						echo '</tr>';
 				endforeach;
@@ -37,12 +37,7 @@
 <?php echo $success_message; ?>
 <?php echo $error_message; ?>
 
-<div id="menu">
-	<div class="menu_item" onclick="location.href='keyspace_action.php?action=create'">
-		<div class="icon create_keyspace"></div> Create New Keyspace
-	</div>
-	<div class="clear_left"></div>
-</div>
+<a href="keyspace_action.php?action=create" class="btn btn-large btn-primary" style="color: #fff; text-decoration: none;">Create New Keyspace</a>
 
 <h3>Keyspaces and Column Families</h3>	
 <ul id="keyspaces">

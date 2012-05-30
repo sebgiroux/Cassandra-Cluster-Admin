@@ -1,9 +1,21 @@
-<h3><a href="index.php"><?php echo $cluster_name; ?></a> &gt; <a href="describe_keyspace.php?keyspace_name=<?php echo $keyspace_name; ?>"><?php echo $keyspace_name; ?></a> <?php if (!empty($columnfamily_name)): echo '&gt; <a href="describe_columnfamily.php?keyspace_name='.$keyspace_name.'&columnfamily_name='.$columnfamily_name.'">'.$columnfamily_name.'</a>'; endif; ?> <?php if ($mode=='create'): echo '&gt; Create Column Family'; else: echo ' &gt; Edit Column Family'; endif;?></h3>
+<ul class="breadcrumb">
+	<li>
+		<a href="index.php"><?php echo $cluster_name; ?></a> <span class="divider">/</span>
+	</li>
+	<li>
+		<a href="describe_keyspace.php?keyspace_name=<?php echo $keyspace_name; ?>"><?php echo $keyspace_name; ?></a> <span class="divider">/</span>
+	</li>
+	<?php if (!empty($columnfamily_name)): echo '<li><a href="describe_columnfamily.php?keyspace_name='.$keyspace_name.'&columnfamily_name='.$columnfamily_name.'">'.$columnfamily_name.'</a> <span class="divider">/</span></li>'; endif; ?>
+	
+	<li class="active">
+		<?php if ($mode=='create'): echo 'Create Column Family'; else: echo 'Edit Column Family'; endif;?>
+	</li>
+</ul>
 
 <?php echo $success_message; ?>
 <?php echo $error_message; ?>
 
-<form method="post" action="" id="columnfamily_form">
+<form method="post" class="well" action="" id="columnfamily_form" class="well">
 
 	<div>
 		<label for="columnfamily_name">Column Family Name:</label>
@@ -166,7 +178,7 @@
 	<p class="form_tips">* Any field left blank will use the server default value.</p>
 	
 	<div>
-		<input type="submit" name="<?php if ($mode == 'edit'): echo 'btn_edit_columnfamily'; else: echo 'btn_create_columnfamily'; endif; ?>" value="<?php if ($mode == 'edit'): echo 'Edit Column Family'; else: echo 'Create Column Family'; endif; ?>" />
+		<input type="submit" class="btn btn-primary" name="<?php if ($mode == 'edit'): echo 'btn_edit_columnfamily'; else: echo 'btn_create_columnfamily'; endif; ?>" value="<?php if ($mode == 'edit'): echo 'Edit Column Family'; else: echo 'Create Column Family'; endif; ?>" />
 		<input type="hidden" name="keyspace_name" value="<?php echo $keyspace_name; ?>" />
 	</div>
 </form>

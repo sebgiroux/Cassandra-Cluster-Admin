@@ -1,4 +1,11 @@
-<h3><a href="index.php"><?php echo $cluster_name; ?></a> &gt; JMX Stats</h3>
+<ul class="breadcrumb">
+	<li>
+		<a href="index.php"><?php echo $cluster_name; ?></a> <span class="divider">/</span>
+	</li>
+	<li class="active">
+		JMX Stats
+	</li>
+</ul>
 
 <p>It looks like MX4J is not actived on the node (<?php echo $jmx_host; ?>) you're trying to see JMX stats, or node is not alive.</p>
 

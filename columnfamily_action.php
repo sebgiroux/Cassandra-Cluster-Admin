@@ -9,6 +9,11 @@
 	require('include/kernel.inc.php');
 	require('include/verify_login.inc.php');
 	
+	use phpcassa\Connection\ConnectionPool;
+	use phpcassa\ColumnFamily;
+	use phpcassa\SuperColumnFamily;
+	use cassandra\IndexType;
+	
 	$included_header = false;
 	$is_valid_action = false;
 	$action = '';
@@ -253,40 +258,28 @@
 			$columnfamily_name = $_GET['columnfamily_name'];
 		}
 		
-		$cf = ColumnFamilyHelper::getCFInKeyspace($keyspace_name,$columnfamily_name);
+		$cf_def = ColumnFamilyHelper::getCFInKeyspace($keyspace_name,$columnfamily_name);
+		$is_super_cf = $cf_def->column_type == 'Super';
 	
 		try {		
 			$pool = new ConnectionPool($keyspace_name, $cluster_helper->getArrayOfNodesForCurrentCluster(),null,5,5000,5000,10000,$cluster_helper->getCredentialsForCurrentCluster());
-			$column_family = new ColumnFamily($pool, $columnfamily_name);
+			
+			if ($is_super_cf) {
+				$column_family = new SuperColumnFamily($pool, $columnfamily_name);
+			}
+			else {
+				$column_family = new ColumnFamily($pool, $columnfamily_name);
+			}
 			
 			$vw_vars['results'] = '';	
 			
 			$time_start = microtime(true);
 			if (count($tab_keys) == 1) {
-				$output = array();								
-				$nb_iterations = 0;
-				$last_column_name = '';
-				
-				do {
-					$output = array_merge($output,$column_family->get($tab_keys[0],null,$last_column_name,'',false,COLUMNS_TO_FETCH_PER_ITERATION));
-					end($output);
-					$last_column_name = key($output);
-					$nb_iterations++;
-				} while (count($output) == COLUMNS_TO_FETCH_PER_ITERATION && $nb_iterations < (MAXIMUM_COLUMNS_TO_FETCH / COLUMNS_TO_FETCH_PER_ITERATION));
-	
+				$output = $column_family->get($tab_keys[0]);  
 				$output = array($tab_keys[0] => $output);
 			}
 			else {
-				$output = array();								
-				$nb_iterations = 0;
-				$last_column_name = '';
-				
-				do {
-					$output = array_merge($output,$column_family->multiget($tab_keys,null,$last_column_name,'',false,COLUMNS_TO_FETCH_PER_ITERATION));
-					end($output);
-					$last_column_name = key($output);
-					$nb_iterations++;
-				} while (count($output) == COLUMNS_TO_FETCH_PER_ITERATION && $nb_iterations < (MAXIMUM_COLUMNS_TO_FETCH / COLUMNS_TO_FETCH_PER_ITERATION));
+				$output = $column_family->multiget($tab_keys);
 			}
 			
 			$time_end = microtime(true);
@@ -340,8 +333,17 @@
 		
 		try {		
 			$pool = new ConnectionPool($keyspace_name, $cluster_helper->getArrayOfNodesForCurrentCluster(),null,5,5000,5000,10000,$cluster_helper->getCredentialsForCurrentCluster());
-			$column_family = new ColumnFamily($pool, $columnfamily_name);
+						
+			$cf_def = ColumnFamilyHelper::getCFInKeyspace($keyspace_name,$columnfamily_name);
+			$is_super_cf = $cf_def->column_type == 'Super';
 		
+			if ($is_super_cf) {
+				$column_family = new SuperColumnFamily($pool, $columnfamily_name);
+			}
+			else {
+				$column_family = new ColumnFamily($pool, $columnfamily_name);
+			}
+			
 			$no_index_expression = 0;
 			$arr_index_expression = array();
 			
@@ -484,7 +486,15 @@
 		$key = $_POST['key'];
 		
 		$pool = new ConnectionPool($keyspace_name, $cluster_helper->getArrayOfNodesForCurrentCluster(),null,5,5000,5000,10000,$cluster_helper->getCredentialsForCurrentCluster());
-		$column_family = new ColumnFamily($pool, $columnfamily_name);
+		$cf_def = ColumnFamilyHelper::getCFInKeyspace($keyspace_name,$columnfamily_name);
+		$is_super_cf = $cf_def->column_type == 'Super';
+		
+		if ($is_super_cf) {
+			$column_family = new SuperColumnFamily($pool, $columnfamily_name);
+		}
+		else {
+			$column_family = new ColumnFamily($pool, $columnfamily_name);
+		}
 		
 		$no_column = 1;
 		
@@ -642,9 +652,30 @@
 		$vw_vars['keyspace_name'] = $keyspace_name;
 		$vw_vars['columnfamily_name'] = $columnfamily_name;
 				
-		try {		
+		try {	
+			$describe_keyspace = $sys_manager->describe_keyspace($keyspace_name);	
+			
+			$cf_def = null;
+			foreach ($describe_keyspace->cf_defs as $cfdef) {
+				if ($cfdef->name == $columnfamily_name) {
+					$cf_def = $cfdef;
+					break;
+				}
+			}				    
+			
+			$is_super_cf = $cf_def->column_type == 'Super';
+			
+			$vw_row_vars['is_super_cf'] = $is_super_cf; 
+			$vw_row_vars['is_counter_column'] = $cf_def->default_validation_class == 'org.apache.cassandra.db.marshal.CounterColumnType';
+			
 			$pool = new ConnectionPool($keyspace_name, $cluster_helper->getArrayOfNodesForCurrentCluster(),null,5,5000,5000,10000,$cluster_helper->getCredentialsForCurrentCluster());
-			$column_family = new ColumnFamily($pool, $columnfamily_name);
+			
+			if ($is_super_cf) {
+				$column_family = new SuperColumnFamily($pool, $columnfamily_name);
+			}
+			else {
+				$column_family = new ColumnFamily($pool, $columnfamily_name);
+			}		
 		
 			// Increment counter
 			if (isset($_GET['increment'])) {
@@ -709,41 +740,12 @@
 			$nb_rows = 5;
 			if (isset($_GET['nb_rows']) && is_numeric($_GET['nb_rows']) && $_GET['nb_rows'] > 0) $nb_rows = $_GET['nb_rows'];
 			$vw_vars['nb_rows'] = $nb_rows;
-		
-			$describe_keyspace = $sys_manager->describe_keyspace($keyspace_name);
-		
-			$cf_def = null;
-			foreach ($describe_keyspace->cf_defs as $cfdef) {
-				if ($cfdef->name == $columnfamily_name) {
-					$cf_def = $cfdef;
-					break;
-				}
-			}
-
-			$vw_row_vars['is_super_cf'] = $cf_def->column_type == 'Super';     
-			$vw_row_vars['is_counter_column'] = $column_family->cfdef->default_validation_class == 'org.apache.cassandra.db.marshal.CounterColumnType';
-			
+					
 			$included_header = true;
-			echo getHTML('header.php');
-							  
-			$output = array();								
-			$nb_iterations = 0;
-			$last_column_name = '';
+			echo getHTML('header.php');		
+
+			$output = $column_family->get_range($offset_key,'',$nb_rows,null);
 			
-			do {
-				$output_to_merge = $column_family->get_range($offset_key,'',$nb_rows,null,$last_column_name,'',false,COLUMNS_TO_FETCH_PER_ITERATION);
-				
-				$count = 0;				
-				foreach ($output_to_merge as $key => $value) {
-					$output[$key] = $value;
-					$count++;
-				}
-				
-				end($output_to_merge);
-				$last_column_name = key($output_to_merge);
-				$nb_iterations++;
-			} while ($count == COLUMNS_TO_FETCH_PER_ITERATION && $nb_iterations < (MAXIMUM_COLUMNS_TO_FETCH / COLUMNS_TO_FETCH_PER_ITERATION));
-				
 			$vw_vars['results'] = '';	
 			$nb_results = 0;
 			
@@ -825,6 +827,8 @@
 		if (!isset($vw_vars['error_message'])) $vw_vars['error_message'] = '';
 		
 		$cf_def = ColumnFamilyHelper::getCFInKeyspace($keyspace_name,$columnfamily_name);
+		
+		$is_super_cf = $cf_def->column_type == 'Super';
 		$vw_vars['is_super_cf'] = $cf_def->column_type == 'Super';
 		
 		$vw_vars['key'] = $key;
@@ -834,21 +838,17 @@
 		
 		try {		
 			$pool = new ConnectionPool($keyspace_name, $cluster_helper->getArrayOfNodesForCurrentCluster(),null,5,5000,5000,10000,$cluster_helper->getCredentialsForCurrentCluster());
-			$column_family = new ColumnFamily($pool, $columnfamily_name);
+			
+			if ($is_super_cf) {
+				$column_family = new SuperColumnFamily($pool, $columnfamily_name);
+			}
+			else {
+				$column_family = new ColumnFamily($pool, $columnfamily_name);
+			}
 			
 			$vw_vars['results'] = '';
-			
-			$output = array();								
-			$nb_iterations = 0;
-			$last_column_name = '';
-			
-			do {
-				$output = array_merge($output,$column_family->get($key,null,$last_column_name,'',false,COLUMNS_TO_FETCH_PER_ITERATION));
-				end($output);
-				$last_column_name = key($output);
-				$nb_iterations++;
-			} while (count($output) == COLUMNS_TO_FETCH_PER_ITERATION && $nb_iterations < (MAXIMUM_COLUMNS_TO_FETCH / COLUMNS_TO_FETCH_PER_ITERATION));
-			
+
+			$output = $column_family->get($key);		
 			$vw_vars['output'] = $output;
 		}
 		catch (Exception $e) {
@@ -890,7 +890,16 @@
 		
 		try {
 			$pool = new ConnectionPool($keyspace_name, $cluster_helper->getArrayOfNodesForCurrentCluster(),null,5,5000,5000,10000,$cluster_helper->getCredentialsForCurrentCluster());
-			$column_family = new ColumnFamily($pool, $columnfamily_name);	
+			
+			$cf_def = ColumnFamilyHelper::getCFInKeyspace($keyspace_name,$columnfamily_name);
+			$is_super_cf = $cf_def->column_type == 'Super';
+			
+			if ($is_super_cf) {
+				$column_family = new SuperColumnFamily($pool, $columnfamily_name);
+			}
+			else {
+				$column_family = new ColumnFamily($pool, $columnfamily_name);
+			}	
 		
 			$column_family->remove($key,null,$super_column_key);
 			
@@ -937,16 +946,25 @@
 		
 		try {
 			$pool = new ConnectionPool($keyspace_name, $cluster_helper->getArrayOfNodesForCurrentCluster(),null,5,5000,5000,10000,$cluster_helper->getCredentialsForCurrentCluster());
-			$column_family = new ColumnFamily($pool, $columnfamily_name);	
+			
+			$cf_def = ColumnFamilyHelper::getCFInKeyspace($keyspace_name,$columnfamily_name);
+			$is_super_cf = $cf_def->column_type == 'Super';
+			
+			if ($is_super_cf) {
+				$column_family = new SuperColumnFamily($pool, $columnfamily_name);
+			}
+			else {
+				$column_family = new ColumnFamily($pool, $columnfamily_name);
+			}	
 			
 			if ($action == 'dec') {
 				$value *= -1;
 			}
 			
-			$column_family->add($key, $column, $value,$super_column);
+			$column_family->add($key, $super_column, $column, $value);
 			
 			$new_value = $column_family->get($key);
-			
+
 			if ($column_family->cfdef->column_type == 'Super') {
 				$new_value = $new_value[$super_column][$column];
 			}

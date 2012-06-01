@@ -38,7 +38,7 @@
 		*/
 		public function getClusterNameForIndex($index) {
 			try {
-				$sys_manager = new SystemManager($this->getArrayOfNodesForIndex($index),$this->getCredentialsForIndex($index),1500,1500);
+				$sys_manager = new SystemManager($this->getRandomNodeForIndex($index),$this->getCredentialsForIndex($index),1500,1500);
 				
 				return $sys_manager->describe_cluster_name();
 			}

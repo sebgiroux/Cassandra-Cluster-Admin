@@ -14,8 +14,8 @@
 		$output_value = '';
 		if (is_array($value)):
 			if (count($value) > 0):
-				for ($i = 0; $i < count($value); $i++):
-					$sub_value = $value[$i];
+				$i = 0;
+				foreach ($value as $key => $sub_value):
 					if (is_array($sub_value)):
 						foreach ($sub_value as $key => $one_value):
 							$output_value .= $key.': '.$sub_value.'<br />';
@@ -26,11 +26,16 @@
 						foreach ($class_vars as $key => $sub_value):
 							$output_value .= $key.': '.$sub_value.'<br />';
 						endforeach;
+					else:
+						$output_value .= $sub_value.'<br />';
 					endif;
+					
 					if ($i < count($value) - 1):
 						$output_value .= '<hr size="1" />';
 					endif;
-				endfor;
+					
+					$i++;
+				endforeach;
 			else:
 				$output_value = 'None';
 			endif;

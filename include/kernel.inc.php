@@ -6,9 +6,9 @@
 		@copyright All rights reserved - 2011
 	*/	
 
-	require('include/phpcassa/connection.php');
-    require('include/phpcassa/columnfamily.php');
-	require('include/phpcassa/sysmanager.php');
+	require('include/autoload.php');	
+	
+	use phpcassa\SystemManager;
 	
 	require('include/lang/english.php');
 	
@@ -17,6 +17,8 @@
 	require('helper/MX4J.php');
 	
 	require('conf.inc.php');
+
+	error_reporting(E_ALL);
 	
 	define('MINIMUM_THRIFT_API_VERSION_FOR_COUNTERS','19.10.0');
 	
@@ -30,12 +32,12 @@
 	}
 	
 	try {	
-		$sys_manager = new SystemManager($cluster_helper->getArrayOfNodesForCurrentCluster(),$cluster_helper->getCredentialsForCurrentCluster(),1500,1500);
+		$sys_manager = new SystemManager($cluster_helper->getRandomNodeForCurrentCluster(),$cluster_helper->getCredentialsForCurrentCluster(),1500,1500);
 	}
 	catch (NoServerAvailable $e) {
 		die(getHTML('header.php').getHTML('server_error.php',array('error_message' => displayErrorMessage('cassandra_server_error',array('error_message' => $e->getMessage())))).getHTML('footer.php'));
 	}
-	
+
 	/*
 		Get the specified view and replace the php variables
 	*/	

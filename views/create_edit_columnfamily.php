@@ -121,6 +121,8 @@
 		<div class="clear_label"></div>
 	</div>
 	
+	<?php if (version_compare($thrift_api_version,THRIFT_API_VERSION_FOR_CASSANDRA_1_0,'<')): ?>
+	
 	<div>
 		<label for="memtable_operations_in_millions">
 			<div class="form_label">Memtable Operations in Millions:</div>
@@ -148,12 +150,14 @@
 		<div class="clear_label"></div>
 	</div>
 	
+	<?php endif; ?>
+	
 	<div>
 		<label for="default_validation_class">
 			<div class="form_label">Default Validation Class:</div>
 			<div class="form_label_help" id="default_validation_class_tooltip">?</div>
 		</label>
-		<input type="text" id="default_validation_class" name="default_validation_class" value="<?php echo $default_validation_class; ?>" /> <?php if ( version_compare($thrift_api_version,MINIMUM_THRIFT_API_VERSION_FOR_COUNTERS,'>=')): ?>* Use "CounterColumnType" for Counter Column<?php endif;?>
+		<input type="text" id="default_validation_class" name="default_validation_class" value="<?php echo $default_validation_class; ?>" /> <?php if (version_compare($thrift_api_version,MINIMUM_THRIFT_API_VERSION_FOR_COUNTERS,'>=')): ?>* Use "CounterColumnType" for Counter Column<?php endif;?>
 		<div class="clear_label"></div>
 	</div>
 	
@@ -174,6 +178,90 @@
 		<input type="text" id="max_compaction_threshold" name="max_compaction_threshold" value="<?php echo $max_compaction_threshold; ?>" />
 		<div class="clear_label"></div>
 	</div>
+	
+	<?php if (version_compare($thrift_api_version,THRIFT_API_VERSION_FOR_CASSANDRA_1_0,'>=')): ?>
+	
+	<div>
+		<label for="replicate_on_write">
+			<div class="form_label">Replicate on Write:</div>
+		</label>
+		<input type="text" id="replicate_on_write" name="replicate_on_write" value="<?php echo $replicate_on_write; ?>" />
+		<div class="clear_label"></div>
+	</div>
+	
+	<div>
+		<label for="key_validation_class">
+			<div class="form_label">Key Validation Class:</div>
+		</label>
+		<input type="text" id="key_validation_class" name="key_validation_class" value="<?php echo $key_validation_class; ?>" />
+		<div class="clear_label"></div>
+	</div>	
+	
+	<div>
+		<label for="key_alias">
+			<div class="form_label">Key Alias:</div>
+		</label>
+		<input type="text" id="key_alias" name="key_alias" value="<?php echo $key_alias; ?>" />
+		<div class="clear_label"></div>
+	</div>
+	
+	<div>
+		<label for="compaction_strategy">
+			<div class="form_label">Compaction Strategy:</div>
+		</label>
+		<input type="text" id="compaction_strategy" name="compaction_strategy" value="<?php echo $compaction_strategy; ?>" />
+		<div class="clear_label"></div>
+	</div>
+	
+	<div>
+		<label for="bloom_filter_fp_chance">
+			<div class="form_label">Bloom Filter FP Chance:</div>
+		</label>
+		<input type="text" id="bloom_filter_fp_chance" name="bloom_filter_fp_chance" value="<?php echo $bloom_filter_fp_chance; ?>" />
+		<div class="clear_label"></div>
+	</div>
+	
+	<div>
+		<label for="caching">
+			<div class="form_label">Caching:</div>
+		</label>
+		<input type="text" id="caching" name="caching" value="<?php echo $caching; ?>" />
+		<div class="clear_label"></div>
+	</div>
+	
+	<div>
+		<label for="dclocal_read_repair_chance">
+			<div class="form_label">DC Local Read Repair Chance:</div>
+		</label>
+		<input type="text" id="dclocal_read_repair_chance" name="dclocal_read_repair_chance" value="<?php echo $dclocal_read_repair_chance; ?>" />
+		<div class="clear_label"></div>
+	</div>
+
+	<div>
+		<label for="merge_shards_chance">
+			<div class="form_label">Merge Shards Chance:</div>
+		</label>
+		<input type="text" id="merge_shards_chance" name="merge_shards_chance" value="<?php echo $merge_shards_chance; ?>" />
+		<div class="clear_label"></div>
+	</div>
+	
+	<div>
+		<label for="row_cache_provider">
+			<div class="form_label">Row Cache Provider:</div>
+		</label>
+		<input type="text" id="row_cache_provider" name="row_cache_provider" value="<?php echo $row_cache_provider; ?>" />
+		<div class="clear_label"></div>
+	</div>
+	
+	<div>
+		<label for="row_cache_keys_to_save">
+			<div class="form_label">Row Cache Keys To Save:</div>
+		</label>
+		<input type="text" id="row_cache_keys_to_save" name="row_cache_keys_to_save" value="<?php echo $row_cache_keys_to_save; ?>" />
+		<div class="clear_label"></div>
+	</div>
+
+	<?php endif; ?>
 	
 	<p class="form_tips">* Any field left blank will use the server default value.</p>
 	

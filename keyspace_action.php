@@ -65,14 +65,52 @@
 		$gc_grace_seconds = $_POST['gc_grace_seconds'];
 		if (!empty($gc_grace_seconds)) $attrs['gc_grace_seconds'] = $gc_grace_seconds;	
 		
-		$memtable_operations_in_millions = $_POST['memtable_operations_in_millions'];
-		if (!empty($memtable_operations_in_millions)) $attrs['memtable_operations_in_millions'] = $memtable_operations_in_millions;	
+		$thrift_api_version = $sys_manager->describe_version();
 		
-		$memtable_throughput_in_mb = $_POST['memtable_throughput_in_mb'];
-		if (!empty($memtable_throughput_in_mb)) $attrs['memtable_throughput_in_mb'] = $memtable_throughput_in_mb;	
+		// Cassandra 0.8-
+		if (version_compare($thrift_api_version,THRIFT_API_VERSION_FOR_CASSANDRA_1_0,'<')) {
+			$memtable_operations_in_millions = $_POST['memtable_operations_in_millions'];
+			if (!empty($memtable_operations_in_millions)) $attrs['memtable_operations_in_millions'] = $memtable_operations_in_millions;	
+			
+			$memtable_throughput_in_mb = $_POST['memtable_throughput_in_mb'];
+			if (!empty($memtable_throughput_in_mb)) $attrs['memtable_throughput_in_mb'] = $memtable_throughput_in_mb;	
+			
+			$memtable_flush_after_mins = $_POST['memtable_flush_after_mins'];
+			if (!empty($memtable_flush_after_mins)) $attrs['memtable_flush_after_mins'] = $memtable_flush_after_mins;	
+		}
 		
-		$memtable_flush_after_mins = $_POST['memtable_flush_after_mins'];
-		if (!empty($memtable_flush_after_mins)) $attrs['memtable_flush_after_mins'] = $memtable_flush_after_mins;	
+		// Cassandra 1.0+
+		if (version_compare($thrift_api_version,THRIFT_API_VERSION_FOR_CASSANDRA_1_0,'>=')) {
+			$replicate_on_write = $_POST['replicate_on_write'];
+			if (!empty($replicate_on_write)) $attrs['replicate_on_write'] = $replicate_on_write;
+		
+			$key_validation_class = $_POST['key_validation_class'];
+			if (!empty($key_validation_class)) $attrs['key_validation_class'] = $key_validation_class;
+			
+			$key_alias = $_POST['key_alias'];
+			if (!empty($key_alias)) $attrs['key_alias'] = $key_alias;
+			
+			$compaction_strategy = $_POST['compaction_strategy'];
+			if (!empty($compaction_strategy)) $attrs['compaction_strategy'] = $compaction_strategy;
+			
+			$bloom_filter_fp_chance = $_POST['bloom_filter_fp_chance'];
+			if (!empty($bloom_filter_fp_chance)) $attrs['bloom_filter_fp_chance'] = $bloom_filter_fp_chance;
+		
+			$caching = $_POST['caching'];
+			if (!empty($caching)) $attrs['caching'] = $caching;
+			
+			$dclocal_read_repair_chance = $_POST['dclocal_read_repair_chance'];
+			if (!empty($dclocal_read_repair_chance)) $attrs['dclocal_read_repair_chance'] = $dclocal_read_repair_chance;
+
+			$merge_shards_chance = $_POST['merge_shards_chance'];
+			if (!empty($merge_shards_chance)) $attrs['merge_shards_chance'] = $merge_shards_chance;			
+
+			$row_cache_provider = $_POST['row_cache_provider'];
+			if (!empty($row_cache_provider)) $attrs['row_cache_provider'] = $row_cache_provider;
+			
+			$row_cache_keys_to_save = $_POST['row_cache_keys_to_save'];
+			if (!empty($row_cache_keys_to_save)) $attrs['row_cache_keys_to_save'] = $row_cache_keys_to_save;
+		}
 		
 		$default_validation_class = $_POST['default_validation_class'];
 		if (!empty($default_validation_class)) $attrs['default_validation_class'] = $default_validation_class;	
@@ -128,9 +166,29 @@
 		$vw_vars['max_compaction_threshold'] = '';
 		$vw_vars['row_cache_save_period_in_seconds'] = '';
 		$vw_vars['key_cache_save_period_in_seconds'] = '';
-		$vw_vars['memtable_flush_after_mins'] = '';
-		$vw_vars['memtable_throughput_in_mb'] = '';
-		$vw_vars['memtable_operations_in_millions'] = '';				
+		
+		$thrift_api_version = $sys_manager->describe_version();
+		
+		// Cassandra 1.0+
+		if (version_compare($thrift_api_version,THRIFT_API_VERSION_FOR_CASSANDRA_1_0,'>=')) {
+			$vw_vars['replicate_on_write'] = '';
+			$vw_vars['key_validation_class'] = '';
+			$vw_vars['key_alias'] = '';
+			$vw_vars['compaction_strategy'] = '';
+			$vw_vars['bloom_filter_fp_chance'] = '';
+			$vw_vars['caching'] = '';
+			$vw_vars['dclocal_read_repair_chance'] = '';
+			$vw_vars['merge_shards_chance'] = '';
+			$vw_vars['row_cache_provider'] = '';
+			$vw_vars['row_cache_keys_to_save'] = '';
+		}
+		
+		// Cassandra 0.8-
+		if (version_compare($thrift_api_version,THRIFT_API_VERSION_FOR_CASSANDRA_1_0,'<')) {
+			$vw_vars['memtable_flush_after_mins'] = '';
+			$vw_vars['memtable_throughput_in_mb'] = '';
+			$vw_vars['memtable_operations_in_millions'] = '';	
+		}		
 		
 		$vw_vars['mode'] = 'create';		
 		$vw_vars['thrift_api_version'] = $sys_manager->describe_version();

@@ -21,6 +21,7 @@
 	error_reporting(E_ALL);
 	
 	define('MINIMUM_THRIFT_API_VERSION_FOR_COUNTERS','19.10.0');
+	define('THRIFT_API_VERSION_FOR_CASSANDRA_1_0','19.20.0');
 	
 	$cluster_helper = new ClusterHelper($CASSANDRA_CLUSTERS);
 	

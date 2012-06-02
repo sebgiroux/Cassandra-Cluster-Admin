@@ -305,7 +305,7 @@
 			
 			$vw_vars['success_message'] = displaySuccessMessage('get_key',array('keys' => implode(',',$tab_keys), 'query_time' => getQueryTime($time_start,$time_end)));
 		}
-		catch (cassandra_NotFoundException $e) {
+		catch (cassandra\NotFoundException $e) {
 			$vw_vars['success_message'] = displayInfoMessage('get_key_doesnt_exists',array('key' => $tab_keys[0]));
 		}
 		catch (Exception $e) {
@@ -784,7 +784,7 @@
 			
 			echo getHTML('columnfamily_browse_data.php',$vw_vars);
 		}
-		catch (cassandra_NotFoundException $e) {
+		catch (cassandra\NotFoundException $e) {
 			echo displayErrorMessage('columnfamily_doesnt_exists',array('column_name' => $columnfamily_name));
 		}
 		catch (Exception $e) {
@@ -905,7 +905,7 @@
 			
 			redirect('columnfamily_action.php?action=browse_data&keyspace_name='.$keyspace_name.'&columnfamily_name='.$columnfamily_name);
 		}
-		catch (cassandra_NotFoundException $e) {
+		catch (cassandra\NotFoundException $e) {
 			$included_header = true;
 			echo getHTML('header.php');
 			echo displayErrorMessage('columnfamily_doesnt_exists',array('column_name' => $columnfamily_name));

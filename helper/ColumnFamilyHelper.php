@@ -21,7 +21,7 @@
 			try {
 				$describe_keyspace = $sys_manager->describe_keyspace($keyspace_name);
 			}
-			catch(cassandra_NotFoundException $e) {
+			catch(cassandra\NotFoundException $e) {
 				return null;
 			}
 			
@@ -62,7 +62,7 @@
 				
 				return array('keyspaces_name' => $keyspaces_name, 'keyspaces_details' => $keyspaces_details);
 			}
-			catch(cassandra_InvalidRequestException $e) {
+			catch(cassandra\InvalidRequestException $e) {
 				die(getHTML('server_error.php',array('error_message' => displayErrorMessage('cassandra_server_error',array('error_message' => $e->getMessage())))).getHTML('footer.php'));
 			}
 		}

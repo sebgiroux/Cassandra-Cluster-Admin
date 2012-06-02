@@ -262,7 +262,7 @@
 			try {
 				$describe_keyspace = $sys_manager->describe_keyspace($keyspace_name);
 			}
-			catch(cassandra_NotFoundException $e) {
+			catch(cassandra\NotFoundException $e) {
 				$found = false;
 			}
 			

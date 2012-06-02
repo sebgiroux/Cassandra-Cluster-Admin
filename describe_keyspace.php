@@ -86,7 +86,7 @@
 				
 			echo getHTML('describe_keyspace.php',$vw_vars);			
 		}
-		catch(cassandra_NotFoundException $e) {
+		catch(cassandra\NotFoundException $e) {
 			echo displayErrorMessage('keyspace_doesnt_exists',array('keyspace_name' => $keyspace_name));
 		}
 	}

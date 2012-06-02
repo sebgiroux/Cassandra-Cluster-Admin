@@ -160,16 +160,16 @@
 	
 		if (isset($matches[1])) {
 			switch ($matches[1]) {
-				case 'cassandra_NotFoundException':
+				case 'cassandra\NotFoundException':
 					return 'A specific column was requested that does not exist.';
 
-				case 'cassandra_InvalidRequestException':
+				case 'cassandra\InvalidRequestException':
 					return 'Invalid request could mean keyspace or column family does not exist, required parameters are missing, or a parameter is malformed. why contains an associated error message.';
 
-				case 'cassandra_UnavailableException':
+				case 'cassandra\UnavailableException':
 					return 'Not all the replicas required could be created and/or read.';
 
-				case 'cassandra_TimedOutException':
+				case 'cassandra\TimedOutException':
 					return 'The node responsible for the write or read did not respond during the rpc interval specified in your configuration (default 10s). This can happen if the request is too large, the node is oversaturated with requests, or the node is down but the failure detector has not yet realized it (usually this takes < 30s).';
 
 				case 'cassandra_TApplicationException':

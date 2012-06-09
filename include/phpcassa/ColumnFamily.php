@@ -94,9 +94,16 @@ class ColumnFamily {
     /** @internal */
     public $is_super;
 
+    /** @internal */
     protected $cf_data_type;
+
+    /** @internal */
     protected $col_name_type;
+
+    /** @internal */
     protected $supercol_name_type;
+
+    /** @internal */
     protected $col_type_dict;
 
 
@@ -533,11 +540,7 @@ class ColumnFamily {
             throw $ire;
         }
 
-        $packed_key_start = $this->pack_key($start);
-        $packed_key_finish = $this->pack_key($finish);
-
-        return new RangeColumnFamilyIterator($this, $buffsz,
-                                             $packed_key_start, $packed_key_finish,
+        return new RangeColumnFamilyIterator($this, $buffsz, $start, $finish,
                                              $count, $cp, $slice, $this->rcl($cl));
     }
 
@@ -575,7 +578,7 @@ class ColumnFamily {
             $new_expr->op = $expr->op;
             $new_clause->expressions[] = $new_expr;
         }
-        $new_clause->start_key = $this->pack_key($index_clause->start_key);
+        $new_clause->start_key = $index_clause->start_key;
         $new_clause->count = $index_clause->count;
 
         $column_parent = $this->create_column_parent();
@@ -862,6 +865,7 @@ class ColumnFamily {
     /** @internal */
     const SLICE_FINISH = 2;
 
+    /** @internal */
     public function pack_name($value,
                               $is_supercol_name=false,
                               $slice_end=self::NON_SLICE,
@@ -887,12 +891,14 @@ class ColumnFamily {
             return $this->col_name_type->unpack($b, $handle_serialize);
     }
 
+    /** @internal */
     public function pack_key($key, $handle_serialize=false) {
         if (!$this->autopack_keys || $key === "")
             return $key;
         return $this->key_type->pack($key, true, null, $handle_serialize);
     }
 
+    /** @internal */
     public function unpack_key($b, $handle_serialize=true) {
         if (!$this->autopack_keys)
             return $b;
@@ -910,9 +916,6 @@ class ColumnFamily {
         if (!$this->autopack_values)
             return $value;
 
-        if (!is_scalar($col_name) || is_float($col_name))
-            $col_name = serialize($col_name);
-
         if (isset($this->col_type_dict[$col_name])) {
             $dtype = $this->col_type_dict[$col_name];
             return $dtype->pack($value, false);
@@ -925,9 +928,6 @@ class ColumnFamily {
         if (!$this->autopack_values)
             return $value;
 
-        if (!is_scalar($col_name) || is_float($col_name))
-            $col_name = serialize($col_name);
-
         if (isset($this->col_type_dict[$col_name])) {
             $dtype = $this->col_type_dict[$col_name];
             return $dtype->unpack($value, false);
@@ -936,6 +936,7 @@ class ColumnFamily {
         }
     }
 
+    /** @internal */
     public function keyslices_to_array($keyslices) {
         $ret = array();
         if ($this->return_format == self::DICTIONARY_FORMAT) {
@@ -1012,9 +1013,9 @@ class ColumnFamily {
         if($first->column) { // normal columns
             foreach($array_of_coscs as $cosc) {
                 $col = $cosc->column;
+                $col->value = $this->unpack_value($col->value, $col->name);
                 $col->name = $this->unpack_name(
                         $col->name, false, $handle_serialize=false);
-                $col->value = $this->unpack_value($col->value, $col->name);
                 $ret[] = $col;
             }
         } else { // counter columns
@@ -1028,6 +1029,7 @@ class ColumnFamily {
         return $ret;
     }
 
+    /** @internal */
     public function make_mutation($array, $timestamp=null, $ttl=null) {
         $coscs = $this->pack_data($array, $timestamp, $ttl);
         $ret = array();
@@ -1068,7 +1070,7 @@ class ColumnFamily {
             }
             $sub->name = $this->pack_name(
                 $name, false, self::NON_SLICE, true);
-            $sub->value = $this->pack_value($value, $name);
+            $sub->value = $this->pack_value($value, $sub->name);
             $ret[] = $c_or_sc;
         }
         return $ret;
@@ -1091,7 +1093,7 @@ class ColumnFamily {
             }
             $sub->name = $this->pack_name(
                 $name, false, self::NON_SLICE, false);
-            $sub->value = $this->pack_value($value, $name);
+            $sub->value = $this->pack_value($value, $sub->name);
             $ret[] = $c_or_sc;
         }
         return $ret;

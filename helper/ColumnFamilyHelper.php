@@ -57,6 +57,10 @@
 						$columnfamilies_name[] = $columnfamily->name;
 					}
 					
+					if(defined('CF_AUTOSORT') && CF_AUTOSORT) {
+						sort($columnfamilies_name);
+					}
+					
 					$keyspaces_details[] = array('columnfamilies_name' => $columnfamilies_name);
 				}
 				
@@ -110,6 +114,10 @@
 			}	
 			
 			return $output;
+		}
+		
+		public static function sortCfDefsCallable($a, $b) {
+			return strcmp($a->name, $b->name);
 		}
 	}
 ?>

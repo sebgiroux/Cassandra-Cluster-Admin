@@ -57,7 +57,7 @@
 						$columnfamilies_name[] = $columnfamily->name;
 					}
 					
-					if(defined('CF_AUTOSORT') && CF_AUTOSORT) {
+					if (defined('CF_AUTOSORT') && CF_AUTOSORT) {
 						sort($columnfamilies_name);
 					}
 					

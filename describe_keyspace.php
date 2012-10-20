@@ -26,7 +26,7 @@
 		try {
 			$describe_keyspace = $sys_manager->describe_keyspace($keyspace_name);
 			
-			if(defined('CF_AUTOSORT') && CF_AUTOSORT) {
+			if (defined('CF_AUTOSORT') && CF_AUTOSORT) {
 				usort($describe_keyspace->cf_defs, array('ColumnFamilyHelper', 'sortCfDefsCallable'));
 			}
 			

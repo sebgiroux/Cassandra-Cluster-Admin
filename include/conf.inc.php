@@ -39,4 +39,6 @@
 	define('CCA_PASSWORD','');
 	
 	define('MX4J_HTTP_ADAPTOR_PORT',8081);
+	
+	define('CF_AUTOSORT', true); // column family autosort alpha-numerically
 ?>

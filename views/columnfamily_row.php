@@ -17,7 +17,20 @@
 	<?php foreach ($row as $column => $value): ?>
 		<tr>
 			<td><?php echo htmlentities($column,ENT_COMPAT,'UTF-8'); ?></td>
-			<td><pre><?php echo htmlentities($value,ENT_COMPAT,'UTF-8'); ?></pre></td>
+			<td><pre><?php
+				if (is_array($value)) { // not sure of a better way to determine if composite or not
+					
+					foreach ($value as &$valItem) {
+						$valItem = htmlentities($valItem,ENT_COMPAT,'UTF-8');
+					}
+				
+					echo '<div class="composite_value" title="CompositeType"><b>CompositeType [</b> <i>'.
+						implode('</i> <b>,</b> <i>', $value).
+						'</i> <b>]</b></div>';
+				} else {
+					echo htmlentities($value,ENT_COMPAT,'UTF-8');
+				}
+			?></pre></td>
 		</tr>
 	<?php endforeach; ?>
 </table>

@@ -116,6 +116,12 @@
 			return $output;
 		}
 		
+		/*
+			Used by usort() method. Assists in sorts column families by name
+			
+			@param $a					cassandra\CFDef Object
+			@param $b					cassandra\CFDef Object
+		 */
 		public static function sortCfDefsCallable($a, $b) {
 			return strcmp($a->name, $b->name);
 		}

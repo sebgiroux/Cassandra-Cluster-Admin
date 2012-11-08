@@ -228,3 +228,6 @@ a, a:visited {
 #columnfamily_details {
 	max-width: 400px;
 }
+
+.composite_value {font-size:14px;}
+.composite_value b {color:blue;}

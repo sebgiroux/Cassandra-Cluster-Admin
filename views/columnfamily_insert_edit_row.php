@@ -61,21 +61,16 @@
 			if ($mode == 'edit'):
 				if ($is_super_cf):
 					foreach ($output as $super_key => $data):
-						$super_key = escapeNameForJs($super_key);
-						echo 'addSuperColumn(\''.$super_key.'\');';
+						echo 'addSuperColumn(', json_encode($super_key), ');';
 						
 						foreach ($data as $name => $value):
-							$name = escapeNameForJs($name);
-							$value = escapeValueForJs($value);
-							echo 'addColumn(\''.$name.'\',\''.$value.'\',num_super_columns);';
+							echo 'addColumn(', json_encode($name), ',', json_encode($value), ',num_super_columns);';
 						endforeach;
 					endforeach;
 				else:	
 					echo 'num_super_columns++;';
 					foreach ($output as $name => $value):
-						$name = escapeNameForJs($name);
-						$value = escapeValueForJs($value);
-						echo 'addColumn(\''.$name.'\',\''.$value.'\',num_super_columns);';
+						echo 'addColumn(', json_encode($name), ',', json_encode($value), ',num_super_columns);';
 					endforeach;
 				endif;
 			endif;

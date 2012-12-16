@@ -8,6 +8,10 @@
 		@copyright All rights reserved - 2011
 	*/
 
+	require('include/autoload.php');	
+	
+	use phpcassa\SystemManager;
+	
 	class ClusterHelper {		
 		private $cassandra_clusters = array();
 		

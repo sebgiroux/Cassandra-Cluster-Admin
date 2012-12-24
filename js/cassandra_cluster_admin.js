@@ -288,7 +288,7 @@ function registerCFFormTooltips() {
 	
 	$('#row_cache_size_tooltip').popover({
 		title: 'Row Cache Size',
-		content: 'Determines how many rows to cache. The values can either be an absolute value or a double between 0 and 1 (inclusive on both ends) denoting what fraction should be cached.</p><p>Each each row cache hit saves 2 seeks at the minimum, sometimes more. The row cache saves more time then key cache, but must store the whole values of its rows, so it is extremely space-intensive. It\'s best to only use the row cache if you have hot rows or static rows.</p><p>Default is: \'0\', disabled row cache.'
+		content: 'Determines how many rows to cache. The values can either be an absolute value or a double between 0 and 1 (inclusive on both ends) denoting what fraction should be cached.</p><p>Each row cache hit saves 2 seeks at the minimum, sometimes more. The row cache saves more time then key cache, but must store the whole values of its rows, so it is extremely space-intensive. It\'s best to only use the row cache if you have hot rows or static rows.</p><p>Default is: \'0\', disabled row cache.'
 	});
 	
 	$('#row_cached_save_period_in_seconds_tooltip').popover({

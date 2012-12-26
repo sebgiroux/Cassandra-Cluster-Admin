@@ -18,6 +18,6 @@
 	</head>
 	
 	<body>
-		<h1 id="cca_title">Cassandra Cluster Admin</h1>
+		<h1 id="cca_title"><a href="./">Cassandra Cluster Admin</a></h1>
 		<?php if (CCA_LOGIN_REQUIRED && isset($_SESSION['cca_login'])): ?><div class="float_right"><a href="logout.php">Logout</a></div><?php endif; ?>
 		<div class="clear_both"></div>

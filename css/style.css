@@ -1,5 +1,5 @@
 body {
-	font-family: 'Lucida Grande','Lucida Sans Unicode','Geneva','Verdana',sans-serif;
+  font-family: 'Lucida Grande','Lucida Sans Unicode','Geneva','Verdana',sans-serif;
 	font-size: 14px;
 	background-color: #eee;
 }
@@ -231,3 +231,14 @@ a, a:visited {
 
 .composite_value {font-size:14px;}
 .composite_value b {color:blue;}
+
+#keyspaces {
+	width: 500px;
+}
+
+#keyspaces li {
+	list-style-type: none;
+	padding: 3px;
+	margin: 3px;
+	padding: 3px;
+}

@@ -40,7 +40,7 @@
 <a href="keyspace_action.php?action=create" class="btn btn-large btn-primary" style="color: #fff; text-decoration: none;">Create New Keyspace</a>
 
 <h3>Keyspaces and Column Families</h3>	
-<ul id="keyspaces">
+<ul id="keyspaces" class="well">
 	<?php
 		$nb_ks = count($keyspaces_name);
 		for ($i = 0; $i < $nb_ks; $i++):

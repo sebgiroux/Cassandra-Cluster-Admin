@@ -1,6 +1,6 @@
 <table id="navigation" class="table table-bordered table-striped">
 	<tr>
-		<td onclick="document.location.href='?nav=schema'"><a href="?nav=schema">Schema</a></td>
+		<td onclick="document.location.href='./'"><a href="./">Schema</a></td>
 		<td onclick="document.location.href='?nav=cluster'"><a href="?nav=cluster">Cluster</a></td>
 	</tr>
 </table>
@@ -9,7 +9,7 @@
 <?php echo $error_message; ?>
 
 <?php
-if ($_GET['nav'] == 'cluster'):
+if (isset($_GET['nav']) && $_GET['nav'] == 'cluster'):
 ?>
 
 <div id="cluster_info" class="well">
@@ -106,4 +106,3 @@ endif;
 <ul>
 	<li><a href="jmx.php">See Stats</a></li>
 </ul>
-

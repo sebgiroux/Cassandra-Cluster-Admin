@@ -9,7 +9,7 @@
 <?php echo $error_message; ?>
 
 <?php
-if ($_GET['nav'] == "cluster") {
+if ($_GET['nav'] == 'cluster'):
 ?>
 
 <div id="cluster_info" class="well">
@@ -46,7 +46,7 @@ if ($_GET['nav'] == "cluster") {
 </div>
 
 <?php
-} else {
+else:
 ?>
 
 <ul id="keyspaces" class="well">
@@ -60,17 +60,22 @@ if ($_GET['nav'] == "cluster") {
 	<?php
 		$nb_ks = count($keyspaces_name);
 		for ($i = 0; $i < $nb_ks; $i++):
-			if ($i/2 == intval($i/2)) {
+			if ($i/2 == intval($i/2) and $i == $nb_ks-1):
 				$beg = '<tr>';
-				$beg .= '<td>';
+				$beg .= '<td colspan="2">';
 
 				$end = '</td>';
-			} else {
+				$end .= '</tr>';
+			elseif ($i/2 == intval($i/2)):
+				$beg = '<td>';
+
+				$end = '</td>';
+			else:
 				$beg = '<td>';
 
 				$end = '</td>';
 				$end .= '</tr>';
-			}
+			endif;
 
 			echo $beg;
 
@@ -93,7 +98,7 @@ if ($_GET['nav'] == "cluster") {
 </ul>
 
 <?php
-}
+endif;
 ?>
 
 <h3>JMX</h3>

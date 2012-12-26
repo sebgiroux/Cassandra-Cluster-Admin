@@ -32,6 +32,10 @@ td {
 	margin-bottom: 5px;
 }
 
+#cca_title a {
+	text-decoration: none;
+}
+
 .small_horizontal_spacer {
 	float: left;
 	width: 5px;
@@ -188,8 +192,7 @@ select {
 }
 
 #cluster_info {
-	width: 500px;
-	padding-top: 10px;
+	width: 100% - 50px;
 }
 
 a, a:visited {
@@ -233,7 +236,7 @@ a, a:visited {
 .composite_value b {color:blue;}
 
 #keyspaces {
-	width: 500px;
+	width: 100% - 50px;
 }
 
 #keyspaces li {
@@ -241,4 +244,26 @@ a, a:visited {
 	padding: 3px;
 	margin: 3px;
 	padding: 3px;
+}
+
+#navigation td {
+	width: 50%;
+	cursor: pointer;
+}
+
+font.cluster_name {
+	font-weight: bold;
+	font-size: 16px;
+}
+
+table.kcfs td {
+	width: 50%;
+}
+
+table.kcfs a {
+	text-decoration: none;
+}
+
+table.kcfs a:hover {
+	text-decoration: underline;
 }

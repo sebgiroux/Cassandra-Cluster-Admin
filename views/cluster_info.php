@@ -18,7 +18,7 @@
 	Thrift API Version: <?php echo $thrift_api_version; ?><br />
 	Schema Versions: <br />
 	<table width="100%" class="cluster_status table table-bordered table-striped">
-        <?php
+		<?php
 			foreach ($schema_version as $version => $servers):
 				foreach ($servers as $server):
 						echo '<tr>';
@@ -30,7 +30,7 @@
 						echo '</tr>';
 				endforeach;
 			endforeach;
-        ?>
+		?>
 	</table>
 </div>
 
@@ -39,8 +39,9 @@
 
 <a href="keyspace_action.php?action=create" class="btn btn-large btn-primary" style="color: #fff; text-decoration: none;">Create New Keyspace</a>
 
-<h3>Keyspaces and Column Families</h3>	
 <ul id="keyspaces" class="well">
+	<h3>Keyspaces and Column Families</h3>
+
 	<?php
 		$nb_ks = count($keyspaces_name);
 		for ($i = 0; $i < $nb_ks; $i++):
@@ -52,12 +53,12 @@
 					for ($j = 0; $j < $nb_cf; $j++):
 						$columnfamily_name = $keyspaces_details[$i]['columnfamilies_name'][$j];
 						echo '<li><a href="describe_columnfamily.php?keyspace_name='.$keyspace_name.'&amp;columnfamily_name='.$columnfamily_name.'">'.$columnfamily_name.'</a></li>';
-					endfor;						
-				echo '</ul>';				
+					endfor;
+				echo '</ul>';
 			echo '</li>';
 		endfor;
 	?>
-</ul>		
+</ul>
 
 <h3>JMX</h3>
 

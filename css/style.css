@@ -192,7 +192,7 @@ select {
 }
 
 #cluster_info {
-	width: 100% - 50px;
+	width: 100% -50px;
 }
 
 a, a:visited {
@@ -236,7 +236,7 @@ a, a:visited {
 .composite_value b {color:blue;}
 
 #keyspaces {
-	width: 100% - 50px;
+	width: 100% -50px;
 }
 
 #keyspaces li {

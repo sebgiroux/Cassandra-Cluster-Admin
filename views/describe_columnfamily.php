@@ -23,7 +23,7 @@
 <div class="well">
 
 <?php
-if ($_GET['view'] == 'details' and !$is_read_only_keyspace):
+if (isset($_GET['view']) && $_GET['view'] == 'details' and !$is_read_only_keyspace):
 ?>
 
 	<a href="columnfamily_action.php?action=edit&amp;keyspace_name=<?php echo $keyspace_name; ?>&amp;columnfamily_name=<?php echo $columnfamily_name; ?>" class="btn btn-large btn-primary" style="color: #fff; text-decoration: none;">Edit Column Family</a>
@@ -65,9 +65,8 @@ else:
 														  'columnfamily_name' => $columnfamily_name));
 		endforeach;
 	?>
-<?php endif; ?>
-
 <?php
+endif;
 endif;
 ?>
 

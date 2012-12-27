@@ -23,7 +23,7 @@
 <?php echo $deleted_cf; ?>
 
 <?php
-if ($_GET['view'] == "details"):
+if (isset($_GET['view']) && $_GET['view'] == 'details'):
 ?>
 
 <?php if (!$is_read_only_keyspace): ?>

@@ -267,3 +267,12 @@ table.kcfs a {
 table.kcfs a:hover {
 	text-decoration: underline;
 }
+
+#describe_columnfamily_navigation td {
+	width: 33%;
+	cursor: pointer;
+}
+
+#keyspace_navigation td {
+	cursor: pointer;
+}

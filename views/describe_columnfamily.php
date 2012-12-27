@@ -10,11 +10,36 @@
 	</li>
 </ul>
 
-<a href="columnfamily_action.php?action=browse_data&amp;keyspace_name=<?php echo $keyspace_name; ?>&amp;columnfamily_name=<?php echo $columnfamily_name; ?>" class="btn btn-large btn-primary" style="color: #fff; text-decoration: none;">Browse Data</a>
+<table id="describe_columnfamily_navigation" class="table table-bordered table-striped">
+	<tr>
+		<td onclick="document.location.href='describe_columnfamily.php?keyspace_name=<?php echo $keyspace_name; ?>&amp;columnfamily_name=<?php echo $columnfamily_name; ?>'"><a href="describe_columnfamily.php?keyspace_name=<?php echo $keyspace_name; ?>&amp;columnfamily_name=<?php echo $columnfamily_name; ?>"><?php echo $columnfamily_name; ?></a></td>
 
 <?php if (!$is_read_only_keyspace): ?>
-	<a href="columnfamily_action.php?action=create_secondary_index&amp;keyspace_name=<?php echo $keyspace_name; ?>&amp;columnfamily_name=<?php echo $columnfamily_name; ?>" class="btn btn-large btn-primary" style="color: #fff; text-decoration: none;">Create Secondary Index</a>
+		<td onclick="document.location.href='describe_columnfamily.php?view=details&amp;keyspace_name=<?php echo $keyspace_name; ?>&amp;columnfamily_name=<?php echo $columnfamily_name; ?>'"><a href="describe_columnfamily.php?view=details&amp;keyspace_name=<?php echo $keyspace_name; ?>&amp;columnfamily_name=<?php echo $columnfamily_name; ?>">Details</a></td>
 <?php endif; ?>
+	</tr>
+</table>
+
+<div class="well">
+
+<?php
+if ($_GET['view'] == 'details' and !$is_read_only_keyspace):
+?>
+
+	<a href="columnfamily_action.php?action=edit&amp;keyspace_name=<?php echo $keyspace_name; ?>&amp;columnfamily_name=<?php echo $columnfamily_name; ?>" class="btn btn-large btn-primary" style="color: #fff; text-decoration: none;">Edit Column Family</a>
+
+	<a href="#" onclick="return truncateColumnFamily('<?php echo $keyspace_name; ?>','<?php echo $columnfamily_name; ?>');" class="btn btn-large btn-primary" style="color: #fff; text-decoration: none;">Truncate Column Family</a>
+	
+	<a href="#" onclick="return dropColumnFamily('<?php echo $keyspace_name; ?>','<?php echo $columnfamily_name; ?>');" class="btn btn-large btn-primary" style="color: #fff; text-decoration: none;">Drop Column Family</a>
+
+<h3>Column Family Details</h3>
+<?php echo $columnfamily_def; ?>
+
+<?php
+else:
+?>
+
+<a href="columnfamily_action.php?action=browse_data&amp;keyspace_name=<?php echo $keyspace_name; ?>&amp;columnfamily_name=<?php echo $columnfamily_name; ?>" class="btn btn-large btn-primary" style="color: #fff; text-decoration: none;">Browse Data</a>
 
 <a href="columnfamily_action.php?action=get_key&amp;keyspace_name=<?php echo $keyspace_name; ?>&amp;columnfamily_name=<?php echo $columnfamily_name; ?>" class="btn btn-large btn-primary" style="color: #fff; text-decoration: none;">Get Key</a>
 
@@ -27,15 +52,8 @@
 <?php endif; ?>
 
 <?php if (!$is_read_only_keyspace): ?>
-	<a href="columnfamily_action.php?action=edit&amp;keyspace_name=<?php echo $keyspace_name; ?>&amp;columnfamily_name=<?php echo $columnfamily_name; ?>" class="btn btn-large btn-primary" style="color: #fff; text-decoration: none;">Edit Column Family</a>
-
-	<a href="#" onclick="return truncateColumnFamily('<?php echo $keyspace_name; ?>','<?php echo $columnfamily_name; ?>');" class="btn btn-large btn-primary" style="color: #fff; text-decoration: none;">Truncate Column Family</a>
-	
-	<a href="#" onclick="return dropColumnFamily('<?php echo $keyspace_name; ?>','<?php echo $columnfamily_name; ?>');" class="btn btn-large btn-primary" style="color: #fff; text-decoration: none;">Drop Column Family</a>
+	<a href="columnfamily_action.php?action=create_secondary_index&amp;keyspace_name=<?php echo $keyspace_name; ?>&amp;columnfamily_name=<?php echo $columnfamily_name; ?>" class="btn btn-large btn-primary" style="color: #fff; text-decoration: none;">Create Secondary Index</a>
 <?php endif; ?>
-
-<h3>Column Family Details</h3>
-<?php echo $columnfamily_def; ?>
 
 <?php if (count($secondary_indexes) > 0): ?>
 	<h3>Secondary Indexes</h3>
@@ -48,3 +66,9 @@
 		endforeach;
 	?>
 <?php endif; ?>
+
+<?php
+endif;
+?>
+
+</div>

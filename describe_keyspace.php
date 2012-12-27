@@ -74,10 +74,11 @@
 				for ($i = 0; $i < $nb_cfs; $i++) {
 					$one_cf = $describe_keyspace->cf_defs[$i];
 				
-					$vw_vars['cf_def'] = $one_cf;	
+					$vw_vars['cf_def'] = $one_cf;
 					$vw_vars['columnfamily_name'] = $one_cf->name;				
-					$vw_vars['show_edit_link'] = true;					
-					$vw_vars['list_column_families'] .= getHTML('columnfamily_details.php',$vw_vars);
+					$vw_vars['show_edit_link'] = true;
+					$vw_vars['list_column_families'] .= '<tr><td onclick="document.location.href=\'describe_columnfamily.php?keyspace_name=' . $keyspace_name . '&columnfamily_name=' . $vw_vars['columnfamily_name'] . '\'"><a href="describe_columnfamily.php?keyspace_name=' . $keyspace_name . '&columnfamily_name=' . $vw_vars['columnfamily_name'] . '">' . $vw_vars['columnfamily_name'] . '</a></td></tr>';
+					// $vw_vars['list_column_families'] .= getHTML('columnfamily_details.php',$vw_vars);
 				}
 			}
 			

@@ -77,7 +77,6 @@
 					$vw_vars['cf_def'] = $one_cf;
 					$vw_vars['columnfamily_name'] = $one_cf->name;				
 					$vw_vars['show_edit_link'] = true;
-					$vw_vars['list_column_families'] .= '';
 					$vw_vars['list_column_families'] .= getHTML('columnfamily_short_details.php',$vw_vars);
 				}
 			}

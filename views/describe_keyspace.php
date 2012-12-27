@@ -7,15 +7,29 @@
 	</li>
 </ul>
 
+<table id="describe_columnfamily_navigation" class="table table-bordered table-striped">
+	<tr>
+		<td onclick="document.location.href='describe_keyspace.php?keyspace_name=<?php echo $keyspace_name; ?>'"><a href="describe_keyspace.php?keyspace_name=<?php echo $keyspace_name; ?>"><?php echo $keyspace_name; ?></a></td>
 
 <?php if (!$is_read_only_keyspace): ?>
-	<a href="keyspace_action.php?action=create_cf&amp;keyspace_name=<?php echo $keyspace_name; ?>" class="btn btn-large btn-primary" style="color: #fff; text-decoration: none;">Create New Column Family</a>
-	<a href="keyspace_action.php?action=edit&amp;keyspace_name=<?php echo $keyspace_name; ?>" class="btn btn-large btn-primary" style="color: #fff; text-decoration: none;">Edit Keyspace</a>
-	<a href="#" onclick="return dropKeyspace('<?php echo $keyspace_name; ?>');" class="btn btn-large btn-primary" style="color: #fff; text-decoration: none;">Drop Keyspace</a>
+		<td onclick="document.location.href='describe_keyspace.php?view=details&amp;keyspace_name=<?php echo $keyspace_name; ?>'"><a href="describe_keyspace.php?view=details&amp;keyspace_name=<?php echo $keyspace_name; ?>">Details</a></td>
 <?php endif; ?>
+	</tr>
+</table>
+
+<div class="well">
 
 <?php echo $added_cf; ?>
 <?php echo $deleted_cf; ?>
+
+<?php
+if ($_GET['view'] == "details"):
+?>
+
+<?php if (!$is_read_only_keyspace): ?>
+	<a href="keyspace_action.php?action=edit&amp;keyspace_name=<?php echo $keyspace_name; ?>" class="btn btn-large btn-primary" style="color: #fff; text-decoration: none;">Edit Keyspace</a>
+	<a href="#" onclick="return dropKeyspace('<?php echo $keyspace_name; ?>');" class="btn btn-large btn-primary" style="color: #fff; text-decoration: none;">Drop Keyspace</a>
+<?php endif; ?>
 
 <h3>Keyspace Details</h3>
 <div>
@@ -43,9 +57,6 @@
 	</table>
 </div>
 
-<h3>List of Column Families in Keyspace</h3>
-<?php echo $list_column_families; ?>
-
 <h3>Ring</h3>
 	
 <?php
@@ -63,3 +74,22 @@
 	}
 
 ?>
+
+<?php
+else:
+?>
+
+<?php if (!$is_read_only_keyspace): ?>
+	<a href="keyspace_action.php?action=create_cf&amp;keyspace_name=<?php echo $keyspace_name; ?>" class="btn btn-large btn-primary" style="color: #fff; text-decoration: none;">Create New Column Family</a>
+<?php endif; ?>
+
+<h3>Column Families in Keyspace <?php echo $keyspace_name; ?></h3>
+<table id="keyspace_navigation" class="cluster_status table table-bordered table-striped">
+<?php echo $list_column_families; ?>
+</table>
+
+<?php
+endif;
+?>
+
+</div>

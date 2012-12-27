@@ -4,14 +4,14 @@ Cassandra Cluster Admin is a GUI tool to help people administrate their Apache C
 
 If you're like me and used MySQL for a while (and still using it!), you get used to phpMyAdmin and its simple and easy to use user interface. I thought it would be nice to have a similar tool for Cassandra and I couldn't find any, so I build my own!
 
-With Cassandra Cluster Admin, you can create/edit/drop keyspace and column family, truncate a column family, create secondary indexes, display a row, browse data (get range slice), insert a row and much more!
+With Cassandra Cluster Admin, you can create/edit/drop keyspaces and column families, truncate a column family, create secondary indexes, display a row, browse data (get range slice), insert a row and much more!
 
 Bug report and/or pull request are always welcome!
 
 Screenshots
 ------------------------------------------------
 
-[![Cassandra Cluster Admin Homepage](http://img708.imageshack.us/img708/7939/screenshot1kk.th.png)](http://img708.imageshack.us/img708/7939/screenshot1kk.png) [![Cassandra Cluster Admin Column family Definition and Actions](http://img24.imageshack.us/img24/7249/screenshot2po.th.png)](http://img24.imageshack.us/img24/7249/screenshot2po.png)  [![Cassandra Cluster Admin List of Column Families in a Keyspace](http://img855.imageshack.us/img855/3512/screenshot3tc.th.png)](http://img855.imageshack.us/img855/3512/screenshot3tc.png) [![Cassandra Cluster Admin Edit a Column Family](http://img52.imageshack.us/img52/6885/screenshot4kr.th.png)](http://img52.imageshack.us/img52/6885/screenshot4kr.png)
+[![Viewing Keyspaces and Column Families](http://www.flashy.cc/cassandra-cluster-admin/1_small.png)](http://www.flashy.cc/cassandra-cluster-admin/1.png) [![Viewing Cluster](http://www.flashy.cc/cassandra-cluster-admin/2_small.png)](http://www.flashy.cc/cassandra-cluster-admin/2.png) [![Cassandra Cluster Admin Column family Definition and Actions](http://www.flashy.cc/cassandra-cluster-admin/4_small.png)](http://www.flashy.cc/cassandra-cluster-admin/4.png)  [![Cassandra Cluster Admin List of Column Families in a Keyspace](http://www.flashy.cc/cassandra-cluster-admin/5_small.png)](http://www.flashy.cc/cassandra-cluster-admin/5.png)
 
 Supported actions
 ------------------------------------------------
@@ -57,7 +57,7 @@ Add the following line to your php.ini file:
 
 Disclaimer
 ------------------------------------------------
-This software is still in beta so always be careful when using it on a production cluster. I won't take any responsability if for some reason this tool drop all your keyspaces and wipe all your data, althought I really doubt it will happen =)
+This software is still in beta so always be careful when using it on a production cluster. I won't take any responsability if for some reason this tool drops all your keyspaces and wipes all your data, although I really doubt it will happen =)
 
 
 Credits

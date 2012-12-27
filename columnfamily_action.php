@@ -550,7 +550,7 @@
 				$column_name = $_POST['column_name_'.$no_scf.'_'.$no_column];
 				$column_value = $_POST['column_value_'.$no_scf.'_'.$no_column];
 				
-				if (!empty($_POST['column_name_'.$no_scf.'_'.$no_column]) && !empty($_POST['column_value_'.$no_scf.'_'.$no_column])) {
+				if ($_POST['column_name_'.$no_scf.'_'.$no_column] != '' && $_POST['column_value_'.$no_scf.'_'.$no_column] != '') {
 					// CF
 					if ($column_key_name == '') {
 						$data[$column_name] = $column_value;

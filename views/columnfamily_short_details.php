@@ -1,0 +1,1 @@
+<tr><td onclick='document.location.href="describe_columnfamily.php?keyspace_name=<?php echo $keyspace_name; ?>&columnfamily_name=<?php echo $columnfamily_name; ?>"'><a href='describe_columnfamily.php?keyspace_name=<?php echo $keyspace_name; ?>&columnfamily_name=<?php echo $columnfamily_name; ?>'><?php echo $columnfamily_name; ?></a></td></tr>

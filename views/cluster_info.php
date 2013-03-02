@@ -49,7 +49,7 @@ if (isset($_GET['nav']) && $_GET['nav'] == 'cluster'):
 else:
 ?>
 
-<ul id="keyspaces" class="well">
+<ul id="keyspaces" class="well"><li>
 	<h3>Keyspaces and Column Families</h3>
 
 	<a href="keyspace_action.php?action=create" class="btn btn-large btn-primary" style="color: #fff; text-decoration: none;">Create New Keyspace</a>
@@ -60,21 +60,20 @@ else:
 	<?php
 		$nb_ks = count($keyspaces_name);
 		for ($i = 0; $i < $nb_ks; $i++):
-			if ($i/2 == intval($i/2) and $i == $nb_ks-1):
-				$beg = '<tr>';
-				$beg .= '<td colspan="2">';
+			$beg = $end = '';
+			if (!($i&1) and $i == $nb_ks-1):
+				$beg .= '</tr><tr><td colspan="2"><ul>';
 
-				$end = '</td>';
-				$end .= '</tr>';
-			elseif ($i/2 == intval($i/2)):
-				$beg = '<td>';
+				$end .= '</ul></td></tr>';
+			elseif (!($i&1)):
+				if ($i) $beg .= '</tr>';
+				$beg .= '<tr><td><ul>';
 
-				$end = '</td>';
+				$end .= '</ul></td>';
 			else:
-				$beg = '<td>';
+				$beg .= '<td><ul>';
 
-				$end = '</td>';
-				$end .= '</tr>';
+				$end .= '</ul></td>';
 			endif;
 
 			echo $beg;
@@ -82,20 +81,22 @@ else:
 			$keyspace_name = $keyspaces_name[$i];
 			
 			echo '<li><a href="describe_keyspace.php?keyspace_name='.$keyspace_name.'">'.$keyspace_name.'</a>';
-				echo '<ul>';
-					$nb_cf = count($keyspaces_details[$i]['columnfamilies_name']);
+				$nb_cf = count($keyspaces_details[$i]['columnfamilies_name']);
+				if ($nb_cf):
+					echo '<ul>';
 					for ($j = 0; $j < $nb_cf; $j++):
 						$columnfamily_name = $keyspaces_details[$i]['columnfamilies_name'][$j];
 						echo '<li><a href="describe_columnfamily.php?keyspace_name='.$keyspace_name.'&amp;columnfamily_name='.$columnfamily_name.'">'.$columnfamily_name.'</a></li>';
 					endfor;
-				echo '</ul>';
+					echo '</ul>';
+				endif;
 			echo '</li>';
 
 			echo $end;
 		endfor;
 	?>
 	</table>
-</ul>
+</li></ul>
 
 <?php
 endif;

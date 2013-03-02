@@ -12,6 +12,7 @@
 	use phpcassa\Connection\ConnectionPool;
 	use phpcassa\ColumnFamily;
 	use phpcassa\SuperColumnFamily;
+	use phpcassa\UUID;
 	use cassandra\IndexType;
 	
 	$included_header = false;
@@ -527,11 +528,18 @@
 		$cf_def = ColumnFamilyHelper::getCFInKeyspace($keyspace_name,$columnfamily_name);
 		$is_super_cf = $cf_def->column_type == 'Super';
 		
+		switch ($cf_def->comparator_type) {
+			case 'org.apache.cassandra.db.marshal.TimeUUIDType':
+				$autopack_names = false;
+				break;
+			default:
+				$autopack_names = true;
+		}
 		if ($is_super_cf) {
-			$column_family = new SuperColumnFamily($pool, $columnfamily_name);
+			$column_family = new SuperColumnFamily($pool, $columnfamily_name, $autopack_names);
 		}
 		else {
-			$column_family = new ColumnFamily($pool, $columnfamily_name);
+			$column_family = new ColumnFamily($pool, $columnfamily_name, $autopack_names);
 		}
 		
 		$no_column = 1;
@@ -548,6 +556,12 @@
 			
 			while (isset($_POST['column_name_'.$no_scf.'_'.$no_column]) && isset($_POST['column_value_'.$no_scf.'_'.$no_column])) {
 				$column_name = $_POST['column_name_'.$no_scf.'_'.$no_column];
+				switch ($cf_def->comparator_type) {
+					case 'org.apache.cassandra.db.marshal.TimeUUIDType':
+						$uuid = UUID::import($column_name);
+						$column_name = $uuid->bytes;
+						break;
+				}
 				$column_value = $_POST['column_value_'.$no_scf.'_'.$no_column];
 				
 				if ($_POST['column_name_'.$no_scf.'_'.$no_column] != '' && $_POST['column_value_'.$no_scf.'_'.$no_column] != '') {
@@ -714,7 +728,7 @@
 			else {
 				$column_family = new ColumnFamily($pool, $columnfamily_name);
 			}		
-		
+			
 			// Increment counter
 			if (isset($_GET['increment'])) {
 				$row_key = $_GET['row_key'];
@@ -793,6 +807,7 @@
 				
 				$vw_row_vars['keyspace_name'] = $keyspace_name;
 				$vw_row_vars['columnfamily_name'] = $columnfamily_name;
+				$vw_row_vars['comparator_type'] = $cf_def->comparator_type;
 				
 				$vw_row_vars['show_actions_link'] = true;
 				
@@ -868,6 +883,7 @@
 		
 		$is_super_cf = $cf_def->column_type == 'Super';
 		$vw_vars['is_super_cf'] = $cf_def->column_type == 'Super';
+		$vw_vars['comparator_type'] = $cf_def->comparator_type;
 		
 		$vw_vars['key'] = $key;
 		$vw_vars['super_key'] = $super_key;

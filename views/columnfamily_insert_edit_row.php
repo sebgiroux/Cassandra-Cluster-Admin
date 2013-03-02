@@ -59,20 +59,37 @@
 		<?php endif; ?>
 		<?php 
 			if ($mode == 'edit'):
-				if ($is_super_cf):
-					foreach ($output as $super_key => $data):
-						echo 'addSuperColumn(', json_encode($super_key), ');';
-						
-						foreach ($data as $name => $value):
-							echo 'addColumn(', json_encode($name), ',', json_encode($value), ',num_super_columns);';
-						endforeach;
-					endforeach;
-				else:	
-					echo 'num_super_columns++;';
-					foreach ($output as $name => $value):
-						echo 'addColumn(', json_encode($name), ',', json_encode($value), ',num_super_columns);';
-					endforeach;
-				endif;
+				switch ($comparator_type):
+					case 'org.apache.cassandra.db.marshal.TimeUUIDType' :
+						if ($is_super_cf):
+							foreach ($output as $super_key => $data):
+								echo 'addSuperColumn(', json_encode($super_key), ');';
+								foreach ($data as $name => $value):
+									echo 'addColumn(', json_encode((string)unserialize($name)), ',', json_encode($value), ',num_super_columns);';
+								endforeach;
+							endforeach;
+						else:
+							echo 'num_super_columns++;';
+							foreach ($output as $name => $value):
+								echo 'addColumn(', json_encode((string)unserialize($name)), ',', json_encode($value), ',num_super_columns);';
+							endforeach;
+						endif;
+						break;
+					default:
+						if ($is_super_cf):
+							foreach ($output as $super_key => $data):
+								echo 'addSuperColumn(', json_encode($super_key), ');';
+								foreach ($data as $name => $value):
+									echo 'addColumn(', json_encode($name), ',', json_encode($value), ',num_super_columns);';
+								endforeach;
+							endforeach;
+						else:
+							echo 'num_super_columns++;';
+							foreach ($output as $name => $value):
+								echo 'addColumn(', json_encode($name), ',', json_encode($value), ',num_super_columns);';
+							endforeach;
+						endif;
+				endswitch;
 			endif;
 		?>
 	});

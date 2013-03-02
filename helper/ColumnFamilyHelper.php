@@ -96,6 +96,25 @@
 				return getHTML('columnfamily_row.php',$vw_vars);
 			}
 		}
+		public static function displayCFTimeUUIDTypeRow($row_key,$keyspace_name,$columnfamily_name,$row,$scf_key = null,$is_counter_column = false) {		
+			$vw_vars['scf_key'] = $scf_key;
+			$uuid_row = array();
+			foreach ($row as $c=>&$v) {
+				$uuid_row[(string)unserialize($c)] = $v;
+			} unset($row, $v);
+			$vw_vars['row'] = $uuid_row;
+			$vw_vars['keyspace_name'] = $keyspace_name;
+			$vw_vars['columnfamily_name'] = $columnfamily_name;
+			$vw_vars['row_key'] = $row_key;
+			
+			// If it's a column family of counter
+			if ($is_counter_column) {			
+				return getHTML('columnfamily_row_counter.php',$vw_vars);
+			}
+			else {		
+				return getHTML('columnfamily_row.php',$vw_vars);
+			}
+		}
 		
 		/*
 			Display a row out of a super column family
@@ -111,6 +130,15 @@
 			
 			foreach ($row as $key => $value) {
 				$output .= ColumnFamilyHelper::displayCFRow($row_key,$keyspace_name,$columnfamily_name,$value,$key,$is_counter_column);
+			}	
+			
+			return $output;
+		}
+		public static function displaySCFTimeUUIDTypeRow($row_key,$keyspace_name,$columnfamily_name,$row,$is_counter_column = false) {
+			$output = '';
+			
+			foreach ($row as $key => $value) {
+				$output .= ColumnFamilyHelper::displayCFTimeUUIDTypeRow($row_key,$keyspace_name,$columnfamily_name,$value,$key,$is_counter_column);
 			}	
 			
 			return $output;

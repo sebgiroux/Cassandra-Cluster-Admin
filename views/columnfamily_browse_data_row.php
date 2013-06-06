@@ -1,5 +1,10 @@
 <tr>
-	<td><?php echo htmlentities($key,ENT_COMPAT,'UTF-8'); ?></td>
+	<td><?php
+            $uuid = @unserialize($key)->string;
+            $key = $uuid ? $uuid : $key;
+            echo htmlentities($key,ENT_COMPAT,'UTF-8');
+        ?></td>
+	<td>
 	<td>
 		<?php 
 			switch ($comparator_type) {
